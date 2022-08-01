@@ -61,9 +61,9 @@ android {
 
         release {
             storeFile file('./keystore/release.keystore')
-            storePassword 'blackhawkdown'
-            keyAlias 'Hawk'
-            keyPassword 'blackhawkdown'
+            storePassword 'skyroguedown'
+            keyAlias 'skyrogue'
+            keyPassword 'skyroguedown'
         }
     }
 

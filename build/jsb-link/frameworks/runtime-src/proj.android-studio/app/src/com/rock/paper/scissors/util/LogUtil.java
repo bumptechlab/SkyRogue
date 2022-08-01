@@ -8,7 +8,7 @@ import android.util.Log;
 
 public class LogUtil {
     private static boolean isDebug = true;
-    private static String sTag = "SRP";
+    private static String sTag = "SkyRogue";
 
     public static boolean isDebug() {
         return isDebug;

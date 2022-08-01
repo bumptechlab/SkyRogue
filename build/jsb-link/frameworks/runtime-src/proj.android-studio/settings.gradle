@@ -1,4 +1,4 @@
 include ':libcocos2dx'
 project(':libcocos2dx').projectDir = new File('../../cocos2d-x/cocos/platform/android/libcocos2dx')
-include ':SRP'
-project(':SRP').projectDir = new File(settingsDir, 'app')
+include ':SkyRogue'
+project(':SkyRogue').projectDir = new File(settingsDir, 'app')
