@@ -1,4 +1,4 @@
-package com.rock.paper.scissors.base;
+package com.sky.rogue.game.base;
 
 import android.content.Context;
 import android.content.Intent;

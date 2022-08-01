@@ -1,4 +1,4 @@
-package com.rock.paper.scissors.util;
+package com.sky.rogue.game.util;
 
 import android.util.Log;
 

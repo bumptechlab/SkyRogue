@@ -22,24 +22,20 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-package com.rock.paper.scissors.activity;
+package com.sky.rogue.game.activity;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.LogPrinter;
-import android.widget.Toast;
 
-import com.rock.paper.scissors.R;
-import com.rock.paper.scissors.base.BaseActivity;
-import com.rock.paper.scissors.event.AppleLoginEvent;
-import com.rock.paper.scissors.event.QuitGameEvent;
-import com.rock.paper.scissors.util.EngineBridge;
-import com.rock.paper.scissors.util.LogUtil;
-import com.rock.paper.scissors.util.ToastUtil;
-import com.rock.paper.scissors.util.UiUtil;
+import com.sky.rogue.game.R;
+import com.sky.rogue.game.base.BaseActivity;
+import com.sky.rogue.game.event.AppleLoginEvent;
+import com.sky.rogue.game.event.QuitGameEvent;
+import com.sky.rogue.game.util.EngineBridge;
+import com.sky.rogue.game.util.ToastUtil;
 
 import org.cocos2dx.lib.Cocos2dxLocalStorage;
 import org.greenrobot.eventbus.Subscribe;

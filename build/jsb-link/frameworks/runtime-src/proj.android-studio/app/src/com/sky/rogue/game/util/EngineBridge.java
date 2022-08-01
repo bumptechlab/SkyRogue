@@ -1,9 +1,9 @@
-package com.rock.paper.scissors.util;
+package com.sky.rogue.game.util;
 
 import androidx.annotation.Keep;
 
-import com.rock.paper.scissors.event.AppleLoginEvent;
-import com.rock.paper.scissors.event.QuitGameEvent;
+import com.sky.rogue.game.event.AppleLoginEvent;
+import com.sky.rogue.game.event.QuitGameEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
