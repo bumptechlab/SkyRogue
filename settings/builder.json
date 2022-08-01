@@ -1,5 +1,5 @@
 {
-  "title": "SRP",
+  "title": "SkyRogue",
   "packageName": "",
   "startScene": "3b470c58-cc9b-4eff-a798-72addde0cbb7",
   "excludeScenes": [],
@@ -21,7 +21,7 @@
   "zipCompressJs": true,
   "fb-instant-games": {},
   "android": {
-    "packageName": "com.rock.paper.scissors"
+    "packageName": "com.sky.rogue.game"
   },
   "ios": {
     "packageName": ""

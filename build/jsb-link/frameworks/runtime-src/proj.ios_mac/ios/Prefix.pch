@@ -1,5 +1,5 @@
 //
-// Prefix header for all source files of the 'SRP' target in the 'SRP' project
+// Prefix header for all source files of the 'SkyRogue' target in the 'SkyRogue' project
 //
 
 #ifdef __OBJC__
