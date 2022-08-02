@@ -7,7 +7,6 @@ import User from "../Business/User";
 import UserDialog from "../../Component/Dialog/UserDialog";
 import SettingDialog from "../../Component/Dialog/SettingDialog";
 import RuleDialog from "../../Component/Dialog/RuleDialog";
-import CheckinDialog from "../../Component/Dialog/CheckinDialog";
 
 class CommonPrefabMgr {
 
@@ -135,23 +134,6 @@ class CommonPrefabMgr {
         });
     }
 
-
-    static showCheckinDialog() {
-        let canvas = CommonFunction.getSceneCanvas();
-        PrefabManager.getPrefab(ResManager.common.prefab.checkinDialog, function (prefab) {
-            if (prefab) {
-                let propBox = cc.instantiate(prefab);
-                if (propBox) {
-                    if (cc.isValid(canvas)) {
-                        canvas.addChild(propBox, Global.Config.layerZOrder.Dialog);
-                    }
-                    if (propBox.getComponent(CheckinDialog)) {
-                        propBox.getComponent(CheckinDialog).showDialog();
-                    }
-                }
-            }
-        });
-    }
 
 }
 

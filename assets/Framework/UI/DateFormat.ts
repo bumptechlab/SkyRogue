@@ -1,4 +1,4 @@
-export default class DateFormat {
+class DateFormat {
 
     /**
      * 获取某个时间在一年中第几天
@@ -12,3 +12,5 @@ export default class DateFormat {
         return hasDays;
     }
 }
+
+export default DateFormat
