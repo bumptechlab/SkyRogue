@@ -1,13 +1,12 @@
 import ResManager from "../Resources/ResManager";
 import LocalStorageMgr from "../Utils/LocalStorageMgr";
 import User from "./User";
-import GameManager from "./GameManager";
 import CommonEventName from "../Base/CommonEventName";
 
 class UserManager {
 
 
-    private static userNames = ["Sam", "Barney", "Lili", "Kate", "Katherine", "James", "Bob", "Carl"];
+    private static userNames = ["Sam", "Barney", "Lily", "Kate", "Katherine", "James", "Bob", "Carl"];
     private static INIT_COIN = 10000;
     private static currentUser: User = null;
 
