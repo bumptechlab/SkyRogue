@@ -27,20 +27,10 @@ export default class Launcher extends cc.Component {
         //cc.director.setClearColor(cc.color().fromHEX("#FFFFFF"));
         cc.Camera.main.backgroundColor = cc.color().fromHEX("#FFFFFF");
 
-        let loginUser = UserManager.initLoginUser();
-        if (loginUser) {
-            self.gotoHallDelay();
-        } else {
-            self.gotoLoadingDelay();
-        }
-
+        let loginUser = UserManager.guestLogin();
+        self.gotoHallDelay();
     }
 
-    private gotoLoadingDelay() {
-        setTimeout(function () {
-            cc.director.loadScene('Loading');
-        }, 3000);
-    }
 
     private gotoHallDelay() {
         setTimeout(function () {

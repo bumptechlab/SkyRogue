@@ -15,8 +15,8 @@ class ResManager {
         },
         texture: {
             userAvatars: [
-                "common/texture/home_img_head1",
-                "common/texture/home_img_head4",
+                "common/texture/head_female",
+                "common/texture/head_male",
             ],
             userAvatarsVS: [
                 "common/texture/home_img_head2",

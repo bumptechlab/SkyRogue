@@ -8,12 +8,13 @@ class UserManager {
 
 
     private static userNames = ["Sam", "Barney", "Lili", "Kate", "Katherine", "James", "Bob", "Carl"];
-    private static INIT_COIN = 1000;
+    private static INIT_COIN = 10000;
     private static currentUser: User = null;
 
     public static createRandomUser(randomCoin?): User {
         let user = new User();
         let id = 10000 + parseInt((Math.random() * 10000).toString());//10000 - 19999
+        let gender = parseInt((Math.random() * 2).toString());//0-2
         let randomNameIndex = Math.random() * this.userNames.length;
         let name = this.userNames[parseInt(randomNameIndex.toString())];
         let avatarIndex = parseInt((Math.random() * ResManager.common.texture.userAvatars.length).toString());
@@ -23,12 +24,11 @@ class UserManager {
         }
         user.id = id;
         user.name = name;
+        user.gender = gender;
         user.coin = coin;
-        user.avatar = avatarIndex;
-        user.life = 0;
-        user.isWinner = false;
-        user.gesture = GameManager.GESTURE.NONE;
-        user.winCount = 0;
+        user.avatar = gender;
+        user.records = [0, 0, 0];
+        user.planes = [0];
         return user;
     }
 
