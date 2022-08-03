@@ -41,21 +41,29 @@ export default class Room extends cc.Component {
     }
 
     protected onClickEasyBtn(event) {
+        let self = this;
         CommonFunction.clickManager(event.target);
         CommonAudioMgr.playEffect(ResManager.common.audio.btnClick);
-
+        self.enterRoom(GameManager.ROOM_KIND.EASY);
     }
 
     protected onClickOrdinaryBtn(event) {
+        let self = this;
         CommonFunction.clickManager(event.target);
         CommonAudioMgr.playEffect(ResManager.common.audio.btnClick);
-
+        self.enterRoom(GameManager.ROOM_KIND.ORDINARY);
     }
 
     protected onClickDifficultyBtn(event) {
+        let self = this;
         CommonFunction.clickManager(event.target);
         CommonAudioMgr.playEffect(ResManager.common.audio.btnClick);
+        self.enterRoom(GameManager.ROOM_KIND.DIFFICULTY);
+    }
 
+    protected enterRoom(roomKind: number) {
+        GameManager.setCurRoom(roomKind);
+        cc.director.loadScene("Game");
     }
 
     protected onClickBackBtn(event) {

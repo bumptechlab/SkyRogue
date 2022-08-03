@@ -177,7 +177,7 @@
       "array": [
         0,
         0,
-        347.27618408203125,
+        467.6408996582031,
         0,
         0,
         0,
@@ -395,7 +395,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 639,
-      "height": 612
+      "height": 610
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -476,7 +476,7 @@
       "ctor": "Float32Array",
       "array": [
         0,
-        204,
+        203,
         0,
         0,
         0,
@@ -769,7 +769,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 639,
-      "height": 204
+      "height": 203
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -781,7 +781,7 @@
       "ctor": "Float32Array",
       "array": [
         0,
-        0,
+        -0.5,
         0,
         0,
         0,
@@ -846,7 +846,7 @@
       "ctor": "Float32Array",
       "array": [
         -25.5,
-        -35.63999938964844,
+        -36.13999938964844,
         0,
         0,
         0,
@@ -943,7 +943,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "397c96e5-5a13-4571-97b1-f9f12f79d93b"
+      "__uuid__": "46bd883e-1b7b-4479-ac71-25e508db48eb"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -1074,7 +1074,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 639,
-      "height": 204
+      "height": 203
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1086,7 +1086,7 @@
       "ctor": "Float32Array",
       "array": [
         0,
-        -204,
+        -203.5,
         0,
         0,
         0,
@@ -1151,7 +1151,7 @@
       "ctor": "Float32Array",
       "array": [
         -25.5,
-        -35.63999938964844,
+        -36.13999938964844,
         0,
         0,
         0,
@@ -1248,7 +1248,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "397c96e5-5a13-4571-97b1-f9f12f79d93b"
+      "__uuid__": "57945c7d-551b-4ae1-9b24-ec953cb84ecd"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -1357,7 +1357,7 @@
     "_layoutSize": {
       "__type__": "cc.Size",
       "width": 639,
-      "height": 612
+      "height": 610
     },
     "_resize": 1,
     "_N$layoutType": 2,

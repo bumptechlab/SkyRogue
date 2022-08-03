@@ -6,8 +6,11 @@ class Language {
 
     public static room = {
         highestRecord: "Highest record: %s",
-
     };
+
+    public static game = {
+        distance: "Distance: %sm"
+    }
 
 }
 
