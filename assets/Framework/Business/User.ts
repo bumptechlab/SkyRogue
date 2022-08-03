@@ -9,7 +9,7 @@ class User {
     public avatar: number;     //头像
     public records: number[];  //每个游戏难度下的最高记录
     public planes: number[];   //解锁的飞机型号
-    public curPlane: number;   //当前的飞机
+    public curPlane: number;   //当前使用的飞机
 
     //以下属性跟游戏控制相关
     public score: number;      //在一局里获得的分数（飞过的距离）

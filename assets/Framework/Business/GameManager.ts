@@ -6,6 +6,22 @@ export default class GameManager {
         ORDINARY: 1,       //普通
         DIFFICULTY: 2      //困难
     });
+    static PLANE_TYPE = cc.Enum({
+        PLANE1: 0,
+        PLANE2: 1,
+        PLANE3: 2
+    });
+    static PLANE_CONFIG = {
+        0: {
+            price: 0
+        },
+        1: {
+            price: 20000
+        },
+        2: {
+            price: 30000
+        }
+    };
     private static curRoom: number; //当前难度
 
 

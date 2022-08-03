@@ -2,6 +2,7 @@ import ResManager from "../Resources/ResManager";
 import LocalStorageMgr from "../Utils/LocalStorageMgr";
 import User from "./User";
 import CommonEventName from "../Base/CommonEventName";
+import GameManager from "./GameManager";
 
 class UserManager {
 
@@ -27,7 +28,8 @@ class UserManager {
         user.coin = coin;
         user.avatar = gender;
         user.records = [0, 0, 0];
-        user.planes = [0];
+        user.planes = [GameManager.PLANE_TYPE.PLANE1];
+        user.curPlane = GameManager.PLANE_TYPE.PLANE1;
         return user;
     }
 
@@ -47,6 +49,14 @@ class UserManager {
 
     public static getLoginUser(): User {
         return this.currentUser;
+    }
+
+    public static updateLoginUser(user: User) {
+        if (user) {
+            LocalStorageMgr.saveLoginUser(this.currentUser);
+            this.currentUser = user;
+            cc.director.emit(CommonEventName.EVENT_REFRESH_USER_INFO);
+        }
     }
 
     public static updateUserCoin(coin: number) {

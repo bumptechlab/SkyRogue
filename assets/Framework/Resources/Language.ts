@@ -1,10 +1,13 @@
 class Language {
 
-    public static common = {}
+    public static common = {
+        balanceNotEnough: "Balance not enough",
+    };
 
     public static room = {
         highestRecord: "Highest record: %s",
-    }
+
+    };
 
 }
 

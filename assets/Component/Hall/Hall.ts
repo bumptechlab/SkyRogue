@@ -54,7 +54,7 @@ export default class Hall extends cc.Component {
     protected onClickShop(event): void {
         CommonFunction.clickManager(event.target);
         CommonAudioMgr.playEffect(ResManager.common.audio.btnClick);
-
+        cc.director.loadScene("Shop");
     }
 
     protected onClickStart(event): void {
