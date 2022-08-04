@@ -17,12 +17,15 @@ const {ccclass, property} = cc._decorator;
 export default class Plane extends cc.Component {
 
 
+    private planeType = 0;
+
     protected onLoad(): void {
 
     }
 
     public init(planeType: number) {
         let self = this;
+        self.planeType = planeType;
         if (cc.isValid(self.node)) {
             let tailFrame = self.node.getChildByName("tail_flame");
             if (cc.isValid(tailFrame)) {
@@ -41,6 +44,21 @@ export default class Plane extends cc.Component {
                 }
             }
         }
+    }
+
+    protected onCollisionEnter(other) {
+        let self = this;
+        //console.log("Plane[%s]: 碰到了%s", self.planeType, other.node.name);
+    }
+
+    protected onCollisionStay(other) {
+        let self = this;
+        //console.log("Plane[%s]: 穿过了%s", self.planeType, other.node.name);
+    }
+
+    protected onCollisionExit(other) {
+        let self = this;
+        //console.log("Plane[%s]: 离开了%s", self.planeType, other.node.name);
     }
 
 }

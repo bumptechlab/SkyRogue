@@ -9,8 +9,8 @@
 //  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
 
 import UserManager from "../../Framework/Business/UserManager";
-import GameManager from "../../Framework/Business/GameManager";
 import Plane from "./Plane";
+import RockScene from "./RockScene";
 
 const {ccclass, property} = cc._decorator;
 
@@ -26,9 +26,12 @@ export default class Game extends cc.Component {
     @property(Plane)
     plane: Plane = null;
 
+    @property(RockScene)
+    rockScene: RockScene = null;
+
     gamePaused: boolean = true;
-    speed = 5;
-    bgOutPosition = 0;
+    speed: number = 5;
+    bgOutPosition: number = -360;
 
     protected onLoad(): void {
         let self = this;
@@ -43,7 +46,13 @@ export default class Game extends cc.Component {
         self.setGamePause(false);
         self.initPlaneSkin();
         self.planeEnter(function () {
-
+            let timeout = setTimeout(function () {
+                clearTimeout(timeout);
+                //障碍物开始入场
+                if (cc.isValid(self.rockScene)) {
+                    self.rockScene.startGame();
+                }
+            }, 3000);
         });
     }
 
@@ -95,6 +104,11 @@ export default class Game extends cc.Component {
         if ((self.bg2Node.y - self.speed) <= self.bgOutPosition) {
             self.bg2Node.y = self.bg1Node.y + self.bg1Node.height;
         }
+    }
+
+    protected onDestroy(): void {
+        cc.director.getCollisionManager().enabled = false;
+        cc.director.getCollisionManager().enabledDebugDraw = false;
     }
 
 }

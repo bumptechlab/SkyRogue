@@ -1,3 +1,9 @@
+import NodeManager from "../UI/NodeManager";
+import ResManager from "../Resources/ResManager";
+import SpriteManager from "../UI/SpriteManager";
+import Rock from "../../Component/Game/Rock";
+import BoxCollider = cc.BoxCollider;
+
 export default class GameManager {
 
     //房间类型
@@ -24,6 +30,28 @@ export default class GameManager {
     };
     private static curRoom: number; //当前难度
 
+    public static createRockNode() {
+        let self = this;
+        let rockNode = SpriteManager.createSpriteNode("rock");
+        rockNode.group = "rock";
+        rockNode.addComponent(Rock);
+        rockNode.addComponent(BoxCollider);
+        let rockRes = [];
+        if (self.curRoom == GameManager.ROOM_KIND.EASY) {
+            rockRes = ResManager.game.texture.rockEasy;
+        } else if (self.curRoom == GameManager.ROOM_KIND.ORDINARY) {
+            rockRes = ResManager.game.texture.rockOrdinary;
+        } else if (self.curRoom == GameManager.ROOM_KIND.DIFFICULTY) {
+            rockRes = ResManager.game.texture.rockDifficulty;
+        }
+        let rockIndex = parseInt((Math.random() * rockRes.length).toString());
+        let rockTexture = rockRes[rockIndex];
+        SpriteManager.loadSpriteForNode(rockNode, rockTexture, function () {
+            console.log("Create a rock, size: %sx%s", rockNode.width, rockNode.height);
+        });
+        return rockNode;
+    }
+
 
     /**
      * 初始化并进入房间场景
@@ -33,13 +61,6 @@ export default class GameManager {
         cc.director.loadScene("Game");
     }
 
-    /**
-     * 初始化一个房间
-     * @param roomKind
-     */
-    public static createRoom(roomKind: number) {
-
-    }
 
     public static setCurRoom(room) {
         this.curRoom = room;
