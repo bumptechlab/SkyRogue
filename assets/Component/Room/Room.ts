@@ -63,7 +63,7 @@ export default class Room extends cc.Component {
 
     protected enterRoom(roomKind: number) {
         GameManager.setCurRoom(roomKind);
-        cc.director.loadScene("Game");
+        GameManager.enterRoom();
     }
 
     protected onClickBackBtn(event) {

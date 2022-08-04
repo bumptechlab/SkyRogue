@@ -21,14 +21,29 @@ class ResManager {
     };
 
     public static room = {
-        texture: {
-        },
-        animation: {
-        },
-        prefab: {
-        }
+        texture: {},
+        animation: {},
+        prefab: {}
     };
 
+    public static game = {
+        rockEasy: [
+            "game/texture/rock_easy/rock1",
+            "game/texture/rock_easy/rock2",
+            "game/texture/rock_easy/rock3",
+        ],
+        rockOrdinary: [
+            "game/texture/rock_ordinary/rock1",
+            "game/texture/rock_ordinary/rock2",
+            "game/texture/rock_ordinary/rock3",
+        ],
+        rockDifficulty: [
+            "game/texture/rock_difficulty/rock1",
+            "game/texture/rock_difficulty/rock2",
+            "game/texture/rock_difficulty/rock3",
+        ]
+    };
 }
+
 
 export default ResManager;

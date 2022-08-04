@@ -1,11 +1,23 @@
 {
   "start-scene": "3b470c58-cc9b-4eff-a798-72addde0cbb7",
   "group-list": [
-    "default"
+    "default",
+    "plane",
+    "rock"
   ],
   "collision-matrix": [
     [
+      false
+    ],
+    [
+      false,
+      false,
       true
+    ],
+    [
+      false,
+      true,
+      false
     ]
   ],
   "excluded-modules": [],

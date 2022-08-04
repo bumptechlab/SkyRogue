@@ -10,6 +10,7 @@
 
 import UserManager from "../../Framework/Business/UserManager";
 import GameManager from "../../Framework/Business/GameManager";
+import Plane from "./Plane";
 
 const {ccclass, property} = cc._decorator;
 
@@ -22,8 +23,8 @@ export default class Game extends cc.Component {
     @property(cc.Node)
     bg2Node: cc.Node = null;
 
-    @property(cc.Node)
-    planeNode: cc.Node = null;
+    @property(Plane)
+    plane: Plane = null;
 
     gamePaused: boolean = true;
     speed = 5;
@@ -32,6 +33,8 @@ export default class Game extends cc.Component {
     protected onLoad(): void {
         let self = this;
         self.bgOutPosition = -self.bg1Node.height;
+        cc.director.getCollisionManager().enabled = true;
+        cc.director.getCollisionManager().enabledDebugDraw = true;
         self.startGame();
     }
 
@@ -39,7 +42,9 @@ export default class Game extends cc.Component {
         let self = this;
         self.setGamePause(false);
         self.initPlaneSkin();
-        self.planeEnter();
+        self.planeEnter(function () {
+
+        });
     }
 
     protected setGamePause(paused) {
@@ -57,33 +62,24 @@ export default class Game extends cc.Component {
 
     protected initPlaneSkin() {
         let self = this;
-        if (cc.isValid(self.planeNode)) {
-            let tailFrame = self.planeNode.getChildByName("tail_flame");
-            if (cc.isValid(tailFrame)) {
-                let animation = tailFrame.getComponent(sp.Skeleton);
-                if (cc.isValid(animation)) {
-                    let animName = "";
-                    let user = UserManager.getLoginUser();
-                    if (user.curPlane == GameManager.PLANE_TYPE.PLANE1) {
-                        animName = "feiji1";
-                    } else if (user.curPlane == GameManager.PLANE_TYPE.PLANE2) {
-                        animName = "feiji2";
-                    } else if (user.curPlane == GameManager.PLANE_TYPE.PLANE3) {
-                        animName = "feiji3";
-                    }
-                    console.log("Use plane: %s, skin: %s", user.curPlane, animName);
-                    animation.setAnimation(0, animName, true);
-                }
-            }
+        let user = UserManager.getLoginUser();
+        if (cc.isValid(self.plane)) {
+            self.plane.init(user.curPlane);
         }
     }
 
-    protected planeEnter() {
+
+    protected planeEnter(enterCallback) {
         let self = this;
-        if (cc.isValid(self.planeNode)) {
-            self.planeNode.runAction(cc.sequence(
+        if (cc.isValid(self.plane)) {
+            self.plane.node.runAction(cc.sequence(
                 cc.moveTo(2, cc.v2(0, -100)),
-                cc.moveTo(2, cc.v2(0, -250))
+                cc.moveTo(2, cc.v2(0, -250)),
+                cc.callFunc(function () {
+                    if (enterCallback) {
+                        enterCallback();
+                    }
+                })
             )).easing(cc.easeSineOut());
         }
     }
