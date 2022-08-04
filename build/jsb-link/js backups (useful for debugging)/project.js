@@ -1,27 +1,27 @@
-window.__require = function e(t, o, a) {
-function n(r, c) {
-if (!o[r]) {
-if (!t[r]) {
-var s = r.split("/");
+window.__require = function e(t, o, n) {
+function a(c, r) {
+if (!o[c]) {
+if (!t[c]) {
+var s = c.split("/");
 s = s[s.length - 1];
 if (!t[s]) {
 var l = "function" == typeof __require && __require;
-if (!c && l) return l(s, !0);
+if (!r && l) return l(s, !0);
 if (i) return i(s, !0);
-throw new Error("Cannot find module '" + r + "'");
+throw new Error("Cannot find module '" + c + "'");
 }
 }
-var u = o[r] = {
+var u = o[c] = {
 exports: {}
 };
-t[r][0].call(u.exports, function(e) {
-return n(t[r][1][e] || e);
-}, u, u.exports, e, t, o, a);
+t[c][0].call(u.exports, function(e) {
+return a(t[c][1][e] || e);
+}, u, u.exports, e, t, o, n);
 }
-return o[r].exports;
+return o[c].exports;
 }
-for (var i = "function" == typeof __require && __require, r = 0; r < a.length; r++) n(a[r]);
-return n;
+for (var i = "function" == typeof __require && __require, c = 0; c < n.length; c++) a(n[c]);
+return a;
 }({
 BaseDialog: [ function(e, t, o) {
 "use strict";
@@ -29,7 +29,7 @@ cc._RF.push(t, "14bdehL0z9MPKq50KveFAqL", "BaseDialog");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = e("../../Framework/Base/CommonFunction"), n = e("../../Framework/Base/CommonAudioMgr"), i = e("../../Framework/Resources/ResManager"), r = cc._decorator, c = r.ccclass, s = r.property, l = function(e) {
+var n = e("../../Framework/Base/CommonFunction"), a = e("../../Framework/Base/CommonAudioMgr"), i = e("../../Framework/Resources/ResManager"), c = cc._decorator, r = c.ccclass, s = c.property, l = function(e) {
 __extends(t, e);
 function t() {
 var t = null !== e && e.apply(this, arguments) || this;
@@ -40,7 +40,7 @@ return t;
 t.prototype.showDialog = function(e) {
 var t = this, o = cc.callFunc(function() {
 e && e();
-}), a = cc.callFunc(function() {
+}), n = cc.callFunc(function() {
 if (cc.isValid(t.body)) {
 t.body.active = !0;
 t.body.runAction(cc.sequence(cc.delayTime(.04), cc.fadeIn(.2), cc.delayTime(.1), o));
@@ -53,7 +53,7 @@ t.node.scale = 0;
 t.node.width = cc.winSize.width;
 t.node.height = cc.winSize.height;
 t.node.active = !0;
-t.node.runAction(cc.sequence(cc.spawn(cc.fadeIn(.15), cc.scaleTo(.15, 1.1)), cc.scaleTo(.15, 1), a)).easing(cc.easeSineOut());
+t.node.runAction(cc.sequence(cc.spawn(cc.fadeIn(.15), cc.scaleTo(.15, 1.1)), cc.scaleTo(.15, 1), n)).easing(cc.easeSineOut());
 }
 };
 t.prototype.dismissDialog = function(e) {
@@ -69,13 +69,13 @@ t.node.removeFromParent();
 }, t.node), o)).easing(cc.easeIn(3));
 };
 t.prototype.onClickCloseBtn = function(e) {
-a.default.clickManager(e.target);
-n.default.playEffect(i.default.common.audio.btnClick);
+n.default.clickManager(e.target);
+a.default.playEffect(i.default.common.audio.btnClick);
 this.dismissDialog();
 };
 __decorate([ s(cc.Node) ], t.prototype, "mask", void 0);
 __decorate([ s(cc.Node) ], t.prototype, "body", void 0);
-return t = __decorate([ c ], t);
+return t = __decorate([ r ], t);
 }(cc.Component);
 o.default = l;
 cc._RF.pop();
@@ -84,153 +84,13 @@ cc._RF.pop();
 "../../Framework/Base/CommonFunction": "CommonFunction",
 "../../Framework/Resources/ResManager": "ResManager"
 } ],
-CheckinDialog: [ function(e, t, o) {
-"use strict";
-cc._RF.push(t, "9448diW62xEl6faEa80+ISO", "CheckinDialog");
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = e("./BaseDialog"), n = e("../../Framework/Base/CommonFunction"), i = e("../../Framework/Base/CommonAudioMgr"), r = e("../../Framework/Resources/ResManager"), c = e("../../Framework/Business/CheckinManager"), s = e("../../Framework/UI/SpriteManager"), l = e("../../Framework/Business/UserManager"), u = e("../../Framework/Base/CommonPrefabMgr"), d = cc.js.formatStr, f = e("../../Framework/Resources/Language"), m = e("../../Framework/UI/LabelManager"), p = cc._decorator, g = p.ccclass, h = p.property, C = function(e) {
-__extends(t, e);
-function t() {
-var t = null !== e && e.apply(this, arguments) || this;
-t.checkinDays = [];
-return t;
-}
-t.prototype.onLoad = function() {
-c.default.initCheckinState(this.checkinDays.length);
-this.updateCheckinUI();
-};
-t.prototype.updateCheckinUI = function() {
-for (var e = c.default.getCheckinState(), t = 0; t < e.length; t++) this.updateDay(this.checkinDays[t], e[t]);
-};
-t.prototype.updateDay = function(e, t) {
-var o = e.getComponent(cc.Button), a = e.getChildByName("checked"), n = e.getChildByName("selected"), i = e.getChildByName("mask"), c = e.getChildByName("day");
-if (t.checked) {
-s.default.loadSpriteForNode(e, r.default.common.texture.checkin.bgNotSelect);
-m.default.setLabelColor(c, "#995129");
-cc.isValid(o) && (o.interactable = !1);
-cc.isValid(a) && (a.active = !0);
-cc.isValid(n) && (n.active = !1);
-cc.isValid(i) && (i.active = !0);
-} else if (t.canCheck) {
-s.default.loadSpriteForNode(e, r.default.common.texture.checkin.bgCheckable);
-m.default.setLabelColor(c, "#fee40b");
-cc.isValid(o) && (o.interactable = !0);
-cc.isValid(a) && (a.active = !1);
-cc.isValid(n) && (n.active = !0);
-cc.isValid(i) && (i.active = !1);
-} else {
-s.default.loadSpriteForNode(e, r.default.common.texture.checkin.bgNotSelect);
-m.default.setLabelColor(c, "#995129");
-cc.isValid(o) && (o.interactable = !1);
-cc.isValid(a) && (a.active = !1);
-cc.isValid(n) && (n.active = !1);
-cc.isValid(i) && (i.active = !1);
-}
-};
-t.prototype.onClickCheckin = function(e, t) {
-n.default.clickManager(e.target);
-i.default.playEffect(r.default.common.audio.btnClick);
-var o = parseInt(t);
-if (c.default.checkin(o)) {
-var a = c.default.getCheckinState()[o - 1];
-if (a) {
-var s = a.reward, m = l.default.getLoginUser();
-l.default.updateUserCoin(m.coin + s);
-u.default.createToast(d(f.default.common.checkinTips, s));
-}
-this.updateCheckinUI();
-}
-};
-__decorate([ h([ cc.Node ]) ], t.prototype, "checkinDays", void 0);
-return t = __decorate([ g ], t);
-}(a.default);
-o.default = C;
-cc._RF.pop();
-}, {
-"../../Framework/Base/CommonAudioMgr": "CommonAudioMgr",
-"../../Framework/Base/CommonFunction": "CommonFunction",
-"../../Framework/Base/CommonPrefabMgr": "CommonPrefabMgr",
-"../../Framework/Business/CheckinManager": "CheckinManager",
-"../../Framework/Business/UserManager": "UserManager",
-"../../Framework/Resources/Language": "Language",
-"../../Framework/Resources/ResManager": "ResManager",
-"../../Framework/UI/LabelManager": "LabelManager",
-"../../Framework/UI/SpriteManager": "SpriteManager",
-"./BaseDialog": "BaseDialog"
-} ],
-CheckinManager: [ function(e, t, o) {
-"use strict";
-cc._RF.push(t, "72078CNoLRCdK8YBxofqFOy", "CheckinManager");
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = e("../Utils/LocalStorageMgr"), n = e("../UI/DateFormat"), i = function() {
-function e() {}
-e.checkin = function(e) {
-var t = !1, o = a.default.getLastCheckinDay(), n = a.default.getCheckinState();
-if (e <= o || e > n.length) return t;
-a.default.saveLastCheckinDate(new Date().getTime());
-a.default.saveLastCheckinDay(e);
-this.getCheckinState();
-return t = !0;
-};
-e.canCheckinToday = function() {
-var e = a.default.getLastCheckinDate(), t = n.default.getDayInYear(e), o = new Date(), i = n.default.getDayInYear(o.getTime());
-console.log("lastCheckinDayInYear=%s, nowDayInYear=%s", t, i);
-var r = !1;
-i > t && (r = !0);
-return r;
-};
-e.getCheckinState = function() {
-for (var e = a.default.getCheckinState(), t = a.default.getLastCheckinDay() - 1, o = 0; o < e.length; o++) if (o <= t) {
-e[o].checked = !0;
-e[o].canCheck = !1;
-} else if (o == t + 1 && this.canCheckinToday()) {
-e[o].checked = !1;
-e[o].canCheck = !0;
-} else {
-e[o].checked = !1;
-e[o].canCheck = !1;
-}
-a.default.saveCheckinState(e);
-return e;
-};
-e.initCheckinState = function(e) {
-void 0 === e && (e = 7);
-var t = a.default.getCheckinState();
-if (!t) {
-t = [];
-for (var o = 0; o < e; o++) {
-var n = this.DAY_REWARDS[o];
-n || (n = 100);
-t[o] = {
-checked: !1,
-canCheck: !1,
-reward: n
-};
-}
-a.default.saveCheckinState(t);
-}
-return t;
-};
-e.DAY_REWARDS = [ 100, 200, 300, 400, 500, 600, 700 ];
-return e;
-}();
-o.default = i;
-cc._RF.pop();
-}, {
-"../UI/DateFormat": "DateFormat",
-"../Utils/LocalStorageMgr": "LocalStorageMgr"
-} ],
 CommonAudioMgr: [ function(e, t, o) {
 "use strict";
 cc._RF.push(t, "41d11WF1eVPeon98lXB57lo", "CommonAudioMgr");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = e("../Utils/LocalStorageMgr"), n = function() {
+var n = e("../Utils/LocalStorageMgr"), a = function() {
 function e() {}
 e.init = function() {
 this.EffectListArr = [];
@@ -245,101 +105,101 @@ this.MusicID = -1;
 this.changeEffectSwitch();
 };
 e.changeEffectSwitch = function() {
-var e = a.default.readEffectSwitch();
+var e = n.default.readEffectSwitch();
 this.IS_OPEN_EFFECT = !e || "true" == e;
 };
-e.playEffect = function(e, t, o, a, n) {
+e.playEffect = function(e, t, o, n, a) {
 void 0 === t && (t = !1);
 void 0 === o && (o = this.AUDIO_EFFECT_VOLUME);
-void 0 === a && (a = null);
 void 0 === n && (n = null);
+void 0 === a && (a = null);
 var i = this;
 if (i.IS_OPEN_EFFECT && e) {
 void 0 == t && (t = !1);
 void 0 == o && (o = i.AUDIO_EFFECT_VOLUME);
-cc.loader.loadRes(e, function(r, c) {
-if (r) {
-console.log("playEffect: " + e + " err=>" + r);
-n && n();
+cc.loader.loadRes(e, function(c, r) {
+if (c) {
+console.log("playEffect: " + e + " err=>" + c);
+a && a();
 } else {
-var s = cc.audioEngine.play(c, t, o);
+var s = cc.audioEngine.play(r, t, o);
 i.AudioEffectArray.push(s);
 cc.audioEngine.setFinishCallback(s, function() {
-n && n();
+a && a();
 });
-a && a(s);
+n && n(s);
 }
 });
 if (i.AudioEffectArray.length >= i.MaxAudioEffectLength) {
-var r = i.AudioEffectArray.shift();
-i.safeStopEffect(r);
+var c = i.AudioEffectArray.shift();
+i.safeStopEffect(c);
 }
-} else n && n();
+} else a && a();
 };
-e.playMultiEffect = function(e, t, o, a, n, i) {
-var r = this;
-if (r.IS_OPEN_EFFECT && e) {
+e.playMultiEffect = function(e, t, o, n, a, i) {
+var c = this;
+if (c.IS_OPEN_EFFECT && e) {
 void 0 == t && (t = !1);
-void 0 == o && (o = r.AUDIO_EFFECT_VOLUME);
-i && i(r.EffectListArr, 22);
-if (r.EffectListArr.length >= 22) {
-n && n(-1);
+void 0 == o && (o = c.AUDIO_EFFECT_VOLUME);
+i && i(c.EffectListArr, 22);
+if (c.EffectListArr.length >= 22) {
+a && a(-1);
 return;
 }
-cc.loader.loadRes(e, function(i, c) {
+cc.loader.loadRes(e, function(i, r) {
 if (i) {
 console.log("playMultiEffect: " + e + " err=>" + i);
-n && n(-1);
+a && a(-1);
 } else {
-var s = cc.audioEngine.play(c, t, o);
--1 != s && r.EffectListArr.push(s);
+var s = cc.audioEngine.play(r, t, o);
+-1 != s && c.EffectListArr.push(s);
 cc.audioEngine.setFinishCallback(s, function() {
-var e = r.EffectListArr.indexOf(s);
-e > -1 && r.EffectListArr.splice(e, 1);
-n && n(s);
-});
+var e = c.EffectListArr.indexOf(s);
+e > -1 && c.EffectListArr.splice(e, 1);
 a && a(s);
+});
+n && n(s);
 }
 });
-} else n && n(-1);
+} else a && a(-1);
 };
 e.playMusic = function(e, t, o) {
-var n = this, i = "true", r = a.default.readMusicSwitch();
-null != r && (i = r);
-if ("false" != i) if (n.AudioMusicFile != e) {
+var a = this, i = "true", c = n.default.readMusicSwitch();
+null != c && (i = c);
+if ("false" != i) if (a.AudioMusicFile != e) {
 void 0 == t && (t = !0);
-void 0 == o && (o = n.AUDIO_MUSIC_VOLUME);
-"true" == i && cc.loader.loadRes(e, function(a, i) {
-if (a) console.log("play Music: " + e + " err=>" + a); else {
-n.stopAll();
-var r = cc.audioEngine.playMusic(i, t);
+void 0 == o && (o = a.AUDIO_MUSIC_VOLUME);
+"true" == i && cc.loader.loadRes(e, function(n, i) {
+if (n) console.log("play Music: " + e + " err=>" + n); else {
+a.stopAll();
+var c = cc.audioEngine.playMusic(i, t);
 cc.audioEngine.setMusicVolume(o);
-n.MusicID = r;
-n.AudioMusicFile = e;
+a.MusicID = c;
+a.AudioMusicFile = e;
 }
 });
-} else console.log("音乐正在播放，不能重复播放：%s", e); else n.stopMusic();
+} else console.log("音乐正在播放，不能重复播放：%s", e); else a.stopMusic();
 };
-e.playMusicWithNoLoop = function(t, o, n, i) {
-void 0 === n && (n = !1);
+e.playMusicWithNoLoop = function(t, o, a, i) {
+void 0 === a && (a = !1);
 void 0 === i && (i = e.AUDIO_MUSIC_VOLUME);
-var r = this, c = "true", s = a.default.readMusicSwitch();
-null != s && (c = s);
-if ("false" != c) if (r.AudioMusicFile != t) {
-void 0 == n && (n = !1);
-void 0 == i && (i = r.AUDIO_MUSIC_VOLUME);
-"true" == c && cc.loader.loadRes(t, function(e, a) {
+var c = this, r = "true", s = n.default.readMusicSwitch();
+null != s && (r = s);
+if ("false" != r) if (c.AudioMusicFile != t) {
+void 0 == a && (a = !1);
+void 0 == i && (i = c.AUDIO_MUSIC_VOLUME);
+"true" == r && cc.loader.loadRes(t, function(e, n) {
 if (e) {
 console.log("play Music: " + t + " err=>" + e);
 o && o();
 } else {
-r.stopAll();
-var c = cc.audioEngine.playMusic(a, n);
+c.stopAll();
+var r = cc.audioEngine.playMusic(n, a);
 cc.audioEngine.setMusicVolume(i);
-cc.audioEngine.setFinishCallback(c, function() {
+cc.audioEngine.setFinishCallback(r, function() {
 o && o();
 });
-r.AudioMusicFile = t;
+c.AudioMusicFile = t;
 }
 });
 } else console.log("音乐正在播放，不能重复播放：%s", t); else this.stopMusic();
@@ -375,24 +235,182 @@ cc.audioEngine.stopAll();
 e.IS_OPEN_EFFECT = !0;
 return e;
 }();
-o.default = n;
+o.default = a;
 cc._RF.pop();
 }, {
 "../Utils/LocalStorageMgr": "LocalStorageMgr"
 } ],
+CommonDragView: [ function(e, t, o) {
+"use strict";
+cc._RF.push(t, "df079+jUMlNWZLEcjTonSe4", "CommonDragView");
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var n = cc.Vec2, a = cc._decorator, i = a.ccclass, c = (a.property, function(e) {
+__extends(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.left = 0;
+t.right = 0;
+t.top = 0;
+t.bottom = 0;
+t.touchStartTime = 0;
+t.lastClickTime = 0;
+t.longClickTimer = null;
+t.LONG_CLICK_TIME = 50;
+t.CLICK_INTERVAL = 1500;
+t.isLongClick = !1;
+t.onClickCallback = null;
+t.onLongClickCallback = null;
+t.parentWidth = 0;
+t.parentHeight = 0;
+t.lastUpdateTime = 0;
+t.draggable = !0;
+return t;
+}
+t.prototype.onLoad = function() {
+this.registerReceiver();
+this.initDragBorder();
+};
+t.prototype.onDestroy = function() {
+this.unregisterReceiver();
+};
+t.prototype.update = function(e) {
+var t = this.getNow();
+if (!(t - this.lastUpdateTime < 1500)) {
+this.lastUpdateTime = t;
+cc.isValid(this.node.parent) && (this.parentWidth == this.node.parent.width && this.parentHeight == this.node.parent.height || this.initDragBorder());
+}
+};
+t.prototype.setDraggable = function(e) {
+this.draggable = e;
+};
+t.prototype.registerReceiver = function() {
+this.node.on(cc.Node.EventType.TOUCH_START, this.onTouchStart, this);
+this.node.on(cc.Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
+this.node.on(cc.Node.EventType.TOUCH_END, this.onTouchEnd, this);
+this.node.on(cc.Node.EventType.TOUCH_CANCEL, this.onTouchCancel, this);
+};
+t.prototype.unregisterReceiver = function() {
+this.node.off(cc.Node.EventType.TOUCH_START);
+this.node.off(cc.Node.EventType.TOUCH_MOVE);
+this.node.off(cc.Node.EventType.TOUCH_END);
+this.node.off(cc.Node.EventType.TOUCH_CANCEL);
+};
+t.prototype.initDragBorder = function() {
+if (cc.isValid(this.node) && cc.isValid(this.node.parent)) {
+this.parentWidth = this.node.parent.width;
+this.parentHeight = this.node.parent.height;
+var e = -this.node.parent.width * this.node.parent.anchorX, t = this.node.parent.width * (1 - this.node.parent.anchorX), o = this.node.parent.height * (1 - this.node.parent.anchorY), a = -this.node.parent.height * this.node.parent.anchorY, i = this.node.parent.convertToWorldSpaceAR(new n(e, o)), c = this.node.parent.convertToWorldSpaceAR(new n(t, a));
+i.x < 0 && (i.x = 0);
+i.y > cc.winSize.height && (i.y = cc.winSize.height);
+c.x > cc.winSize.width && (c.x = cc.winSize.width);
+c.y < 0 && (c.y = 0);
+this.left = i.x + this.node.width / 2;
+this.top = i.y - this.node.height / 2;
+this.right = c.x - this.node.width / 2;
+this.bottom = c.y + this.node.height / 2;
+}
+console.log("拖拽边界:[%s, %s, %s, %s]", this.left, this.top, this.right, this.bottom);
+};
+t.prototype.initDefaultPosition = function() {
+var e = this.right, t = this.top;
+this.moveToPos(new cc.Vec2(e, t));
+};
+t.prototype.init = function(e, t) {
+this.onClickCallback = e;
+this.onLongClickCallback = t;
+};
+t.prototype.initPosition = function(e) {
+var t = this;
+t.scheduleOnce(function() {
+t.initDragBorder();
+e ? t.moveToPos(e) : t.initDefaultPosition();
+}, 0);
+};
+t.prototype.zoomInViewSize = function(e) {
+void 0 === e && (e = !0);
+if (e && cc.isValid(this.node)) {
+this.node.stopAllActions();
+this.node.runAction(cc.scaleTo(.1, 1.2));
+}
+this.isLongClick = !0;
+};
+t.prototype.recoverViewSize = function(e) {
+void 0 === e && (e = !0);
+if (e && cc.isValid(this.node)) {
+this.node.stopAllActions();
+this.node.runAction(cc.scaleTo(.1, 1));
+}
+this.isLongClick = !1;
+};
+t.prototype.onTouchStart = function(e) {
+var t = this;
+t.touchStartTime = t.getNow();
+console.log("==》onTouchStart");
+t.longClickTimer = setTimeout(function() {
+t.zoomInViewSize(!1);
+t.clearLongClickTimer();
+}, t.LONG_CLICK_TIME);
+};
+t.prototype.clearLongClickTimer = function() {
+if (this.longClickTimer) {
+clearTimeout(this.longClickTimer);
+this.longClickTimer = null;
+}
+};
+t.prototype.onTouchEnd = function(e) {
+this.clearLongClickTimer();
+var t = this.getNow(), o = t - this.touchStartTime, n = t - this.lastClickTime;
+console.log("==》onTouchEnd: clickTime=%sms, clickInterval=%sms, isLongClick=%s", o, n, this.isLongClick);
+if (this.isLongClick) "function" == typeof this.onLongClickCallback && this.onLongClickCallback(e); else {
+o < this.LONG_CLICK_TIME && n > this.CLICK_INTERVAL && "function" == typeof this.onClickCallback && this.onClickCallback(e);
+this.lastClickTime = t;
+}
+this.recoverViewSize(!1);
+};
+t.prototype.onTouchCancel = function(e) {
+console.log("==》onTouchCancel");
+this.clearLongClickTimer();
+this.recoverViewSize(!1);
+};
+t.prototype.onTouchMove = function(e) {
+if (this.isLongClick && this.draggable) {
+var t = new cc.Vec2(e.getLocationX(), e.getLocationY());
+this.moveToPos(t);
+}
+};
+t.prototype.moveToPos = function(e) {
+if (e && cc.isValid(this.node) && cc.isValid(this.node.parent)) {
+var t = e.x, o = e.y;
+t > this.right ? t = this.right : t < this.left && (t = this.left);
+o > this.top ? o = this.top : o < this.bottom && (o = this.bottom);
+var n = new cc.Vec2(t, o);
+n = this.node.parent.convertToNodeSpaceAR(n);
+this.node.position = n;
+}
+};
+t.prototype.getNow = function() {
+return new Date().getTime();
+};
+return t = __decorate([ i ], t);
+}(cc.Component));
+o.default = c;
+cc._RF.pop();
+}, {} ],
 CommonEventName: [ function(e, t, o) {
 "use strict";
 cc._RF.push(t, "f49d9gNXhlCtpNPmY1KGy8x", "CommonEventName");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = function() {
+var n = function() {
 function e() {}
 e.EVENT_APPLE_LOGIN_RESULT = "EVENT_APPLE_LOGIN_RESULT";
 e.EVENT_REFRESH_USER_INFO = "EVENT_REFRESH_USER_INFO";
 return e;
 }();
-o.default = a;
+o.default = n;
 cc._RF.pop();
 }, {} ],
 CommonFunction: [ function(e, t, o) {
@@ -401,7 +419,7 @@ cc._RF.push(t, "04b32vpnTZD4qFboCOgX/Mv", "CommonFunction");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = function() {
+var n = function() {
 function e() {}
 e.getSceneCanvas = function() {
 if (cc.director) {
@@ -419,15 +437,15 @@ void 0 === t && (t = 1500);
 if (cc.isValid(e)) {
 var o = e.getComponent(cc.Button);
 cc.isValid(o) && (o.interactable = !1);
-var a = setTimeout(function() {
+var n = setTimeout(function() {
 cc.isValid(o) && (o.interactable = !0);
-clearInterval(a);
+clearInterval(n);
 }, t);
 }
 };
 return e;
 }();
-o.default = a;
+o.default = n;
 cc._RF.pop();
 }, {} ],
 CommonPrefabMgr: [ function(e, t, o) {
@@ -436,119 +454,43 @@ cc._RF.push(t, "6f0dcP9/AFL8J9/1X2O2YAz", "CommonPrefabMgr");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = e("./CommonFunction"), n = e("../Resources/ResManager"), i = e("../UI/PrefabManager"), r = e("./Global"), c = e("../../Component/Dialog/WinDialog"), s = e("../../Component/Dialog/UserDialog"), l = e("../../Component/Dialog/SettingDialog"), u = e("../../Component/Dialog/RuleDialog"), d = e("../../Component/Dialog/CheckinDialog"), f = function() {
+var n = e("./CommonFunction"), a = e("../Resources/ResManager"), i = e("../UI/PrefabManager"), c = e("./Global"), r = e("../../Component/Game/GameOverDialog"), s = function() {
 function e() {}
 e.createToast = function(e, t) {
-void 0 === t && (t = r.default.Config.layerZOrder.Toast);
-var o = a.default.getSceneCanvas();
+void 0 === t && (t = c.default.Config.layerZOrder.Toast);
+var o = n.default.getSceneCanvas();
 if (cc.isValid(o)) {
-var c = o.getChildByName("Toast");
-c && o.removeChild(c);
+var r = o.getChildByName("Toast");
+r && o.removeChild(r);
 }
-var s = n.default.common.prefab.toast;
-i.default.getPrefabIns(s, function(a) {
-if (cc.isValid(o) && a) {
-o.addChild(a, t);
-a.getComponent("Toast") && a.getComponent("Toast").init(e);
-a.x = 0;
-a.y = 0;
+var s = a.default.common.prefab.toast;
+i.default.getPrefabIns(s, function(n) {
+if (cc.isValid(o) && n) {
+o.addChild(n, t);
+n.getComponent("Toast") && n.getComponent("Toast").init(e);
+n.x = 0;
+n.y = 0;
 }
 });
 };
-e.showWinDialog = function(e, t, o) {
-var s = a.default.getSceneCanvas();
-i.default.getPrefab(n.default.room.prefab.winDialog, function(a) {
-if (a) {
-var n = cc.instantiate(a);
+e.showGameOverDialog = function(e, t, o, s) {
+var l = n.default.getSceneCanvas();
+i.default.getPrefab(a.default.game.prefab.gameOverDialog, function(n) {
 if (n) {
-cc.isValid(s) && s.addChild(n, r.default.Config.layerZOrder.Dialog);
-n.getComponent(c.default) && n.getComponent(c.default).showDialog(e, t, o);
-}
-}
-});
-};
-e.showLostDialog = function(e, t, o) {
-var s = a.default.getSceneCanvas();
-i.default.getPrefab(n.default.room.prefab.lostDialog, function(a) {
+var a = cc.instantiate(n);
 if (a) {
-var n = cc.instantiate(a);
-if (n) {
-cc.isValid(s) && s.addChild(n, r.default.Config.layerZOrder.Dialog);
-n.getComponent(c.default) && n.getComponent(c.default).showDialog(e, t, o);
-}
-}
-});
-};
-e.showDrawDialog = function(e, t, o) {
-var s = a.default.getSceneCanvas();
-i.default.getPrefab(n.default.room.prefab.drawDialog, function(a) {
-if (a) {
-var n = cc.instantiate(a);
-if (n) {
-cc.isValid(s) && s.addChild(n, r.default.Config.layerZOrder.Dialog);
-n.getComponent(c.default) && n.getComponent(c.default).showDialog(e, t, o);
-}
-}
-});
-};
-e.showUserDialog = function(e) {
-var t = a.default.getSceneCanvas();
-i.default.getPrefab(n.default.common.prefab.userDialog, function(o) {
-if (o) {
-var a = cc.instantiate(o);
-if (a) {
-cc.isValid(t) && t.addChild(a, r.default.Config.layerZOrder.Dialog);
-a.getComponent(s.default) && a.getComponent(s.default).showDialog(e);
-}
-}
-});
-};
-e.showSettingDialog = function() {
-var e = a.default.getSceneCanvas();
-i.default.getPrefab(n.default.common.prefab.settingDialog, function(t) {
-if (t) {
-var o = cc.instantiate(t);
-if (o) {
-cc.isValid(e) && e.addChild(o, r.default.Config.layerZOrder.Dialog);
-o.getComponent(l.default) && o.getComponent(l.default).showDialog();
-}
-}
-});
-};
-e.showRuleDialog = function() {
-var e = a.default.getSceneCanvas();
-i.default.getPrefab(n.default.common.prefab.ruleDialog, function(t) {
-if (t) {
-var o = cc.instantiate(t);
-if (o) {
-cc.isValid(e) && e.addChild(o, r.default.Config.layerZOrder.Dialog);
-o.getComponent(u.default) && o.getComponent(u.default).showDialog();
-}
-}
-});
-};
-e.showCheckinDialog = function() {
-var e = a.default.getSceneCanvas();
-i.default.getPrefab(n.default.common.prefab.checkinDialog, function(t) {
-if (t) {
-var o = cc.instantiate(t);
-if (o) {
-cc.isValid(e) && e.addChild(o, r.default.Config.layerZOrder.Dialog);
-o.getComponent(d.default) && o.getComponent(d.default).showDialog();
+cc.isValid(l) && l.addChild(a, c.default.Config.layerZOrder.Dialog);
+a.getComponent(r.default) && a.getComponent(r.default).showDialog(e, t, o, s);
 }
 }
 });
 };
 return e;
 }();
-o.default = f;
+o.default = s;
 cc._RF.pop();
 }, {
-"../../Component/Dialog/CheckinDialog": "CheckinDialog",
-"../../Component/Dialog/RuleDialog": "RuleDialog",
-"../../Component/Dialog/SettingDialog": "SettingDialog",
-"../../Component/Dialog/UserDialog": "UserDialog",
-"../../Component/Dialog/WinDialog": "WinDialog",
+"../../Component/Game/GameOverDialog": "GameOverDialog",
 "../Resources/ResManager": "ResManager",
 "../UI/PrefabManager": "PrefabManager",
 "./CommonFunction": "CommonFunction",
@@ -560,7 +502,7 @@ cc._RF.push(t, "e178dRT0R1Gp7hz5F9RgpUY", "CountDownUtil");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = function() {
+var n = function() {
 function e(e, t, o) {
 this.COUNT_DOWN_ACTION_TAG = 9111024911;
 this._componentNode = null;
@@ -610,7 +552,7 @@ this._callback(e);
 };
 return e;
 }();
-o.default = a;
+o.default = n;
 cc._RF.pop();
 }, {} ],
 CountDown: [ function(e, t, o) {
@@ -619,7 +561,7 @@ cc._RF.push(t, "0a1d77xStpHepXdigZVVvNO", "CountDown");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = e("../../Framework/Utils/CountDownUtil"), n = e("../../Framework/UI/SpriteManager"), i = e("../../Framework/Resources/ResManager"), r = cc._decorator, c = r.ccclass, s = (r.property, 
+var n = e("../../Framework/Utils/CountDownUtil"), a = e("../../Framework/UI/SpriteManager"), i = e("../../Framework/Resources/ResManager"), c = cc._decorator, r = c.ccclass, s = (c.property, 
 function(e) {
 __extends(t, e);
 function t() {
@@ -631,7 +573,7 @@ t.countdownCallback = null;
 return t;
 }
 t.prototype.onLoad = function() {
-this.countDownUtil = new a.default(this.node, this.COUNT_DOWN_TAG, this.countDownCallback.bind(this));
+this.countDownUtil = new n.default(this.node, this.COUNT_DOWN_TAG, this.countDownCallback.bind(this));
 var e = this.node.getComponent(cc.Layout);
 if (!e) {
 (e = this.node.addComponent(cc.Layout)).type = cc.Layout.Type.HORIZONTAL;
@@ -646,8 +588,8 @@ t.prototype.countDownCallback = function(e) {
 var t = e.toString();
 this.numberSprites.length != t.length && this.createNumberSprites(t.length);
 for (var o = 0; o < t.length; o++) {
-var a = parseInt(t.substr(o, 1)), r = i.default.common.texture.numbers[a];
-n.default.loadSpriteForNode(this.numberSprites[o], r);
+var n = parseInt(t.substr(o, 1)), c = i.default.common.texture.numbers[n];
+a.default.loadSpriteForNode(this.numberSprites[o], c);
 }
 e <= 0 && (this.node.active = !1);
 this.countdownCallback && this.countdownCallback(e);
@@ -656,7 +598,7 @@ t.prototype.createNumberSprites = function(e) {
 this.node.removeAllChildren();
 this.numberSprites = [];
 for (var t = 0; t < e; t++) {
-var o = n.default.createSpriteNode("number" + t);
+var o = a.default.createSpriteNode("number" + t);
 this.node.addChild(o);
 this.numberSprites[t] = o;
 }
@@ -669,7 +611,7 @@ t.prototype.stopCountDown = function() {
 this.countDownUtil.stopCountDown();
 this.node.active = !1;
 };
-return t = __decorate([ c ], t);
+return t = __decorate([ r ], t);
 }(cc.Component));
 o.default = s;
 cc._RF.pop();
@@ -684,7 +626,7 @@ cc._RF.push(t, "a81cdeaheBMEpIaiVOoC8wG", "DateFormat");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = function() {
+var n = function() {
 function e() {}
 e.getDayInYear = function(e) {
 var t = new Date().getFullYear().toString(), o = new Date(e) - new Date(t);
@@ -692,36 +634,73 @@ return Math.ceil(o / 864e5);
 };
 return e;
 }();
-o.default = a;
+o.default = n;
 cc._RF.pop();
 }, {} ],
+DistanceCounter: [ function(e, t, o) {
+"use strict";
+cc._RF.push(t, "e8b045PUslNFpdwHhxCdWwo", "DistanceCounter");
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var n = e("../../Framework/UI/LabelManager"), a = cc._decorator, i = a.ccclass, c = a.property, r = function(e) {
+__extends(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.distanceLabel = null;
+t.finishCallback = null;
+t.distance = 0;
+return t;
+}
+t.prototype.onLoad = function() {
+n.default.setLabelString(this.distanceLabel, this.distance + "m");
+};
+t.prototype.init = function(e) {
+this.finishCallback = e;
+this.distance = 0;
+n.default.setLabelString(this.distanceLabel, this.distance + "m");
+};
+t.prototype.startCount = function() {
+var e = this;
+e.unscheduleAllCallbacks();
+e.schedule(function() {
+e.distance++;
+n.default.setLabelString(e.distanceLabel, e.distance + "m");
+}, 1, cc.macro.REPEAT_FOREVER, 0);
+};
+t.prototype.stopCount = function() {
+this.unscheduleAllCallbacks();
+this.finishCallback && this.finishCallback(this.distance);
+};
+t.prototype.getDistance = function() {
+return this.distance;
+};
+t.prototype.onDestroy = function() {
+this.unscheduleAllCallbacks();
+};
+__decorate([ c(cc.Label) ], t.prototype, "distanceLabel", void 0);
+return t = __decorate([ i ], t);
+}(cc.Component);
+o.default = r;
+cc._RF.pop();
+}, {
+"../../Framework/UI/LabelManager": "LabelManager"
+} ],
 GameManager: [ function(e, t, o) {
 "use strict";
 cc._RF.push(t, "4f2a86rJIhCIoZ9hUBSfFat", "GameManager");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = e("./UserManager"), n = e("../../Component/GameRoom/GameRoomController"), i = function() {
+var n = e("../UI/SpriteManager"), a = e("../../Component/Game/Rock"), i = function() {
 function e() {}
-e.createOpponent = function() {
-var e = a.default.getLoginUser(), t = a.default.createRandomUser(!0);
-do {
-t = a.default.createRandomUser(!0);
-} while (e.id == t.id || e.avatar == t.avatar || e.name == t.name);
-return t;
+e.createRockNode = function() {
+var e = n.default.createSpriteNode("rock");
+e.addComponent(a.default).init(this.curRoom);
+return e;
 };
 e.enterRoom = function() {
-cc.director.loadScene("GameRoom");
-};
-e.createRoom = function(e) {
-var t = a.default.getLoginUser();
-if (t.coin < this.betAmount) return null;
-var o = this.createOpponent(), i = new n.default();
-i.initRoom(e, t, o);
-var r = t.coin - this.betAmount;
-i.updateMyCoin(r);
-this.setCurRoom(i);
-return i;
+cc.director.loadScene("Game");
 };
 e.setCurRoom = function(e) {
 this.curRoom = e;
@@ -730,436 +709,193 @@ e.getCurRoom = function() {
 return this.curRoom;
 };
 e.ROOM_KIND = cc.Enum({
-ONE: 0,
-THREE: 1,
-FIVE: 2
+EASY: 0,
+ORDINARY: 1,
+DIFFICULTY: 2
 });
-e.GESTURE = cc.Enum({
-NONE: 100,
-SCISSORS: 0,
-ROCK: 1,
-PAPER: 2
+e.PLANE_TYPE = cc.Enum({
+PLANE1: 0,
+PLANE2: 1,
+PLANE3: 2
 });
-e.roomInfo = {
-roomOne: {
-limit: 100
+e.PLANE_CONFIG = {
+0: {
+price: 0
 },
-roomThree: {
-limit: 500
+1: {
+price: 2e4
 },
-roomFive: {
-limit: 1e3
+2: {
+price: 3e4
 }
 };
-e.betAmount = 10;
 return e;
 }();
 o.default = i;
 cc._RF.pop();
 }, {
-"../../Component/GameRoom/GameRoomController": "GameRoomController",
-"./UserManager": "UserManager"
+"../../Component/Game/Rock": "Rock",
+"../UI/SpriteManager": "SpriteManager"
 } ],
-GameRoomController: [ function(e, t, o) {
+GameOverDialog: [ function(e, t, o) {
 "use strict";
-cc._RF.push(t, "3524diF/KxGiohDojgTNTGM", "GameRoomController");
+cc._RF.push(t, "db1ca5fJhFAO5tb18ooVDiy", "GameOverDialog");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = e("../../Framework/Business/UserManager"), n = e("../../Framework/Business/GameManager"), i = function() {
-function e() {
-this.me = null;
-this.opponent = null;
-this.roomKind = 0;
-this.winRound = 0;
-this.curRound = 0;
-this.isGameOver = !1;
-this.gameState = 0;
-}
-e.prototype.initRoom = function(e, t, o) {
-this.roomKind = e;
-this.me = t;
-this.opponent = o;
-this.resetRoom();
-};
-e.prototype.resetRoom = function() {
-var t = 0, o = 0;
-if (this.roomKind == n.default.ROOM_KIND.ONE) {
-t = 1;
-o = 1;
-} else if (this.roomKind == n.default.ROOM_KIND.THREE) {
-t = 3;
-o = 2;
-} else if (this.roomKind == n.default.ROOM_KIND.FIVE) {
-t = 5;
-o = 3;
-}
-var a = this.me;
-a.life = t;
-a.isWinner = !1;
-a.gesture = n.default.GESTURE.NONE;
-a.winCount = 0;
-var i = this.opponent;
-i.life = t;
-i.isWinner = !1;
-i.gesture = n.default.GESTURE.NONE;
-i.winCount = 0;
-this.winRound = o;
-this.curRound = 0;
-this.isGameOver = !1;
-this.gameState = e.GAME_STATE.IDLE;
-};
-e.prototype.updateOpponentCoin = function(e) {
-this.opponent && (this.opponent.coin = e);
-};
-e.prototype.updateMyCoin = function(e) {
-this.me && (this.me.coin = e);
-a.default.updateUserCoin(e);
-};
-e.prototype.beginMatch = function(t, o) {
-if (this.me && this.opponent) if (this.isGameOver) {
-console.log("Game Over");
-this.gameState = e.GAME_STATE.GAME_OVER;
-o && o(this.me, this.opponent, this.isGameOver);
-} else {
-this.curRound++;
-this.me.gesture = t;
-this.opponent.gesture = parseInt((3 * Math.random()).toString());
-this.matchGame(this.me, this.opponent);
-if (this.me.isWinner) {
-this.me.winCount++;
-this.opponent.life--;
-} else if (this.opponent.isWinner) {
-this.opponent.winCount++;
-this.me.life--;
-}
-if (this.me.winCount >= this.winRound) {
-this.me.isWinner = !0;
-this.opponent.isWinner = !1;
-this.isGameOver = !0;
-this.gameState = e.GAME_STATE.GAME_OVER;
-} else if (this.opponent.winCount >= this.winRound) {
-this.me.isWinner = !1;
-this.opponent.isWinner = !0;
-this.isGameOver = !0;
-this.gameState = e.GAME_STATE.GAME_OVER;
-} else this.gameState = e.GAME_STATE.ROUND_END;
-o && o(this.me, this.opponent, this.isGameOver);
-} else console.log("Not enough of gamers, can not play the game");
-};
-e.prototype.matchGame = function(e, t) {
-if (e.gesture == t.gesture) {
-e.isWinner = !1;
-t.isWinner = !1;
-} else if (e.gesture == n.default.GESTURE.PAPER && t.gesture == n.default.GESTURE.ROCK) {
-e.isWinner = !0;
-t.isWinner = !1;
-} else if (e.gesture == n.default.GESTURE.PAPER && t.gesture == n.default.GESTURE.SCISSORS) {
-e.isWinner = !1;
-t.isWinner = !0;
-} else if (e.gesture == n.default.GESTURE.ROCK && t.gesture == n.default.GESTURE.PAPER) {
-e.isWinner = !1;
-t.isWinner = !0;
-} else if (e.gesture == n.default.GESTURE.ROCK && t.gesture == n.default.GESTURE.SCISSORS) {
-e.isWinner = !0;
-t.isWinner = !1;
-} else if (e.gesture == n.default.GESTURE.SCISSORS && t.gesture == n.default.GESTURE.ROCK) {
-e.isWinner = !1;
-t.isWinner = !0;
-} else if (e.gesture == n.default.GESTURE.SCISSORS && t.gesture == n.default.GESTURE.PAPER) {
-e.isWinner = !0;
-t.isWinner = !1;
-}
-};
-e.GAME_STATE = cc.Enum({
-IDLE: 0,
-ROUND_BEGIN: 1,
-ROUND_END: 2,
-ROUND_WAITING: 3,
-GAME_OVER: 4
-});
-return e;
-}();
-o.default = i;
-cc._RF.pop();
-}, {
-"../../Framework/Business/GameManager": "GameManager",
-"../../Framework/Business/UserManager": "UserManager"
-} ],
-GameRoom: [ function(e, t, o) {
-"use strict";
-cc._RF.push(t, "2bba1H6FkFBErZNu3KKrYYJ", "GameRoom");
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = e("../../Framework/UI/SpriteManager"), n = e("../../Framework/Resources/ResManager"), i = e("../../Framework/Business/GameManager"), r = e("./LifeController"), c = e("./ResultController"), s = e("./GameRoomController"), l = e("../../Framework/UI/SpineManager"), u = e("./GestureSelector"), d = e("../../Framework/Base/CommonPrefabMgr"), f = e("../Common/CountDown"), m = e("../../Framework/Resources/Language"), p = e("../../Framework/Base/CommonAudioMgr"), g = e("../../Framework/Base/CommonFunction"), h = cc._decorator, C = h.ccclass, _ = h.property, v = function(e) {
+var n = e("../Dialog/BaseDialog"), a = e("../../Framework/UI/LabelManager"), i = e("../../Framework/Base/CommonFunction"), c = e("../../Framework/Base/CommonAudioMgr"), r = e("../../Framework/Resources/ResManager"), s = cc._decorator, l = s.ccclass, u = s.property, d = function(e) {
 __extends(t, e);
 function t() {
 var t = null !== e && e.apply(this, arguments) || this;
-t.titleSprite = null;
-t.meLifeController = null;
-t.opponentLifeController = null;
-t.meResultController = null;
-t.opponentResultController = null;
-t.vsSkeleton = null;
-t.gestureSelector = null;
-t.countDown = null;
-t.BET_COUNT_DOWN_TIME = 10;
-t.RESULT_SHOW_TIME = 2;
-t.RANDOM_GESTURE_SHOW_TIME = 3;
+t.distanceLabel = null;
+t.goldLabel = null;
+return t;
+}
+t.prototype.onLoad = function() {};
+t.prototype.showDialog = function(t, o, n, i) {
+e.prototype.showDialog.call(this);
+a.default.setLabelString(this.distanceLabel, t);
+a.default.setLabelString(this.goldLabel, "+" + o);
+this.backCallback = n;
+this.continueCallback = i;
+};
+t.prototype.onClickBackBtn = function(t) {
+i.default.clickManager(t.target);
+c.default.playEffect(r.default.common.audio.btnClick);
+e.prototype.dismissDialog.call(this);
+this.backCallback && this.backCallback();
+};
+t.prototype.onClickContinueBtn = function(t) {
+i.default.clickManager(t.target);
+c.default.playEffect(r.default.common.audio.btnClick);
+e.prototype.dismissDialog.call(this);
+this.continueCallback && this.continueCallback();
+};
+__decorate([ u(cc.Label) ], t.prototype, "distanceLabel", void 0);
+__decorate([ u(cc.Label) ], t.prototype, "goldLabel", void 0);
+return t = __decorate([ l ], t);
+}(n.default);
+o.default = d;
+cc._RF.pop();
+}, {
+"../../Framework/Base/CommonAudioMgr": "CommonAudioMgr",
+"../../Framework/Base/CommonFunction": "CommonFunction",
+"../../Framework/Resources/ResManager": "ResManager",
+"../../Framework/UI/LabelManager": "LabelManager",
+"../Dialog/BaseDialog": "BaseDialog"
+} ],
+Game: [ function(e, t, o) {
+"use strict";
+cc._RF.push(t, "98a8biRS9pO+ZCoV/dcLmUm", "Game");
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var n = e("../../Framework/Business/UserManager"), a = e("./Plane"), i = e("./RockScene"), c = e("../../Framework/Business/GameManager"), r = e("../../Framework/Base/CommonPrefabMgr"), s = e("./DistanceCounter"), l = cc._decorator, u = l.ccclass, d = l.property, f = function(e) {
+__extends(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.bg1Node = null;
+t.bg2Node = null;
+t.distanceCounter = null;
+t.plane = null;
+t.rockScene = null;
+t.gamePaused = !0;
+t.speed = 5;
+t.bgOutPosition = -360;
 return t;
 }
 t.prototype.onLoad = function() {
+this.bgOutPosition = -this.bg1Node.height;
+this.startGame();
+};
+t.prototype.startGame = function() {
 var e = this;
-p.default.playMusic(n.default.common.audio.bgm, !0, 1);
-e.curRoom = i.default.getCurRoom();
-e.initRoom();
-e.playVsAnimation(function() {
-e.initStateOnNewGame();
+cc.director.getCollisionManager().enabled = !0;
+e.setGamePause(!1);
+cc.isValid(e.distanceCounter) && e.distanceCounter.init(e.distanceFinishCallback.bind(e));
+e.initPlane(function() {
+cc.isValid(e.distanceCounter) && e.distanceCounter.startCount();
+cc.isValid(e.plane) && e.plane.setDraggable(!0);
+e.scheduleOnce(function() {
+e.rockEnter();
+}, 3);
 });
 };
-t.prototype.startNewGame = function() {
-var e = this, t = i.default.createRoom(e.curRoom.roomKind);
-if (null != t) {
-e.curRoom = t;
-e.initRoom();
-e.playVsAnimation(function() {
-e.initStateOnNewGame();
-});
-} else {
-d.default.createToast(m.default.common.notEnoughMoney);
-e.exitGameRoom();
+t.prototype.stopGame = function() {
+cc.director.getCollisionManager().enabled = !1;
+this.setGamePause(!0);
+cc.isValid(this.rockScene) && this.rockScene.stopGame();
+cc.isValid(this.distanceCounter) && this.distanceCounter.stopCount();
+cc.isValid(this.plane) && this.plane.setDraggable(!1);
+};
+t.prototype.distanceFinishCallback = function() {};
+t.prototype.rockEnter = function() {
+if (cc.isValid(this.rockScene)) {
+var e = this.speed;
+c.default.getCurRoom() == c.default.ROOM_KIND.EASY ? e = .8 * this.speed : c.default.getCurRoom() == c.default.ROOM_KIND.ORDINARY ? e = this.speed : c.default.getCurRoom() == c.default.ROOM_KIND.DIFFICULTY && (e = 1.2 * this.speed);
+this.rockScene.setSpeed(e);
+this.rockScene.startGame();
 }
 };
-t.prototype.initStateOnNewGame = function() {
-this.curRoom.gameState = s.default.GAME_STATE.ROUND_WAITING;
-cc.isValid(this.countDown) && this.countDown.startCountDown(this.BET_COUNT_DOWN_TIME);
+t.prototype.setGamePause = function(e) {
+this.gamePaused = e;
 };
-t.prototype.initRoom = function() {
-a.default.loadSprite(this.titleSprite, n.default.room.texture.roomTitle[this.curRoom.roomKind]);
-var e = this.curRoom.me, t = this.curRoom.opponent;
-this.updateLife(e, t);
-this.updateResult(e, t, !1);
-this.setControlVisible(!1);
-if (cc.isValid(this.gestureSelector)) {
-this.gestureSelector.init(this.onSelectGesture.bind(this));
-this.gestureSelector.selectGesture(i.default.GESTURE.NONE);
-}
-cc.isValid(this.countDown) && this.countDown.init(this.countdownCallback.bind(this));
+t.prototype.update = function(e) {
+this.gamePaused || this.renderBg();
 };
-t.prototype.setControlVisible = function(e) {
-cc.isValid(this.meLifeController) && (this.meLifeController.node.active = e);
-cc.isValid(this.opponentLifeController) && (this.opponentLifeController.node.active = e);
-cc.isValid(this.meResultController) && (this.meResultController.node.active = e);
-cc.isValid(this.opponentResultController) && (this.opponentResultController.node.active = e);
-cc.isValid(this.gestureSelector) && (this.gestureSelector.node.active = e);
-cc.isValid(this.countDown) && (this.countDown.node.active = e);
-};
-t.prototype.playVsAnimation = function(e) {
-var t = this;
-l.default.loadSpine(this.vsSkeleton, n.default.room.animation.vs, {
-name: "animation",
-loop: !1
-}, function() {
-t.setControlVisible(!0);
-e();
-});
-};
-t.prototype.updateLife = function(e, t) {
-cc.isValid(this.meLifeController) && this.meLifeController.init(e);
-cc.isValid(this.opponentLifeController) && this.opponentLifeController.init(t);
-};
-t.prototype.updateResult = function(e, t, o) {
-cc.isValid(this.meResultController) && this.meResultController.init(e, o);
-cc.isValid(this.opponentResultController) && this.opponentResultController.init(t, o);
-};
-t.prototype.beginMatch = function(e) {
-var t = this;
-t.curRoom.gameState == s.default.GAME_STATE.ROUND_BEGIN ? t.curRoom.beginMatch(e, function(e, o, a) {
-var n = !1, r = "";
-if (e.isWinner || o.isWinner) e.isWinner ? r = e.name : o.isWinner && (r = o.name); else {
-n = !0;
-r = "Nobody";
-}
-console.log("Round-%s, winner is %s, isGameOver=%s", t.curRoom.curRound, r, t.curRoom.isGameOver);
-t.updateLife(e, o);
-t.updateResult(e, o, n);
-if (a) {
-if (e.isWinner) {
-var c = 2 * i.default.betAmount;
-t.curRoom.updateMyCoin(e.coin + c);
-d.default.showWinDialog(c, t.onDialogBackCallback.bind(t), t.onDialogContinueCallback.bind(t));
-} else if (o.isWinner) {
-var l = -i.default.betAmount, u = 2 * i.default.betAmount;
-t.curRoom.updateOpponentCoin(o.coin + u);
-d.default.showLostDialog(l, t.onDialogBackCallback.bind(t), t.onDialogContinueCallback.bind(t));
-}
-cc.isValid(t.countDown) && t.countDown.stopCountDown();
-} else var f = setTimeout(function() {
-clearTimeout(f);
-if (cc.isValid(t.node)) {
-t.curRoom.gameState = s.default.GAME_STATE.ROUND_WAITING;
-t.curRoom.me.gesture = i.default.GESTURE.NONE;
-t.curRoom.me.isWinner = !1;
-t.curRoom.opponent.gesture = i.default.GESTURE.NONE;
-t.curRoom.opponent.isWinner = !1;
-t.updateResult(t.curRoom.me, t.curRoom.opponent, !1);
-cc.isValid(t.countDown) && t.countDown.startCountDown(t.BET_COUNT_DOWN_TIME);
-}
-}, 1e3 * t.RESULT_SHOW_TIME);
-}) : console.log("Can not begin match, current state: " + t.curRoom.gameState);
-};
-t.prototype.countdownCallback = function(e) {
-console.log("Round-%s countdown: %s, isGameOver=%s", this.curRoom.curRound, e, this.curRoom.isGameOver);
-if (this.curRoom.gameState == s.default.GAME_STATE.ROUND_WAITING && e <= 0) {
-var t = this.gestureSelector.getSelectedGesture();
-t == i.default.GESTURE.NONE && (t = parseInt((3 * Math.random()).toString()));
-this.startNewRound(t);
+t.prototype.initPlane = function(e) {
+var t = n.default.getLoginUser();
+if (cc.isValid(this.plane)) {
+this.plane.setDraggable(!1);
+this.plane.initPosition();
+this.plane.init(t.curPlane, this.gameOverCallback.bind(this));
+this.plane.enter(e);
 }
 };
-t.prototype.exitGameRoom = function() {
-this.curRoom.resetRoom();
+t.prototype.gameOverCallback = function(e) {
+this.stopGame();
+this.showGameOverDialog();
+};
+t.prototype.showGameOverDialog = function() {
+var e = this, t = 0;
+cc.isValid(e.distanceCounter) && (t = e.distanceCounter.getDistance());
+var o = c.default.getCurRoom(), a = t, i = n.default.getLoginUser();
+i.coin = i.coin + a;
+t > i.records[o] && (i.records[o] = t);
+n.default.updateLoginUser(i);
+r.default.showGameOverDialog(t, a, function() {
 cc.director.loadScene("Hall");
+}, function() {
+e.startGame();
+});
 };
-t.prototype.onClickBackBtn = function(e) {
-g.default.clickManager(e.target);
-p.default.playEffect(n.default.common.audio.btnClick);
-this.exitGameRoom();
-};
-t.prototype.onDialogBackCallback = function() {
-this.exitGameRoom();
-};
-t.prototype.onDialogContinueCallback = function() {
-this.startNewGame();
-};
-t.prototype.onSelectGesture = function(e) {};
-t.prototype.onClickConfirm = function(e) {
-g.default.clickManager(e.target);
-p.default.playEffect(n.default.common.audio.btnClick);
-var t = this.gestureSelector.getSelectedGesture();
-t != i.default.GESTURE.NONE ? this.startNewRound(t) : d.default.createToast(m.default.common.notSelectGesture);
-};
-t.prototype.startNewRound = function(e) {
-var t = this;
-if (t.curRoom.gameState == s.default.GAME_STATE.IDLE || t.curRoom.gameState == s.default.GAME_STATE.ROUND_WAITING) {
-t.curRoom.gameState = s.default.GAME_STATE.ROUND_BEGIN;
-cc.isValid(t.countDown) && t.countDown.stopCountDown();
-t.meResultController.startRandomGesture();
-t.opponentResultController.startRandomGesture();
-console.log("Round-%s begin, show random gesture", t.curRoom.curRound);
-var o = setTimeout(function() {
-clearTimeout(o);
-if (cc.isValid(t.node)) {
-t.meResultController.stopRandomGesture();
-t.opponentResultController.stopRandomGesture();
-console.log("Round-%s, stop random gesture", t.curRoom.curRound);
-t.beginMatch(e);
-}
-}, 1e3 * t.RANDOM_GESTURE_SHOW_TIME);
-}
-cc.isValid(t.gestureSelector) && t.gestureSelector.selectGesture(i.default.GESTURE.NONE);
+t.prototype.renderBg = function() {
+this.bg1Node.y -= this.speed;
+this.bg2Node.y -= this.speed;
+this.bg1Node.y - this.speed <= this.bgOutPosition && (this.bg1Node.y = this.bg2Node.y + this.bg2Node.height);
+this.bg2Node.y - this.speed <= this.bgOutPosition && (this.bg2Node.y = this.bg1Node.y + this.bg1Node.height);
 };
 t.prototype.onDestroy = function() {
-cc.isValid(this.countDown) && this.countDown.stopCountDown();
+cc.director.getCollisionManager().enabled = !1;
+cc.director.getCollisionManager().enabledDebugDraw = !1;
+this.unscheduleAllCallbacks();
 };
-__decorate([ _(cc.Sprite) ], t.prototype, "titleSprite", void 0);
-__decorate([ _(r.default) ], t.prototype, "meLifeController", void 0);
-__decorate([ _(r.default) ], t.prototype, "opponentLifeController", void 0);
-__decorate([ _(c.default) ], t.prototype, "meResultController", void 0);
-__decorate([ _(c.default) ], t.prototype, "opponentResultController", void 0);
-__decorate([ _(sp.Skeleton) ], t.prototype, "vsSkeleton", void 0);
-__decorate([ _(u.default) ], t.prototype, "gestureSelector", void 0);
-__decorate([ _(f.default) ], t.prototype, "countDown", void 0);
-return t = __decorate([ C ], t);
+__decorate([ d(cc.Node) ], t.prototype, "bg1Node", void 0);
+__decorate([ d(cc.Node) ], t.prototype, "bg2Node", void 0);
+__decorate([ d(s.default) ], t.prototype, "distanceCounter", void 0);
+__decorate([ d(a.default) ], t.prototype, "plane", void 0);
+__decorate([ d(i.default) ], t.prototype, "rockScene", void 0);
+return t = __decorate([ u ], t);
 }(cc.Component);
-o.default = v;
+o.default = f;
 cc._RF.pop();
 }, {
-"../../Framework/Base/CommonAudioMgr": "CommonAudioMgr",
-"../../Framework/Base/CommonFunction": "CommonFunction",
 "../../Framework/Base/CommonPrefabMgr": "CommonPrefabMgr",
 "../../Framework/Business/GameManager": "GameManager",
-"../../Framework/Resources/Language": "Language",
-"../../Framework/Resources/ResManager": "ResManager",
-"../../Framework/UI/SpineManager": "SpineManager",
-"../../Framework/UI/SpriteManager": "SpriteManager",
-"../Common/CountDown": "CountDown",
-"./GameRoomController": "GameRoomController",
-"./GestureSelector": "GestureSelector",
-"./LifeController": "LifeController",
-"./ResultController": "ResultController"
-} ],
-GestureSelector: [ function(e, t, o) {
-"use strict";
-cc._RF.push(t, "33eb6O1zOtInZ/Km6ef/pdq", "GestureSelector");
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = e("../../Framework/Business/GameManager"), n = e("../../Framework/Base/CommonFunction"), i = e("../../Framework/Base/CommonAudioMgr"), r = e("../../Framework/Resources/ResManager"), c = cc._decorator, s = c.ccclass, l = c.property, u = function(e) {
-__extends(t, e);
-function t() {
-var t = null !== e && e.apply(this, arguments) || this;
-t.scissorNode = null;
-t.rockNode = null;
-t.paperNode = null;
-return t;
-}
-t.prototype.onLoad = function() {
-this.selectedGesture = a.default.GESTURE.NONE;
-this.selectGesture(this.selectedGesture);
-};
-t.prototype.init = function(e) {
-this.selectCallback = e;
-};
-t.prototype.onSelectGesture = function(e, t) {
-n.default.clickManager(e.target);
-i.default.playEffect(r.default.common.audio.btnClick);
-console.log("Select gesture: data=" + t);
-var o = parseInt(t);
-this.selectGesture(o);
-};
-t.prototype.selectGesture = function(e) {
-if (e == a.default.GESTURE.SCISSORS) {
-this.setChosenIconVisible(this.scissorNode, !0);
-this.setChosenIconVisible(this.rockNode, !1);
-this.setChosenIconVisible(this.paperNode, !1);
-} else if (e == a.default.GESTURE.ROCK) {
-this.setChosenIconVisible(this.scissorNode, !1);
-this.setChosenIconVisible(this.rockNode, !0);
-this.setChosenIconVisible(this.paperNode, !1);
-} else if (e == a.default.GESTURE.PAPER) {
-this.setChosenIconVisible(this.scissorNode, !1);
-this.setChosenIconVisible(this.rockNode, !1);
-this.setChosenIconVisible(this.paperNode, !0);
-} else {
-this.setChosenIconVisible(this.scissorNode, !1);
-this.setChosenIconVisible(this.rockNode, !1);
-this.setChosenIconVisible(this.paperNode, !1);
-}
-this.selectedGesture = e;
-this.selectCallback && this.selectCallback(e);
-};
-t.prototype.setChosenIconVisible = function(e, t) {
-if (cc.isValid(e)) {
-var o = e.getChildByName("chosen");
-cc.isValid(o) && (o.active = t);
-}
-};
-t.prototype.getSelectedGesture = function() {
-return this.selectedGesture;
-};
-__decorate([ l(cc.Node) ], t.prototype, "scissorNode", void 0);
-__decorate([ l(cc.Node) ], t.prototype, "rockNode", void 0);
-__decorate([ l(cc.Node) ], t.prototype, "paperNode", void 0);
-return t = __decorate([ s ], t);
-}(cc.Component);
-o.default = u;
-cc._RF.pop();
-}, {
-"../../Framework/Base/CommonAudioMgr": "CommonAudioMgr",
-"../../Framework/Base/CommonFunction": "CommonFunction",
-"../../Framework/Business/GameManager": "GameManager",
-"../../Framework/Resources/ResManager": "ResManager"
+"../../Framework/Business/UserManager": "UserManager",
+"./DistanceCounter": "DistanceCounter",
+"./Plane": "Plane",
+"./RockScene": "RockScene"
 } ],
 Global: [ function(e, t, o) {
 "use strict";
@@ -1167,7 +903,7 @@ cc._RF.push(t, "e44d2crUEpDUpXz70FN2T2J", "Global");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = function() {
+var n = function() {
 function e() {}
 e.Config = {
 layerZOrder: {
@@ -1177,7 +913,7 @@ Dialog: 7e3
 };
 return e;
 }();
-o.default = a;
+o.default = n;
 cc._RF.pop();
 }, {} ],
 Hall: [ function(e, t, o) {
@@ -1186,7 +922,7 @@ cc._RF.push(t, "c5e60FAkL5JKZtwdy83I9mx", "Hall");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = e("../../Framework/Business/UserManager"), n = e("../../Framework/Resources/ResManager"), i = e("../../Framework/Utils/NativeUtil"), r = e("../../Framework/Base/CommonAudioMgr"), c = e("../../Framework/Base/CommonFunction"), s = e("../../Framework/Base/CommonEventName"), l = e("../../Framework/UI/LabelManager"), u = cc._decorator, d = u.ccclass, f = u.property, m = function(e) {
+var n = e("../../Framework/Business/UserManager"), a = e("../../Framework/Resources/ResManager"), i = e("../../Framework/Utils/NativeUtil"), c = e("../../Framework/Base/CommonAudioMgr"), r = e("../../Framework/Base/CommonFunction"), s = e("../../Framework/Base/CommonEventName"), l = e("../../Framework/UI/LabelManager"), u = cc._decorator, d = u.ccclass, f = u.property, p = function(e) {
 __extends(t, e);
 function t() {
 var t = null !== e && e.apply(this, arguments) || this;
@@ -1195,7 +931,7 @@ return t;
 }
 t.prototype.onLoad = function() {
 console.log("=== Hall onLoad ===");
-r.default.playMusic(n.default.common.audio.bgm, !0, 1);
+c.default.playMusic(a.default.common.audio.bgm, !0, 1);
 this.initUserInfo();
 };
 t.prototype.onEnable = function() {
@@ -1207,16 +943,18 @@ cc.systemEvent.off(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this);
 cc.director.off(s.default.EVENT_REFRESH_USER_INFO, this.initUserInfo, this);
 };
 t.prototype.initUserInfo = function() {
-var e = a.default.getLoginUser();
+var e = n.default.getLoginUser();
 l.default.setLabelString(this.coinLabel, e.coin);
 };
 t.prototype.onClickShop = function(e) {
-c.default.clickManager(e.target);
-r.default.playEffect(n.default.common.audio.btnClick);
+r.default.clickManager(e.target);
+c.default.playEffect(a.default.common.audio.btnClick);
+cc.director.loadScene("Shop");
 };
 t.prototype.onClickStart = function(e) {
-c.default.clickManager(e.target);
-r.default.playEffect(n.default.common.audio.btnClick);
+r.default.clickManager(e.target);
+c.default.playEffect(a.default.common.audio.btnClick);
+cc.director.loadScene("Room");
 };
 t.prototype.onKeyUp = function(e) {
 e.keyCode == cc.macro.KEY.back && i.default.quitGame();
@@ -1225,7 +963,7 @@ t.prototype.onDestroy = function() {};
 __decorate([ f(cc.Label) ], t.prototype, "coinLabel", void 0);
 return t = __decorate([ d ], t);
 }(cc.Component);
-o.default = m;
+o.default = p;
 cc._RF.pop();
 }, {
 "../../Framework/Base/CommonAudioMgr": "CommonAudioMgr",
@@ -1242,7 +980,7 @@ cc._RF.push(t, "2b649QP/KtCb7NeLMPcD+Ja", "LabelManager");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = function() {
+var n = function() {
 function e() {}
 e.initLabelManager = function() {
 this.initFont();
@@ -1255,10 +993,10 @@ return t;
 };
 e.setLabelOutline = function(e, t, o) {
 void 0 === o && (o = 1);
-var a = this.getLabelOutline(e);
-if (cc.isValid(a)) {
-a.color = cc.color().fromHEX(t);
-a.width = o;
+var n = this.getLabelOutline(e);
+if (cc.isValid(n)) {
+n.color = cc.color().fromHEX(t);
+n.width = o;
 }
 };
 e.getLabelOutline = function(e) {
@@ -1337,21 +1075,21 @@ cc.loader.loadRes(e, cc.Font, function(e, o) {
 e ? cc.error(e.message || e) : o && "function" == typeof t && t(o);
 });
 };
-e.loadFont = function(e, t, o, a) {
-cc.loader.loadRes(t, cc.Font, function(t, n) {
+e.loadFont = function(e, t, o, n) {
+cc.loader.loadRes(t, cc.Font, function(t, a) {
 if (t) cc.error(t.message || t); else if (cc.isValid(e)) {
 e instanceof cc.Label || e instanceof cc.Node && (e = e.getComponent(cc.Label));
 if (cc.isValid(e)) {
-e.font = n;
+e.font = a;
 (o || 0 == o) && (e.spacingX = o);
-"function" == typeof a && a();
+"function" == typeof n && n();
 }
 }
 });
 };
 return e;
 }();
-o.default = a;
+o.default = n;
 cc._RF.pop();
 }, {} ],
 Language: [ function(e, t, o) {
@@ -1360,17 +1098,20 @@ cc._RF.push(t, "6adbeVqVkRIcoe3L+sV8xX1", "Language");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = function() {
+var n = function() {
 function e() {}
 e.common = {
-notEnoughMoney: "Not enough gold to enter the room.",
-betAmountTips: "A match will cost %s gold",
-notSelectGesture: "Please choose your gesture",
-checkinTips: "Congratulations, you get reward: %s"
+balanceNotEnough: "Balance not enough"
+};
+e.room = {
+highestRecord: "Highest record: %s"
+};
+e.game = {
+distance: "Distance: %sm"
 };
 return e;
 }();
-o.default = a;
+o.default = n;
 cc._RF.pop();
 }, {} ],
 Launcher: [ function(e, t, o) {
@@ -1379,7 +1120,7 @@ cc._RF.push(t, "cc4f8FH8aJCdrQBQuLC05CZ", "Launcher");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = e("../../Framework/Utils/NativeUtil"), n = e("../../Framework/Business/UserManager"), i = e("../../Framework/Base/CommonAudioMgr"), r = cc._decorator, c = r.ccclass, s = (r.property, 
+var n = e("../../Framework/Utils/NativeUtil"), a = e("../../Framework/Business/UserManager"), i = e("../../Framework/Base/CommonAudioMgr"), c = cc._decorator, r = c.ccclass, s = (c.property, 
 function(e) {
 __extends(t, e);
 function t() {
@@ -1387,9 +1128,9 @@ return null !== e && e.apply(this, arguments) || this;
 }
 t.prototype.onLoad = function() {
 i.default.init();
-a.default.init();
+n.default.init();
 cc.Camera.main.backgroundColor = cc.color().fromHEX("#FFFFFF");
-n.default.guestLogin();
+a.default.guestLogin();
 this.gotoHallDelay();
 };
 t.prototype.gotoHallDelay = function() {
@@ -1398,7 +1139,7 @@ cc.director.loadScene("Hall");
 }, 3e3);
 };
 t.prototype.start = function() {};
-return t = __decorate([ c ], t);
+return t = __decorate([ r ], t);
 }(cc.Component));
 o.default = s;
 cc._RF.pop();
@@ -1407,68 +1148,13 @@ cc._RF.pop();
 "../../Framework/Business/UserManager": "UserManager",
 "../../Framework/Utils/NativeUtil": "NativeUtil"
 } ],
-LifeController: [ function(e, t, o) {
-"use strict";
-cc._RF.push(t, "35c08m9ktRI3qnxKf4ysetX", "LifeController");
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = e("../../Framework/UI/SpriteManager"), n = e("../../Framework/Resources/ResManager"), i = e("../../Framework/UI/LabelManager"), r = e("../../Framework/Base/CommonPrefabMgr"), c = e("../../Framework/Base/CommonFunction"), s = e("../../Framework/Base/CommonAudioMgr"), l = cc._decorator, u = l.ccclass, d = l.property, f = function(e) {
-__extends(t, e);
-function t() {
-var t = null !== e && e.apply(this, arguments) || this;
-t.avatarSprite = null;
-t.nameLabel = null;
-t.lifeCount = null;
-return t;
-}
-t.prototype.init = function(e) {
-if (e) {
-var t = n.default.common.texture.userAvatars[e.avatar];
-a.default.loadSprite(this.avatarSprite, t);
-i.default.setLabelString(this.nameLabel, e.name);
-this.updateLifeCount(e.life);
-this.user = e;
-}
-};
-t.prototype.updateLifeCount = function(e) {
-if (cc.isValid(this.lifeCount)) {
-this.lifeCount.removeAllChildren();
-for (var t = 0; t < e; t++) {
-var o = a.default.createSpriteNode("life");
-o.y = 5;
-this.lifeCount.addChild(o);
-a.default.loadSpriteForNode(o, n.default.room.texture.life);
-}
-}
-};
-t.prototype.onClickAvatar = function(e) {
-c.default.clickManager(e.target);
-s.default.playEffect(n.default.common.audio.btnClick);
-r.default.showUserDialog(this.user);
-};
-__decorate([ d(cc.Sprite) ], t.prototype, "avatarSprite", void 0);
-__decorate([ d(cc.Label) ], t.prototype, "nameLabel", void 0);
-__decorate([ d(cc.Node) ], t.prototype, "lifeCount", void 0);
-return t = __decorate([ u ], t);
-}(cc.Component);
-o.default = f;
-cc._RF.pop();
-}, {
-"../../Framework/Base/CommonAudioMgr": "CommonAudioMgr",
-"../../Framework/Base/CommonFunction": "CommonFunction",
-"../../Framework/Base/CommonPrefabMgr": "CommonPrefabMgr",
-"../../Framework/Resources/ResManager": "ResManager",
-"../../Framework/UI/LabelManager": "LabelManager",
-"../../Framework/UI/SpriteManager": "SpriteManager"
-} ],
 Loading: [ function(e, t, o) {
 "use strict";
 cc._RF.push(t, "b7e4780HsVNypzwv6PTvZdF", "Loading");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = e("../../Framework/Utils/NativeUtil"), n = e("../../Framework/Business/UserManager"), i = e("../../Framework/Base/CommonEventName"), r = e("../../Framework/Base/CommonFunction"), c = e("../../Framework/Base/CommonAudioMgr"), s = e("../../Framework/Resources/ResManager"), l = cc._decorator, u = l.ccclass, d = (l.property, 
+var n = e("../../Framework/Utils/NativeUtil"), a = e("../../Framework/Business/UserManager"), i = e("../../Framework/Base/CommonEventName"), c = e("../../Framework/Base/CommonFunction"), r = e("../../Framework/Base/CommonAudioMgr"), s = e("../../Framework/Resources/ResManager"), l = cc._decorator, u = l.ccclass, d = (l.property, 
 function(e) {
 __extends(t, e);
 function t() {
@@ -1484,17 +1170,17 @@ cc.director.off(i.default.EVENT_APPLE_LOGIN_RESULT, this.onAppLoginResult, this)
 cc.systemEvent.off(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this);
 };
 t.prototype.onKeyUp = function(e) {
-e.keyCode == cc.macro.KEY.back && a.default.quitGame();
+e.keyCode == cc.macro.KEY.back && n.default.quitGame();
 };
 t.prototype.onGuestLogin = function(e) {
-r.default.clickManager(e.target);
-c.default.playEffect(s.default.common.audio.btnClick);
-n.default.guestLogin() && cc.director.loadScene("Hall");
+c.default.clickManager(e.target);
+r.default.playEffect(s.default.common.audio.btnClick);
+a.default.guestLogin() && cc.director.loadScene("Hall");
 };
 t.prototype.onAppleLogin = function(e) {
-r.default.clickManager(e.target);
-c.default.playEffect(s.default.common.audio.btnClick);
-a.default.appleLogin();
+c.default.clickManager(e.target);
+r.default.playEffect(s.default.common.audio.btnClick);
+n.default.appleLogin();
 };
 t.prototype.onAppLoginResult = function(e, t) {};
 return t = __decorate([ u ], t);
@@ -1515,7 +1201,7 @@ cc._RF.push(t, "76cc7xRj6NBBbXuOYbH8IYy", "LocalStorageMgr");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = e("../Base/CommonAudioMgr"), n = function() {
+var n = e("../Base/CommonAudioMgr"), a = function() {
 function e() {}
 e.readData = function(e) {
 return cc.sys.localStorage.getItem("_local" + e);
@@ -1581,14 +1267,14 @@ return this.readData("_sound");
 };
 e.saveEffectSwitch = function(e) {
 this.saveData("_effect", e);
-a.default.changeEffectSwitch();
+n.default.changeEffectSwitch();
 };
 e.readEffectSwitch = function() {
 return this.readData("_effect");
 };
 return e;
 }();
-o.default = n;
+o.default = a;
 cc._RF.pop();
 }, {
 "../Base/CommonAudioMgr": "CommonAudioMgr"
@@ -1599,10 +1285,10 @@ cc._RF.push(t, "9cb6byZwNZPHKjrtMtR8XGx", "NativeUtil");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = e("./LocalStorageMgr"), n = e("../Base/CommonEventName"), i = function() {
+var n = e("./LocalStorageMgr"), a = e("../Base/CommonEventName"), i = function() {
 function e() {}
 e.init = function() {
-this.nativeClassName = a.default.getNativeClassName();
+this.nativeClassName = n.default.getNativeClassName();
 console.log("设置JavaUtil/OCUtil别名：" + this.nativeClassName);
 };
 e.nativeAndroidClassName = function() {
@@ -1644,7 +1330,7 @@ cc.onAppleLoginResult = function(e, t) {
 console.log("onAppleLoginResult: state=%s, data=%s", e, t);
 var o = {};
 t && (o = JSON.parse(t));
-cc.director.emit(n.default.EVENT_APPLE_LOGIN_RESULT, e, o);
+cc.director.emit(a.default.EVENT_APPLE_LOGIN_RESULT, e, o);
 };
 cc._RF.pop();
 }, {
@@ -1657,11 +1343,18 @@ cc._RF.push(t, "b9f43P/XVNP+aWuPtFnPU02", "NodeManager");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = function() {
+var n = function() {
 function e() {}
-e.setVisiable = function(e, t) {
+e.setVisible = function(e, t) {
 void 0 === t && (t = !1);
 cc.isValid(e) && (e instanceof cc.Node ? e.active = t : e.node.active = t);
+};
+e.setInteractable = function(e, t) {
+if (cc.isValid(e)) {
+var o = null;
+e instanceof cc.Button ? o = e : e instanceof cc.Node && (o = e.getComponent(cc.Button));
+cc.isValid(o) && (o.interactable = t);
+}
 };
 e.setOpacity = function(e, t) {
 cc.isValid(e) && (e instanceof cc.Node ? e.opacity = t : e.node.opacity = t);
@@ -1678,34 +1371,34 @@ e.loadNodeRes = function(e, t, o) {
 if (cc.isValid(e) && t) {
 if (t.sprite) {
 console.log("NodeManager ======= 图片加载开始，父节点[%s] =======", e.name);
-for (var a = 0; a < t.sprite.length; a++) {
-var n = t.sprite[a].nodePath, i = t.sprite[a].resPath, r = t.sprite[a].spriteName, c = null;
-c = "" == n || "/" == n ? e : cc.find(n, e);
-if (cc.isValid(c) && i) {
-var s = this.getAssetByPath(i, "sprite", r, o);
+for (var n = 0; n < t.sprite.length; n++) {
+var a = t.sprite[n].nodePath, i = t.sprite[n].resPath, c = t.sprite[n].spriteName, r = null;
+r = "" == a || "/" == a ? e : cc.find(a, e);
+if (cc.isValid(r) && i) {
+var s = this.getAssetByPath(i, "sprite", c, o);
 if (s) {
-console.log("NodeManager ==》子节点[%s]，从内存中加载图片：%s", n, i);
-UIDepend.SpriteManager.setSpriteFrame(c, s);
+console.log("NodeManager ==》子节点[%s]，从内存中加载图片：%s", a, i);
+UIDepend.SpriteManager.setSpriteFrame(r, s);
 } else {
-console.log("NodeManager ==》子节点[%s]，内存中找不到图片，动态加载：%s", n, i);
-r ? UIDepend.SpriteManager.loadSpriteAtlasForNode(c, i, r) : UIDepend.SpriteManager.loadSpriteForNode(c, i);
+console.log("NodeManager ==》子节点[%s]，内存中找不到图片，动态加载：%s", a, i);
+c ? UIDepend.SpriteManager.loadSpriteAtlasForNode(r, i, c) : UIDepend.SpriteManager.loadSpriteForNode(r, i);
 }
 }
 }
 }
 if (t.font) {
 console.log("NodeManager ======= 字体加载开始，父节点[%s] =======", e.name);
-for (a = 0; a < t.font.length; a++) {
-n = t.font[a].nodePath, i = t.font[a].resPath;
-var l = t.font[a].spacingX, u = null;
-u = "" == n || "/" == n ? e : cc.find(n, e);
+for (n = 0; n < t.font.length; n++) {
+a = t.font[n].nodePath, i = t.font[n].resPath;
+var l = t.font[n].spacingX, u = null;
+u = "" == a || "/" == a ? e : cc.find(a, e);
 if (cc.isValid(u) && i) {
 var d = this.getAssetByPath(i, "font");
 if (d) {
-console.log("NodeManager ==》子节点[%s]，从内存中加载字体：%s", n, i);
+console.log("NodeManager ==》子节点[%s]，从内存中加载字体：%s", a, i);
 UIDepend.LabelManager.setFont(u, d, l);
 } else {
-console.log("NodeManager ==》子节点[%s]，内存中找不到字体，动态加载：%s", n, i);
+console.log("NodeManager ==》子节点[%s]，内存中找不到字体，动态加载：%s", a, i);
 UIDepend.LabelManager.loadFont(u, i, l);
 }
 }
@@ -1713,19 +1406,19 @@ UIDepend.LabelManager.loadFont(u, i, l);
 }
 }
 };
-e.getAssetByPath = function(e, t, o, a) {
+e.getAssetByPath = function(e, t, o, n) {
 if (!e) return null;
 if (o && "sprite" == t) {
 return UIDepend.SpriteManager.getSpriteFromCommonAtlas(e, o);
 }
-var n = CommonDepend.ResourceManager.getResByGameId(a);
-if (!n) return null;
+var a = CommonDepend.ResourceManager.getResByGameId(n);
+if (!a) return null;
 var i = "";
 if (-1 != e.indexOf("/")) {
-var r = e.split("/");
-i = r[r.length - 1];
+var c = e.split("/");
+i = c[c.length - 1];
 } else i = e;
-return n.find(function(e) {
+return a.find(function(e) {
 return "sprite" == t ? e instanceof cc.SpriteFrame && e.name == i : "font" == t && (e instanceof cc.Font && e.name == i);
 });
 };
@@ -1734,16 +1427,85 @@ cc.isValid(e) && (e.color = new cc.Color().fromHEX(t));
 };
 return e;
 }();
-o.default = a;
+o.default = n;
 cc._RF.pop();
 }, {} ],
+Plane: [ function(e, t, o) {
+"use strict";
+cc._RF.push(t, "bd7ec2F+GBJv4L9x89SWP4N", "Plane");
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var n = e("../../Framework/Business/GameManager"), a = e("../Common/CommonDragView"), i = cc._decorator, c = i.ccclass, r = i.property, s = function(e) {
+__extends(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.commonDragView = null;
+t.planeType = 0;
+t.crashCallback = null;
+return t;
+}
+t.prototype.onLoad = function() {
+this.initPosition();
+};
+t.prototype.initPosition = function() {
+var e = cc.winSize.width / 2, t = new cc.v2(e, -100);
+this.setPosition(t);
+};
+t.prototype.setPosition = function(e) {
+var t = this.node.parent.convertToNodeSpaceAR(e);
+console.log("Plane init position: [%s,%s]", t.x, t.y);
+this.node.position = t;
+};
+t.prototype.setDraggable = function(e) {
+cc.isValid(this.commonDragView) && this.commonDragView.setDraggable(e);
+};
+t.prototype.enter = function(e) {
+if (cc.isValid(this.node)) {
+var t = cc.winSize.width / 2, o = this.node.parent.convertToNodeSpaceAR(new cc.v2(t, 137)), n = t, a = this.node.parent.convertToNodeSpaceAR(new cc.v2(n, 337));
+this.node.runAction(cc.sequence(cc.moveTo(2, a), cc.moveTo(2, o), cc.callFunc(function() {
+e && e();
+}))).easing(cc.easeSineOut());
+}
+};
+t.prototype.init = function(e, t) {
+this.planeType = e;
+this.crashCallback = t;
+if (cc.isValid(this.node)) {
+var o = this.node.getChildByName("tail_flame");
+if (cc.isValid(o)) {
+var a = o.getComponent(sp.Skeleton);
+if (cc.isValid(a)) {
+var i = "";
+e == n.default.PLANE_TYPE.PLANE1 ? i = "feiji1" : e == n.default.PLANE_TYPE.PLANE2 ? i = "feiji2" : e == n.default.PLANE_TYPE.PLANE3 && (i = "feiji3");
+console.log("Use plane: %s, skin: %s", e, i);
+a.setAnimation(0, i, !0);
+}
+}
+}
+};
+t.prototype.onCollisionEnter = function(e) {
+console.log("Plane[%s]: 碰到了%s", this.planeType, e.node.name);
+this.crashCallback && this.crashCallback(e.node);
+};
+t.prototype.onCollisionStay = function(e) {};
+t.prototype.onCollisionExit = function(e) {};
+__decorate([ r(a.default) ], t.prototype, "commonDragView", void 0);
+return t = __decorate([ c ], t);
+}(cc.Component);
+o.default = s;
+cc._RF.pop();
+}, {
+"../../Framework/Business/GameManager": "GameManager",
+"../Common/CommonDragView": "CommonDragView"
+} ],
 PrefabManager: [ function(e, t, o) {
 "use strict";
 cc._RF.push(t, "716f7xKRjFHlK4xgnnRJNQr", "PrefabManager");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = function() {
+var n = function() {
 function e() {}
 e.loadPrefabToNode = function(e, t) {
 if (cc.isValid(e) && cc.isValid(t)) {
@@ -1753,152 +1515,130 @@ cc.isValid(o) && t.addChild(o);
 };
 e.loadPrefab = function(e, t, o) {
 o || (o = CommonDepend.CommonFunction.getSceneCanvas());
-cc.loader.loadRes(e, function(e, a) {
-if (e) cc.error(e.message || e); else if (a && cc.isValid(o)) {
-var n = cc.instantiate(a);
-if (n) {
-o.addChild(n, Cocos20.Global.layerZOrder.Dialog);
-"function" == typeof t && t(n);
+cc.loader.loadRes(e, function(e, n) {
+if (e) cc.error(e.message || e); else if (n && cc.isValid(o)) {
+var a = cc.instantiate(n);
+if (a) {
+o.addChild(a, Cocos20.Global.layerZOrder.Dialog);
+"function" == typeof t && t(a);
 }
 }
 });
 };
 e.getPrefab = function(e, t, o) {
-cc.loader.loadRes(e, function(e, a) {
+cc.loader.loadRes(e, function(e, n) {
 if (e) {
 cc.error(e.message || e);
 o && o();
-} else a ? "function" == typeof t && t(a) : o && o();
+} else n ? "function" == typeof t && t(n) : o && o();
 });
 };
 e.getPrefabIns = function(e, t, o) {
-cc.loader.loadRes(e, function(e, a) {
+cc.loader.loadRes(e, function(e, n) {
 if (e) {
 cc.error(e.message || e);
 o && o();
-} else if (a) {
-var n = cc.instantiate(a);
-n ? "function" == typeof t && t(n) : o && o();
+} else if (n) {
+var a = cc.instantiate(n);
+a ? "function" == typeof t && t(a) : o && o();
 } else o && o();
 });
 };
 return e;
 }();
-o.default = a;
+o.default = n;
 cc._RF.pop();
 }, {} ],
-RandomAvatar: [ function(e, t, o) {
+PurchaseBtn: [ function(e, t, o) {
 "use strict";
-cc._RF.push(t, "97173+dmapBXqY9p6VmMri/", "RandomAvatar");
+cc._RF.push(t, "09bcbvn9/RCkp/Q6uc4md23", "PurchaseBtn");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = e("../../Framework/UI/SpriteManager"), n = e("../../Framework/Resources/ResManager"), i = cc._decorator, r = i.ccclass, c = i.property, s = function(e) {
+var n = e("../../Framework/UI/LabelManager"), a = e("../../Framework/UI/SpriteManager"), i = e("../../Framework/Resources/ResManager"), c = e("../../Framework/Base/CommonFunction"), r = e("../../Framework/Base/CommonAudioMgr"), s = e("../../Framework/Business/GameManager"), l = e("../../Framework/UI/NodeManager"), u = cc._decorator, d = u.ccclass, f = u.property, p = function(e) {
 __extends(t, e);
 function t() {
 var t = null !== e && e.apply(this, arguments) || this;
-t.avatarFrames = [];
-t.avatarUpSprite = null;
-t.avatarSprite = null;
-t.avatarDownSprite = null;
-t.animRunning = !1;
-t.userAvatar = 0;
-t.finishCallback = null;
-t.INIT_STEP = 20;
-t.ROLL_TIME = 2e3;
-t.step = t.INIT_STEP;
-t.animBeginTime = 0;
-t.lastSlowDownTime = 0;
-t.topAvatarNode = null;
-t.lastAvatar = -1;
+t.bgSprite = null;
+t.usingNode = null;
+t.useNode = null;
+t.unlockNode = null;
+t.goldLabel = null;
+t.planeType = 0;
+t.clickCallback = null;
+t.state = 0;
 return t;
 }
-t.prototype.onLoad = function() {
-this.avatarUpSprite.y = 156;
-this.avatarSprite.y = 0;
-this.avatarDownSprite.y = -156;
+o = t;
+t.prototype.onLoad = function() {};
+t.prototype.init = function(e, t, o) {
+this.planeType = e;
+this.clickCallback = o;
+n.default.setLabelString(this.goldLabel, s.default.PLANE_CONFIG[e].price);
+this.setState(t);
 };
-t.prototype.startRandomAnimation = function(e, t) {
-this.animRunning = !0;
-this.topAvatarNode = null;
-this.animBeginTime = new Date().getTime();
-this.lastSlowDownTime = 0;
-this.step = this.INIT_STEP;
-console.log("Start to roll, will stop at avatar: " + e);
-this.finishCallback = t;
-this.userAvatar = e;
-};
-t.prototype.stopRandomAnimation = function() {
-this.animRunning = !1;
-this.topAvatarNode = null;
-this.animBeginTime = 0;
-this.lastSlowDownTime = 0;
-this.step = this.INIT_STEP;
-};
-t.prototype.isAnimRunning = function() {
-return this.animRunning;
-};
-t.prototype.update = function(e) {
-if (this.animRunning) {
-var t = new Date().getTime();
-if (t - this.animBeginTime > this.ROLL_TIME && t - this.lastSlowDownTime > 100) {
-console.log("开始减速, step=%s", this.step);
-this.step -= 2;
-if (this.step <= 2) {
-this.step = 2;
-if (!cc.isValid(this.topAvatarNode)) {
-this.topAvatarNode = this.findTopAvatar();
-var o = n.default.common.texture.userAvatarsVS[this.userAvatar];
-a.default.loadSpriteForNode(this.topAvatarNode, o);
-}
-}
-this.lastSlowDownTime = t;
-}
-this.moveNodeByStep(this.avatarUpSprite);
-this.moveNodeByStep(this.avatarSprite);
-this.moveNodeByStep(this.avatarDownSprite);
-if (cc.isValid(this.topAvatarNode) && this.topAvatarNode.y <= 0) {
-console.log("topAvatarNode y=" + this.topAvatarNode.y);
-this.stopRandomAnimation();
-this.finishCallback && this.finishCallback();
-}
+t.prototype.setState = function(e) {
+var t = this;
+t.state = e;
+console.log("Purchase btn set state [%s] on plane-%s", e, t.planeType);
+if (e == o.STATE.USING) {
+l.default.setVisible(t.usingNode, !0);
+l.default.setVisible(t.useNode, !1);
+l.default.setVisible(t.unlockNode, !1);
+a.default.loadSprite(t.bgSprite, i.default.common.texture.btn1, function() {
+l.default.setInteractable(t.node, !0);
+});
+} else if (e == o.STATE.UNLOCKED) {
+l.default.setVisible(t.usingNode, !1);
+l.default.setVisible(t.useNode, !0);
+l.default.setVisible(t.unlockNode, !1);
+a.default.loadSprite(t.bgSprite, i.default.common.texture.btn3, function() {
+l.default.setInteractable(t.node, !0);
+});
+} else if (e == o.STATE.LOCKED_CAN_BUY) {
+l.default.setVisible(t.usingNode, !1);
+l.default.setVisible(t.useNode, !1);
+l.default.setVisible(t.unlockNode, !0);
+a.default.loadSprite(t.bgSprite, i.default.common.texture.btn2, function() {
+l.default.setInteractable(t.node, !0);
+});
+} else if (e == o.STATE.LOCKED_CAN_NOT_BUY) {
+l.default.setVisible(t.usingNode, !1);
+l.default.setVisible(t.useNode, !1);
+l.default.setVisible(t.unlockNode, !0);
+a.default.loadSprite(t.bgSprite, i.default.common.texture.btn2, function() {
+l.default.setInteractable(t.node, !1);
+});
 }
 };
-t.prototype.moveNodeByStep = function(e) {
-e.y -= this.step;
-if (e.y < -156) {
-e.y = 312;
-this.changeAvatar(e);
-}
+t.prototype.onClickBtn = function(e) {
+c.default.clickManager(e.target);
+r.default.playEffect(i.default.common.audio.btnClick);
+this.clickCallback && this.clickCallback(this.planeType, this.state);
 };
-t.prototype.changeAvatar = function(e) {
-var t = -1;
-do {
-t = parseInt((Math.random() * this.avatarFrames.length).toString());
-} while (this.lastAvatar == t);
-this.lastAvatar = t;
-a.default.setSpriteFrame(e, this.avatarFrames[t]);
-};
-t.prototype.findTopAvatar = function() {
-for (var e = this.node.children, t = 0, o = null, a = 0; a < e.length; a++) {
-var n = e[a];
-if (n.y > t) {
-o = n;
-t = n.y;
-}
-}
-return o;
-};
-__decorate([ c([ cc.SpriteFrame ]) ], t.prototype, "avatarFrames", void 0);
-__decorate([ c(cc.Node) ], t.prototype, "avatarUpSprite", void 0);
-__decorate([ c(cc.Node) ], t.prototype, "avatarSprite", void 0);
-__decorate([ c(cc.Node) ], t.prototype, "avatarDownSprite", void 0);
-return t = __decorate([ r ], t);
+var o;
+t.STATE = cc.Enum({
+USING: 0,
+UNLOCKED: 1,
+LOCKED_CAN_NOT_BUY: 2,
+LOCKED_CAN_BUY: 3
+});
+__decorate([ f(cc.Sprite) ], t.prototype, "bgSprite", void 0);
+__decorate([ f(cc.Node) ], t.prototype, "usingNode", void 0);
+__decorate([ f(cc.Node) ], t.prototype, "useNode", void 0);
+__decorate([ f(cc.Node) ], t.prototype, "unlockNode", void 0);
+__decorate([ f(cc.Label) ], t.prototype, "goldLabel", void 0);
+return t = o = __decorate([ d ], t);
 }(cc.Component);
-o.default = s;
+o.default = p;
 cc._RF.pop();
 }, {
+"../../Framework/Base/CommonAudioMgr": "CommonAudioMgr",
+"../../Framework/Base/CommonFunction": "CommonFunction",
+"../../Framework/Business/GameManager": "GameManager",
 "../../Framework/Resources/ResManager": "ResManager",
+"../../Framework/UI/LabelManager": "LabelManager",
+"../../Framework/UI/NodeManager": "NodeManager",
 "../../Framework/UI/SpriteManager": "SpriteManager"
 } ],
 ResManager: [ function(e, t, o) {
@@ -1907,7 +1647,7 @@ cc._RF.push(t, "69e38nI6MpPb67UX3teUryd", "ResManager");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = function() {
+var n = function() {
 function e() {}
 e.common = {
 audio: {
@@ -1915,180 +1655,271 @@ bgm: "common/audio/bgm",
 btnClick: "common/audio/btn_click"
 },
 prefab: {
-toast: "common/prefab/Toast",
-userDialog: "common/prefab/UserDialog",
-settingDialog: "common/prefab/SettingDialog",
-ruleDialog: "common/prefab/RuleDialog",
-checkinDialog: "common/prefab/CheckinDialog"
+toast: "common/prefab/Toast"
 },
 texture: {
 userAvatars: [ "common/texture/head_female", "common/texture/head_male" ],
-userAvatarsVS: [ "common/texture/home_img_head2", "common/texture/home_img_head3" ],
-numbers: [ "common/texture/number/0", "common/texture/number/1", "common/texture/number/2", "common/texture/number/3", "common/texture/number/4", "common/texture/number/5", "common/texture/number/6", "common/texture/number/7", "common/texture/number/8", "common/texture/number/9" ],
-off: "common/texture/icon_off",
-on: "common/texture/icon_on",
-checkin: {
-bgCheckable: "common/texture/checkin/bg_checkable",
-bgNotSelect: "common/texture/checkin/bg_not_selected"
-}
+btn1: "common/texture/btn_1",
+btn2: "common/texture/btn_2",
+btn3: "common/texture/btn_3"
 }
 };
 e.room = {
+texture: {},
+animation: {},
+prefab: {}
+};
+e.game = {
 texture: {
-roomTitle: [ "gameRoom/texture/title_room_one", "gameRoom/texture/title_room_three", "gameRoom/texture/title_room_five" ],
-gesture: [ "gameRoom/texture/scissor", "gameRoom/texture/rock", "gameRoom/texture/paper" ],
-life: "gameRoom/texture/life",
-winner: "gameRoom/texture/winner",
-draw: "gameRoom/texture/draw"
+rockEasy: [ "game/texture/rock_easy/rock1", "game/texture/rock_easy/rock2", "game/texture/rock_easy/rock3" ],
+rockOrdinary: [ "game/texture/rock_ordinary/rock1", "game/texture/rock_ordinary/rock2", "game/texture/rock_ordinary/rock3" ],
+rockDifficulty: [ "game/texture/rock_difficulty/rock1", "game/texture/rock_difficulty/rock2", "game/texture/rock_difficulty/rock3" ]
 },
-animation: {
-vs: "gameRoom/animation/VS"
-},
+animation: {},
 prefab: {
-winDialog: "gameRoom/prefab/WinDialog",
-lostDialog: "gameRoom/prefab/LostDialog",
-drawDialog: "gameRoom/prefab/DrawDialog"
+gameOverDialog: "game/prefab/GameOverDialog"
 }
 };
 return e;
 }();
-o.default = a;
+o.default = n;
 cc._RF.pop();
 }, {} ],
-ResultController: [ function(e, t, o) {
+RockScene: [ function(e, t, o) {
 "use strict";
-cc._RF.push(t, "a5e83Ey02dK6bImINFwrRQ+", "ResultController");
+cc._RF.push(t, "9b1f8ZgOXlFcqmMYQYfn228", "RockScene");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = e("../../Framework/UI/SpriteManager"), n = e("../../Framework/Resources/ResManager"), i = e("../../Framework/Base/CommonPrefabMgr"), r = e("../../Framework/Base/CommonFunction"), c = e("../../Framework/Base/CommonAudioMgr"), s = cc._decorator, l = s.ccclass, u = s.property, d = function(e) {
+var n = e("../../Framework/Business/GameManager"), a = cc._decorator, i = a.ccclass, c = (a.property, 
+function(e) {
 __extends(t, e);
 function t() {
 var t = null !== e && e.apply(this, arguments) || this;
-t.avatarSprite = null;
-t.gestureSprite = null;
-t.winnerSprite = null;
-t.highlightSprite = null;
-t.gestures = [];
-t.user = null;
-t.RANDOM_TAG = 1e3;
+t.speed = 5;
+t.paused = !0;
+t.lastElapsedTime = 0;
+t.randomInterval = 0;
+t.outPositionY = 0;
 return t;
 }
-t.prototype.init = function(e, t) {
-if (e) {
-var o = n.default.common.texture.userAvatarsVS[e.avatar];
-a.default.loadSprite(this.avatarSprite, o);
-var i = n.default.room.texture.gesture[e.gesture];
-i ? a.default.loadSprite(this.gestureSprite, i) : a.default.setSpriteFrame(this.gestureSprite, null);
-t ? a.default.loadSprite(this.winnerSprite, n.default.room.texture.draw) : e.isWinner ? a.default.loadSprite(this.winnerSprite, n.default.room.texture.winner) : a.default.setSpriteFrame(this.winnerSprite, null);
-cc.isValid(this.highlightSprite) && (this.highlightSprite.node.active = e.isWinner);
-this.user = e;
+t.prototype.onLoad = function() {
+var e = this.node.convertToNodeSpaceAR(new cc.v2(0, -50));
+this.outPositionY = e.y;
+console.log("RockScene: outPositionY=" + this.outPositionY);
+};
+t.prototype.startGame = function() {
+this.node.removeAllChildren();
+this.setPaused(!1);
+};
+t.prototype.stopGame = function() {
+this.node.removeAllChildren();
+this.setPaused(!0);
+};
+t.prototype.setSpeed = function(e) {
+this.speed = e;
+console.log("Rock speed set to: " + e);
+};
+t.prototype.setPaused = function(e) {
+this.paused = e;
+};
+t.prototype.update = function(e) {
+if (!this.paused) {
+this.createRandomRocks(e);
+this.renderRocks();
 }
 };
-t.prototype.onClickAvatar = function(e) {
-r.default.clickManager(e.target);
-c.default.playEffect(n.default.common.audio.btnClick);
-i.default.showUserDialog(this.user);
+t.prototype.createRandomRocks = function(e) {
+this.lastElapsedTime += e;
+if (this.lastElapsedTime >= this.randomInterval) {
+var t = n.default.createRockNode();
+t.y = cc.winSize.height / 2 + 50;
+t.x = Math.random() * this.node.width - this.node.width / 2;
+this.node.addChild(t);
+this.randomInterval = 3 * Math.random();
+this.lastElapsedTime = 0;
+console.log("Create %s, next rock in %s seconds", t.name, this.randomInterval);
+}
 };
-t.prototype.startRandomGesture = function() {
-var e = this, t = -1, o = cc.callFunc(function() {
-var o = -1;
-do {
-o = parseInt((3 * Math.random()).toString());
-} while (o == t);
-t = o;
-a.default.setSpriteFrame(e.gestureSprite, e.gestures[o]);
+t.prototype.renderRocks = function() {
+for (var e = [], t = 0; t < this.node.children.length; t++) {
+var o = this.node.children[t];
+o.y -= this.speed;
+o.y <= this.outPositionY && e.push(o);
+}
+for (t = 0; t < e.length; t++) e[t].removeFromParent();
+};
+return t = __decorate([ i ], t);
+}(cc.Component));
+o.default = c;
+cc._RF.pop();
+}, {
+"../../Framework/Business/GameManager": "GameManager"
+} ],
+Rock: [ function(e, t, o) {
+"use strict";
+cc._RF.push(t, "85adeHsj/lJ7Yx3czOy3k9t", "Rock");
+Object.defineProperty(o, "__esModule", {
+value: !0
 });
-e.node.runAction(cc.repeatForever(cc.sequence(o, cc.delayTime(.1)))).setTag(e.RANDOM_TAG);
+var n = e("../../Framework/Resources/ResManager"), a = e("../../Framework/UI/SpriteManager"), i = e("../../Framework/Business/GameManager"), c = cc.BoxCollider, r = cc._decorator, s = r.ccclass, l = (r.property, 
+function(e) {
+__extends(t, e);
+function t() {
+return null !== e && e.apply(this, arguments) || this;
+}
+t.prototype.onLoad = function() {};
+t.prototype.init = function(e) {
+this.node.group = "rock";
+this.node.addComponent(c);
+var t = [];
+e == i.default.ROOM_KIND.EASY ? t = n.default.game.texture.rockEasy : e == i.default.ROOM_KIND.ORDINARY ? t = n.default.game.texture.rockOrdinary : e == i.default.ROOM_KIND.DIFFICULTY && (t = n.default.game.texture.rockDifficulty);
+var o = parseInt((Math.random() * t.length).toString()), r = t[o];
+this.node.name = "rock" + o;
+a.default.loadSpriteForNode(this.node, r, null);
 };
-t.prototype.stopRandomGesture = function() {
-this.node.stopActionByTag(this.RANDOM_TAG);
+t.prototype.onCollisionEnter = function(e) {};
+t.prototype.onCollisionStay = function(e) {};
+t.prototype.onCollisionExit = function(e) {};
+return t = __decorate([ s ], t);
+}(cc.Component));
+o.default = l;
+cc._RF.pop();
+}, {
+"../../Framework/Business/GameManager": "GameManager",
+"../../Framework/Resources/ResManager": "ResManager",
+"../../Framework/UI/SpriteManager": "SpriteManager"
+} ],
+Room: [ function(e, t, o) {
+"use strict";
+cc._RF.push(t, "f5a20IT/nVA54Tm2cHDZGM2", "Room");
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var n = e("../../Framework/Base/CommonFunction"), a = e("../../Framework/Base/CommonAudioMgr"), i = e("../../Framework/Resources/ResManager"), c = e("../../Framework/Business/UserManager"), r = e("../../Framework/UI/LabelManager"), s = cc.js.formatStr, l = e("../../Framework/Resources/Language"), u = e("../../Framework/Business/GameManager"), d = cc._decorator, f = d.ccclass, p = d.property, m = function(e) {
+__extends(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.easyRecord = null;
+t.ordinaryRecord = null;
+t.difficultyRecord = null;
+return t;
+}
+t.prototype.onLoad = function() {
+var e = c.default.getLoginUser();
+r.default.setLabelString(this.easyRecord, s(l.default.room.highestRecord, e.records[u.default.ROOM_KIND.EASY]));
+r.default.setLabelString(this.ordinaryRecord, s(l.default.room.highestRecord, e.records[u.default.ROOM_KIND.ORDINARY]));
+r.default.setLabelString(this.difficultyRecord, s(l.default.room.highestRecord, e.records[u.default.ROOM_KIND.DIFFICULTY]));
 };
-__decorate([ u(cc.Sprite) ], t.prototype, "avatarSprite", void 0);
-__decorate([ u(cc.Sprite) ], t.prototype, "gestureSprite", void 0);
-__decorate([ u(cc.Sprite) ], t.prototype, "winnerSprite", void 0);
-__decorate([ u(cc.Sprite) ], t.prototype, "highlightSprite", void 0);
-__decorate([ u([ cc.SpriteFrame ]) ], t.prototype, "gestures", void 0);
-return t = __decorate([ l ], t);
+t.prototype.onClickEasyBtn = function(e) {
+n.default.clickManager(e.target);
+a.default.playEffect(i.default.common.audio.btnClick);
+this.enterRoom(u.default.ROOM_KIND.EASY);
+};
+t.prototype.onClickOrdinaryBtn = function(e) {
+n.default.clickManager(e.target);
+a.default.playEffect(i.default.common.audio.btnClick);
+this.enterRoom(u.default.ROOM_KIND.ORDINARY);
+};
+t.prototype.onClickDifficultyBtn = function(e) {
+n.default.clickManager(e.target);
+a.default.playEffect(i.default.common.audio.btnClick);
+this.enterRoom(u.default.ROOM_KIND.DIFFICULTY);
+};
+t.prototype.enterRoom = function(e) {
+u.default.setCurRoom(e);
+u.default.enterRoom();
+};
+t.prototype.onClickBackBtn = function(e) {
+n.default.clickManager(e.target);
+a.default.playEffect(i.default.common.audio.btnClick);
+cc.director.loadScene("Hall");
+};
+__decorate([ p(cc.Label) ], t.prototype, "easyRecord", void 0);
+__decorate([ p(cc.Label) ], t.prototype, "ordinaryRecord", void 0);
+__decorate([ p(cc.Label) ], t.prototype, "difficultyRecord", void 0);
+return t = __decorate([ f ], t);
 }(cc.Component);
-o.default = d;
+o.default = m;
+cc._RF.pop();
+}, {
+"../../Framework/Base/CommonAudioMgr": "CommonAudioMgr",
+"../../Framework/Base/CommonFunction": "CommonFunction",
+"../../Framework/Business/GameManager": "GameManager",
+"../../Framework/Business/UserManager": "UserManager",
+"../../Framework/Resources/Language": "Language",
+"../../Framework/Resources/ResManager": "ResManager",
+"../../Framework/UI/LabelManager": "LabelManager"
+} ],
+Shop: [ function(e, t, o) {
+"use strict";
+cc._RF.push(t, "fe9abYJDxdHIZxJAGzYNABO", "Shop");
+Object.defineProperty(o, "__esModule", {
+value: !0
+});
+var n = e("../../Framework/Base/CommonFunction"), a = e("../../Framework/Base/CommonAudioMgr"), i = e("../../Framework/Resources/ResManager"), c = e("./PurchaseBtn"), r = e("../../Framework/Business/GameManager"), s = e("../../Framework/Business/UserManager"), l = e("../../Framework/Base/CommonPrefabMgr"), u = e("../../Framework/Resources/Language"), d = cc._decorator, f = d.ccclass, p = d.property, m = function(e) {
+__extends(t, e);
+function t() {
+var t = null !== e && e.apply(this, arguments) || this;
+t.purchaseBtns = [];
+return t;
+}
+t.prototype.onLoad = function() {
+this.initPurchaseState();
+};
+t.prototype.initPurchaseState = function() {
+for (var e = 0; e < this.purchaseBtns.length; e++) {
+var t = this.getPlanePurchaseState(e);
+this.purchaseBtns[e].init(e, t, this.onPurchaseBtnClickCallback.bind(this));
+}
+};
+t.prototype.getPlanePurchaseState = function(e) {
+var t = s.default.getLoginUser(), o = c.default.STATE.LOCKED_CAN_BUY;
+if (t.curPlane == e) o = c.default.STATE.USING; else if (-1 != t.planes.indexOf(e)) o = c.default.STATE.UNLOCKED; else {
+var n = r.default.PLANE_CONFIG[e].price;
+o = t.coin < n ? c.default.STATE.LOCKED_CAN_NOT_BUY : c.default.STATE.LOCKED_CAN_BUY;
+}
+return o;
+};
+t.prototype.onPurchaseBtnClickCallback = function(e, t) {
+console.log("Click on plane type: " + e);
+if (t != c.default.STATE.USING) {
+var o = s.default.getLoginUser();
+if (t == c.default.STATE.UNLOCKED) {
+o.curPlane = e;
+s.default.updateLoginUser(o);
+} else if (t == c.default.STATE.LOCKED_CAN_BUY) {
+var n = r.default.PLANE_CONFIG[e].price;
+if (o.coin < n) {
+l.default.createToast(u.default.common.balanceNotEnough);
+return;
+}
+o.coin = o.coin - n;
+o.planes = o.planes.concat(e);
+s.default.updateLoginUser(o);
+}
+this.initPurchaseState();
+}
+};
+t.prototype.onClickBackBtn = function(e) {
+n.default.clickManager(e.target);
+a.default.playEffect(i.default.common.audio.btnClick);
+cc.director.loadScene("Hall");
+};
+__decorate([ p(c.default) ], t.prototype, "purchaseBtns", void 0);
+return t = __decorate([ f ], t);
+}(cc.Component);
+o.default = m;
 cc._RF.pop();
 }, {
 "../../Framework/Base/CommonAudioMgr": "CommonAudioMgr",
 "../../Framework/Base/CommonFunction": "CommonFunction",
 "../../Framework/Base/CommonPrefabMgr": "CommonPrefabMgr",
+"../../Framework/Business/GameManager": "GameManager",
+"../../Framework/Business/UserManager": "UserManager",
+"../../Framework/Resources/Language": "Language",
 "../../Framework/Resources/ResManager": "ResManager",
-"../../Framework/UI/SpriteManager": "SpriteManager"
-} ],
-RuleDialog: [ function(e, t, o) {
-"use strict";
-cc._RF.push(t, "b0f26WCoIxJr4UmgVThXiaf", "RuleDialog");
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = e("./BaseDialog"), n = cc._decorator, i = n.ccclass, r = (n.property, function(e) {
-__extends(t, e);
-function t() {
-return null !== e && e.apply(this, arguments) || this;
-}
-return t = __decorate([ i ], t);
-}(a.default));
-o.default = r;
-cc._RF.pop();
-}, {
-"./BaseDialog": "BaseDialog"
-} ],
-SettingDialog: [ function(e, t, o) {
-"use strict";
-cc._RF.push(t, "0a94fsQ6XxAuKytp5t84673", "SettingDialog");
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = e("./BaseDialog"), n = e("../../Framework/Utils/LocalStorageMgr"), i = e("../../Framework/UI/SpriteManager"), r = e("../../Framework/Resources/ResManager"), c = e("../../Framework/Base/CommonFunction"), s = e("../../Framework/Base/CommonAudioMgr"), l = cc._decorator, u = l.ccclass, d = l.property, f = function(e) {
-__extends(t, e);
-function t() {
-var t = null !== e && e.apply(this, arguments) || this;
-t.musicSwitch = null;
-t.effectSwitch = null;
-return t;
-}
-t.prototype.onLoad = function() {
-this.initSwitch();
-};
-t.prototype.initSwitch = function() {
-"false" == n.default.readMusicSwitch() ? i.default.loadSprite(this.musicSwitch, r.default.common.texture.off) : i.default.loadSprite(this.musicSwitch, r.default.common.texture.on);
-"false" == n.default.readEffectSwitch() ? i.default.loadSprite(this.effectSwitch, r.default.common.texture.off) : i.default.loadSprite(this.effectSwitch, r.default.common.texture.on);
-};
-t.prototype.onClickMusicSwitch = function(e) {
-c.default.clickManager(e.target);
-s.default.playEffect(r.default.common.audio.btnClick);
-var t = n.default.readMusicSwitch();
-t = "false" == t ? "true" : "false";
-n.default.saveMusicSwitch(t);
-this.initSwitch();
-"false" == t ? s.default.stopAll() : s.default.playMusic(r.default.common.audio.bgm, !0, 1);
-};
-t.prototype.onClickEffectSwitch = function(e) {
-c.default.clickManager(e.target);
-s.default.playEffect(r.default.common.audio.btnClick);
-var t = n.default.readEffectSwitch();
-t = "false" == t ? "true" : "false";
-n.default.saveEffectSwitch(t);
-this.initSwitch();
-};
-__decorate([ d(cc.Sprite) ], t.prototype, "musicSwitch", void 0);
-__decorate([ d(cc.Sprite) ], t.prototype, "effectSwitch", void 0);
-return t = __decorate([ u ], t);
-}(a.default);
-o.default = f;
-cc._RF.pop();
-}, {
-"../../Framework/Base/CommonAudioMgr": "CommonAudioMgr",
-"../../Framework/Base/CommonFunction": "CommonFunction",
-"../../Framework/Resources/ResManager": "ResManager",
-"../../Framework/UI/SpriteManager": "SpriteManager",
-"../../Framework/Utils/LocalStorageMgr": "LocalStorageMgr",
-"./BaseDialog": "BaseDialog"
+"./PurchaseBtn": "PurchaseBtn"
 } ],
 SpineManager: [ function(e, t, o) {
 "use strict";
@@ -2096,71 +1927,71 @@ cc._RF.push(t, "b110cDWcpxFKLFa8MaWyPOT", "SpineManager");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = function() {
+var n = function() {
 function e() {}
 e.getSpine = function(e) {
 var t = null;
 cc.isValid(e) && (e instanceof sp.Skeleton ? t = e : e instanceof cc.Node && ((t = e.getComponent(sp.Skeleton)) || (t = e.addComponent(sp.Skeleton))));
 return t;
 };
-e.loadSpine = function(e, t, o, a, n) {
+e.loadSpine = function(e, t, o, n, a) {
 var i = this.getSpine(e);
 cc.isValid(i) && t && cc.loader.loadRes(t, sp.SkeletonData, function(e, t) {
 if (e) cc.error(e.message || e); else if (cc.isValid(i)) {
-var r = 0, c = "", s = !0;
+var c = 0, r = "", s = !0;
 if (o) {
-r = o.trackIndex || 0;
-c = o.name || "";
+c = o.trackIndex || 0;
+r = o.name || "";
 null != o.loop && void 0 != o.loop && (s = o.loop);
 }
 i.skeletonData = t;
-i.setAnimation(r, c, s);
-"function" == typeof n && i.setEventListener(function(e, t) {
-n(e, t);
+i.setAnimation(c, r, s);
+"function" == typeof a && i.setEventListener(function(e, t) {
+a(e, t);
 });
-"function" == typeof a && i.setCompleteListener(function() {
-a();
+"function" == typeof n && i.setCompleteListener(function() {
+n();
 });
 }
 });
 };
-e.loadSkeleton = function(e, t, o, a) {
-void 0 === a && (a = null);
-var n = this.getSpine(e);
-cc.isValid(n) && cc.loader.loadRes(t, sp.SkeletonData, function(e, t) {
+e.loadSkeleton = function(e, t, o, n) {
+void 0 === n && (n = null);
+var a = this.getSpine(e);
+cc.isValid(a) && cc.loader.loadRes(t, sp.SkeletonData, function(e, t) {
 if (e) {
 cc.log(e.message || e);
-a && a();
-} else if (cc.isValid(n)) {
-n.skeletonData = t;
+n && n();
+} else if (cc.isValid(a)) {
+a.skeletonData = t;
 o && o();
 }
 });
 };
-e.loadSpineWithSkin = function(e, t, o, a, n) {
+e.loadSpineWithSkin = function(e, t, o, n, a) {
 var i = this.getSpine(e);
 cc.isValid(i) && t && cc.loader.loadRes(t, sp.SkeletonData, function(e, t) {
 if (e) cc.error(e.message || e); else if (cc.isValid(i)) {
-var r = 0, c = "", s = !0, l = "";
+var c = 0, r = "", s = !0, l = "";
 if (o) {
-r = o.trackIndex || 0;
-c = o.name || "";
+c = o.trackIndex || 0;
+r = o.name || "";
 null != o.loop && void 0 != o.loop && (s = o.loop);
 l = o.skin || "";
 }
 i.skeletonData = t;
 "" != l && i.setSkin(l);
-"function" == typeof n && i.setCompleteListener(function() {
-n();
+"function" == typeof a && i.setCompleteListener(function() {
+a();
 });
-i.findAnimation(c) ? i.setAnimation(r, c, s) : cc.log("[SpineManager] 找不到动画名称: " + c);
-"function" == typeof a && a();
+i.findAnimation(r) ? i.setAnimation(c, r, s) : cc.log("[SpineManager] 找不到动画名称: " + r);
+"function" == typeof n && n();
 }
 });
 };
 return e;
 }();
-o.default = a;
+o.default = n;
 cc._RF.pop();
 }, {} ],
 SpriteManager: [ function(e, t, o) {
@@ -2169,7 +2000,7 @@ cc._RF.push(t, "3c11cDw8I5A2pSdxo0VSftu", "SpriteManager");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = function() {
+var n = function() {
 function e() {}
 e.init = function() {
 this.atlasCache = {};
@@ -2189,47 +2020,47 @@ cc.isValid(o) && (o.spriteFrame = t);
 };
 e.loadSpriteForNode = function(e, t, o) {
 if (cc.isValid(e)) {
-var a = e.getComponent(cc.Sprite);
-this.loadSprite(a, t, o);
+var n = e.getComponent(cc.Sprite);
+this.loadSprite(n, t, o);
 }
 };
-e.loadSprite = function(e, t, o, a) {
-cc.isValid(e) && t && cc.loader.loadRes(t, cc.SpriteFrame, function(t, n) {
+e.loadSprite = function(e, t, o, n) {
+cc.isValid(e) && t && cc.loader.loadRes(t, cc.SpriteFrame, function(t, a) {
 if (t) {
 cc.error(t.message || t);
-"function" == typeof a && a();
+"function" == typeof n && n();
 } else if (cc.isValid(e)) {
-e.spriteFrame = n;
+e.spriteFrame = a;
 "function" == typeof o && o();
 }
 });
 };
-e.loadSpriteAtlasForNode = function(e, t, o, a, n) {
+e.loadSpriteAtlasForNode = function(e, t, o, n, a) {
 if (cc.isValid(e)) {
 var i = e.getComponent(cc.Sprite);
-this.loadSpriteAtlas(i, t, o, a, n);
+this.loadSpriteAtlas(i, t, o, n, a);
 }
 };
-e.loadSpriteAtlas = function(e, t, o, a, n) {
+e.loadSpriteAtlas = function(e, t, o, n, a) {
 var i = this;
 if (cc.isValid(e) && t && o) {
-var r = i.atlasCache[t];
-if (r) {
-var c = r.getSpriteFrame(o);
+var c = i.atlasCache[t];
 if (c) {
-e.spriteFrame = c;
-"function" == typeof a && a();
-} else "function" == typeof n && n();
-} else cc.loader.loadRes(t, cc.SpriteAtlas, function(r, c) {
-if (!r && c) {
+var r = c.getSpriteFrame(o);
+if (r) {
+e.spriteFrame = r;
+"function" == typeof n && n();
+} else "function" == typeof a && a();
+} else cc.loader.loadRes(t, cc.SpriteAtlas, function(c, r) {
+if (!c && r) {
 i.restrictAtlasCache();
-i.atlasCache[t] = c;
-var s = c.getSpriteFrame(o);
+i.atlasCache[t] = r;
+var s = r.getSpriteFrame(o);
 if (s) {
 e.spriteFrame = s;
-"function" == typeof a && a();
-} else "function" == typeof n && n();
-} else "function" == typeof n && n();
+"function" == typeof n && n();
+} else "function" == typeof a && a();
+} else "function" == typeof a && a();
 });
 }
 };
@@ -2247,26 +2078,26 @@ cc.loader.loadRes(e, cc.SpriteFrame, function(e, o) {
 e ? cc.error(e.message || e) : o && "function" == typeof t && t(o);
 });
 };
-e.loadRemoteUrl = function(e, t, o, a) {
-var n = null;
-cc.isValid(e) && (e instanceof cc.Sprite ? n = e : e instanceof cc.Node && ((n = e.getComponent(cc.Sprite)) || (n = e.addComponent(cc.Sprite))));
-null != n ? cc.loader.load(t, function(e, t) {
+e.loadRemoteUrl = function(e, t, o, n) {
+var a = null;
+cc.isValid(e) && (e instanceof cc.Sprite ? a = e : e instanceof cc.Node && ((a = e.getComponent(cc.Sprite)) || (a = e.addComponent(cc.Sprite))));
+null != a ? cc.loader.load(t, function(e, t) {
 if (e) {
 cc.error(e.message || e);
-"function" == typeof a && a();
-} else if (t && t.url && cc.isValid(n) && cc.isValid(n.node)) {
+"function" == typeof n && n();
+} else if (t && t.url && cc.isValid(a) && cc.isValid(a.node)) {
 var i = new cc.SpriteFrame(t);
 if (i) {
-n.spriteFrame = i;
+a.spriteFrame = i;
 "function" == typeof o && o();
-} else "function" == typeof a && a();
-} else "function" == typeof a && a();
-}) : "function" == typeof a && a();
+} else "function" == typeof n && n();
+} else "function" == typeof n && n();
+}) : "function" == typeof n && n();
 };
 e.atlasCache = {};
 return e;
 }();
-o.default = a;
+o.default = n;
 cc._RF.pop();
 }, {} ],
 Toast: [ function(e, t, o) {
@@ -2275,7 +2106,7 @@ cc._RF.push(t, "b4cf67cDZpLZpwLFmucq9Tw", "Toast");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = cc._decorator, n = a.ccclass, i = a.property, r = function(e) {
+var n = cc._decorator, a = n.ccclass, i = n.property, c = function(e) {
 __extends(t, e);
 function t() {
 var t = null !== e && e.apply(this, arguments) || this;
@@ -2301,106 +2132,67 @@ console.log("hide toast......");
 this.node.active = !1;
 };
 __decorate([ i(cc.Label) ], t.prototype, "message", void 0);
-return t = __decorate([ n ], t);
+return t = __decorate([ a ], t);
 }(cc.Component);
-o.default = r;
+o.default = c;
 cc._RF.pop();
 }, {} ],
-UserDialog: [ function(e, t, o) {
-"use strict";
-cc._RF.push(t, "d3946ZKqatDLKKo01CVP/fz", "UserDialog");
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = e("../../Framework/UI/LabelManager"), n = e("./BaseDialog"), i = e("../../Framework/Resources/ResManager"), r = e("../../Framework/UI/SpriteManager"), c = cc._decorator, s = c.ccclass, l = c.property, u = function(e) {
-__extends(t, e);
-function t() {
-var t = null !== e && e.apply(this, arguments) || this;
-t.avatarSprite = null;
-t.nameLabel = null;
-t.idLabel = null;
-t.coinLabel = null;
-return t;
-}
-t.prototype.showDialog = function(t, o) {
-e.prototype.showDialog.call(this, o);
-this.initUserInfo(t);
-};
-t.prototype.initUserInfo = function(e) {
-var t = i.default.common.texture.userAvatars[e.avatar];
-t ? r.default.loadSprite(this.avatarSprite, t) : r.default.setSpriteFrame(this.avatarSprite, null);
-a.default.setLabelString(this.nameLabel, e.name);
-a.default.setLabelString(this.idLabel, e.id);
-a.default.setLabelString(this.coinLabel, e.coin);
-};
-__decorate([ l(cc.Sprite) ], t.prototype, "avatarSprite", void 0);
-__decorate([ l(cc.Label) ], t.prototype, "nameLabel", void 0);
-__decorate([ l(cc.Label) ], t.prototype, "idLabel", void 0);
-__decorate([ l(cc.Label) ], t.prototype, "coinLabel", void 0);
-return t = __decorate([ s ], t);
-}(n.default);
-o.default = u;
-cc._RF.pop();
-}, {
-"../../Framework/Resources/ResManager": "ResManager",
-"../../Framework/UI/LabelManager": "LabelManager",
-"../../Framework/UI/SpriteManager": "SpriteManager",
-"./BaseDialog": "BaseDialog"
-} ],
 UserManager: [ function(e, t, o) {
 "use strict";
 cc._RF.push(t, "e9d0a6ZPV9E35L2SR5nWjRo", "UserManager");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = e("../Resources/ResManager"), n = e("../Utils/LocalStorageMgr"), i = e("./User"), r = e("../Base/CommonEventName"), c = function() {
+var n = e("../Resources/ResManager"), a = e("../Utils/LocalStorageMgr"), i = e("./User"), c = e("../Base/CommonEventName"), r = e("./GameManager"), s = function() {
 function e() {}
 e.createRandomUser = function(e) {
-var t = new i.default(), o = 1e4 + parseInt((1e4 * Math.random()).toString()), n = parseInt((2 * Math.random()).toString()), r = Math.random() * this.userNames.length, c = this.userNames[parseInt(r.toString())], s = (parseInt((Math.random() * a.default.common.texture.userAvatars.length).toString()), 
+var t = new i.default(), o = 1e4 + parseInt((1e4 * Math.random()).toString()), a = parseInt((2 * Math.random()).toString()), c = Math.random() * this.userNames.length, s = this.userNames[parseInt(c.toString())], l = (parseInt((Math.random() * n.default.common.texture.userAvatars.length).toString()), 
 this.INIT_COIN);
-e && (s = parseInt((Math.random() * this.INIT_COIN * 10).toString()));
+e && (l = parseInt((Math.random() * this.INIT_COIN * 10).toString()));
 t.id = o;
-t.name = c;
-t.gender = n;
-t.coin = s;
-t.avatar = n;
+t.name = s;
+t.gender = a;
+t.coin = l;
+t.avatar = a;
 t.records = [ 0, 0, 0 ];
-t.planes = [ 0 ];
+t.planes = [ r.default.PLANE_TYPE.PLANE1 ];
+t.curPlane = r.default.PLANE_TYPE.PLANE1;
 return t;
 };
 e.initLoginUser = function() {
-this.currentUser = n.default.getLoginUser();
+this.currentUser = a.default.getLoginUser();
 return this.currentUser;
 };
 e.guestLogin = function() {
-this.currentUser = n.default.getLoginUser();
+this.currentUser = a.default.getLoginUser();
 if (!this.currentUser) {
 this.currentUser = this.createRandomUser();
-n.default.saveLoginUser(this.currentUser);
+a.default.saveLoginUser(this.currentUser);
 }
 return this.currentUser;
 };
 e.getLoginUser = function() {
 return this.currentUser;
 };
-e.updateUserCoin = function(e) {
-if (this.currentUser) {
-this.currentUser.coin = e;
-n.default.saveLoginUser(this.currentUser);
-cc.director.emit(r.default.EVENT_REFRESH_USER_INFO);
+e.updateLoginUser = function(e) {
+if (e) {
+a.default.saveLoginUser(this.currentUser);
+this.currentUser = e;
+cc.director.emit(c.default.EVENT_REFRESH_USER_INFO);
 }
 };
-e.userNames = [ "Sam", "Barney", "Lili", "Kate", "Katherine", "James", "Bob", "Carl" ];
-e.INIT_COIN = 1e4;
+e.userNames = [ "Sam", "Barney", "Lily", "Kate", "Katherine", "James", "Bob", "Carl" ];
+e.INIT_COIN = 0;
 e.currentUser = null;
 return e;
 }();
-o.default = c;
+o.default = s;
 cc._RF.pop();
 }, {
 "../Base/CommonEventName": "CommonEventName",
 "../Resources/ResManager": "ResManager",
 "../Utils/LocalStorageMgr": "LocalStorageMgr",
+"./GameManager": "GameManager",
 "./User": "User"
 } ],
 User: [ function(e, t, o) {
@@ -2409,57 +2201,10 @@ cc._RF.push(t, "1185bjrNkNHvp4mXmXed2OY", "User");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var a = function() {
+var n = function() {
 return function() {};
 }();
-o.default = a;
+o.default = n;
 cc._RF.pop();
-}, {} ],
-WinDialog: [ function(e, t, o) {
-"use strict";
-cc._RF.push(t, "c5fceiiDHtAt6awKHf3AGkM", "WinDialog");
-Object.defineProperty(o, "__esModule", {
-value: !0
-});
-var a = e("../../Framework/UI/LabelManager"), n = e("./BaseDialog"), i = e("../../Framework/Base/CommonFunction"), r = e("../../Framework/Base/CommonAudioMgr"), c = e("../../Framework/Resources/ResManager"), s = cc._decorator, l = s.ccclass, u = s.property, d = function(e) {
-__extends(t, e);
-function t() {
-var t = null !== e && e.apply(this, arguments) || this;
-t.amountLabel = null;
-t.backCallback = null;
-t.continueCallback = null;
-return t;
-}
-t.prototype.showDialog = function(t, o, n) {
-this.backCallback = o;
-this.continueCallback = n;
-var i = "";
-i = t >= 0 ? "+" + t : "" + t;
-a.default.setLabelString(this.amountLabel, i);
-e.prototype.showDialog.call(this);
-};
-t.prototype.onClickBack = function(e) {
-i.default.clickManager(e.target);
-r.default.playEffect(c.default.common.audio.btnClick);
-this.dismissDialog();
-this.backCallback && this.backCallback();
-};
-t.prototype.onClickContinue = function(e) {
-i.default.clickManager(e.target);
-r.default.playEffect(c.default.common.audio.btnClick);
-this.dismissDialog();
-this.continueCallback && this.continueCallback();
-};
-__decorate([ u(cc.Label) ], t.prototype, "amountLabel", void 0);
-return t = __decorate([ l ], t);
-}(n.default);
-o.default = d;
-cc._RF.pop();
-}, {
-"../../Framework/Base/CommonAudioMgr": "CommonAudioMgr",
-"../../Framework/Base/CommonFunction": "CommonFunction",
-"../../Framework/Resources/ResManager": "ResManager",
-"../../Framework/UI/LabelManager": "LabelManager",
-"./BaseDialog": "BaseDialog"
-} ]
-}, {}, [ "CountDown", "RandomAvatar", "Toast", "BaseDialog", "CheckinDialog", "RuleDialog", "SettingDialog", "UserDialog", "WinDialog", "GameRoom", "GameRoomController", "GestureSelector", "LifeController", "ResultController", "Hall", "Launcher", "Loading", "CommonAudioMgr", "CommonEventName", "CommonFunction", "CommonPrefabMgr", "Global", "CheckinManager", "GameManager", "User", "UserManager", "Language", "ResManager", "DateFormat", "LabelManager", "NodeManager", "PrefabManager", "SpineManager", "SpriteManager", "CountDownUtil", "LocalStorageMgr", "NativeUtil" ]);
+}, {} ]
+}, {}, [ "CommonDragView", "CountDown", "Toast", "BaseDialog", "DistanceCounter", "Game", "GameOverDialog", "Plane", "Rock", "RockScene", "Hall", "Launcher", "Loading", "Room", "PurchaseBtn", "Shop", "CommonAudioMgr", "CommonEventName", "CommonFunction", "CommonPrefabMgr", "Global", "GameManager", "User", "UserManager", "Language", "ResManager", "DateFormat", "LabelManager", "NodeManager", "PrefabManager", "SpineManager", "SpriteManager", "CountDownUtil", "LocalStorageMgr", "NativeUtil" ]);
