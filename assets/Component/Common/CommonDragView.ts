@@ -36,6 +36,7 @@ export default class CommonDragView extends cc.Component {
     private parentWidth: number = 0;
     private parentHeight: number = 0;
     private lastUpdateTime: number = 0;
+    private draggable: boolean = true;
 
     protected onLoad(): void {
         let self = this;
@@ -44,7 +45,6 @@ export default class CommonDragView extends cc.Component {
         self.initDragBorder();
         //self.initDefaultPosition();
     }
-
 
     protected onDestroy(): void {
         let self = this;
@@ -65,6 +65,11 @@ export default class CommonDragView extends cc.Component {
                 self.initDragBorder();
             }
         }
+    }
+
+    public setDraggable(draggable: boolean) {
+        let self = this;
+        self.draggable = draggable;
     }
 
     private registerReceiver(): void {
@@ -244,6 +249,9 @@ export default class CommonDragView extends cc.Component {
     protected onTouchMove(event): void {
         let self = this;
         if (!self.isLongClick) {
+            return;
+        }
+        if (!self.draggable) {
             return;
         }
         //console.log("鼠标移动了, 世界坐标[%s, %s]", event.getLocationX(), event.getLocationY());

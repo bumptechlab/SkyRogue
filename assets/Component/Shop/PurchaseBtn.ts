@@ -14,6 +14,7 @@ import ResManager from "../../Framework/Resources/ResManager";
 import CommonFunction from "../../Framework/Base/CommonFunction";
 import CommonAudioMgr from "../../Framework/Base/CommonAudioMgr";
 import GameManager from "../../Framework/Business/GameManager";
+import NodeManager from "../../Framework/UI/NodeManager";
 
 const {ccclass, property} = cc._decorator;
 
@@ -24,7 +25,8 @@ export default class PurchaseBtn extends cc.Component {
     static STATE = cc.Enum({
         USING: 0,    //正在使用
         UNLOCKED: 1, //已解锁
-        LOCKED: 2    //未解锁
+        LOCKED_CAN_NOT_BUY: 2,    //未解锁-不可购买
+        LOCKED_CAN_BUY: 3,        //未解锁-可购买
     });
 
     @property(cc.Sprite)
@@ -60,39 +62,35 @@ export default class PurchaseBtn extends cc.Component {
     public setState(state: number) {
         let self = this;
         self.state = state;
+        console.log("Purchase btn set state [%s] on plane-%s", state, self.planeType);
         if (state == PurchaseBtn.STATE.USING) {
-            if (cc.isValid(self.usingNode)) {
-                self.usingNode.active = true;
-            }
-            if (cc.isValid(self.useNode)) {
-                self.useNode.active = false;
-            }
-            if (cc.isValid(self.unlockNode)) {
-                self.unlockNode.active = false;
-            }
+            NodeManager.setInteractable(self.node, true);
+            NodeManager.setVisible(self.usingNode, true);
+            NodeManager.setVisible(self.useNode, false);
+            NodeManager.setVisible(self.unlockNode, false);
             SpriteManager.loadSprite(self.bgSprite, ResManager.common.texture.btn1);
+
         } else if (state == PurchaseBtn.STATE.UNLOCKED) {
-            if (cc.isValid(self.usingNode)) {
-                self.usingNode.active = false;
-            }
-            if (cc.isValid(self.useNode)) {
-                self.useNode.active = true;
-            }
-            if (cc.isValid(self.unlockNode)) {
-                self.unlockNode.active = false;
-            }
+            NodeManager.setInteractable(self.node, true);
+            NodeManager.setVisible(self.usingNode, false);
+            NodeManager.setVisible(self.useNode, true);
+            NodeManager.setVisible(self.unlockNode, false);
             SpriteManager.loadSprite(self.bgSprite, ResManager.common.texture.btn3);
-        } else if (state == PurchaseBtn.STATE.LOCKED) {
-            if (cc.isValid(self.usingNode)) {
-                self.usingNode.active = false;
-            }
-            if (cc.isValid(self.useNode)) {
-                self.useNode.active = false;
-            }
-            if (cc.isValid(self.unlockNode)) {
-                self.unlockNode.active = true;
-            }
+
+        } else if (state == PurchaseBtn.STATE.LOCKED_CAN_BUY) {
+            NodeManager.setInteractable(self.node, true);
+            NodeManager.setVisible(self.usingNode, false);
+            NodeManager.setVisible(self.useNode, false);
+            NodeManager.setVisible(self.unlockNode, true);
             SpriteManager.loadSprite(self.bgSprite, ResManager.common.texture.btn2);
+
+        } else if (state == PurchaseBtn.STATE.LOCKED_CAN_NOT_BUY) {
+            NodeManager.setInteractable(self.node, false);
+            NodeManager.setVisible(self.usingNode, false);
+            NodeManager.setVisible(self.useNode, false);
+            NodeManager.setVisible(self.unlockNode, true);
+            SpriteManager.loadSprite(self.bgSprite, ResManager.common.texture.btn2);
+
         }
     }
 

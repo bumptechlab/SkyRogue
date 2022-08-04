@@ -1,8 +1,5 @@
-import NodeManager from "../UI/NodeManager";
-import ResManager from "../Resources/ResManager";
 import SpriteManager from "../UI/SpriteManager";
 import Rock from "../../Component/Game/Rock";
-import BoxCollider = cc.BoxCollider;
 
 export default class GameManager {
 
@@ -55,5 +52,6 @@ export default class GameManager {
     public static getCurRoom() {
         return this.curRoom;
     }
+
 
 }

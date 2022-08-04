@@ -46,6 +46,7 @@ export default class RockScene extends cc.Component {
     public setSpeed(speed: number): void {
         let self = this;
         self.speed = speed;
+        console.log("Rock speed set to: " + speed);
     }
 
     private setPaused(paused: boolean) {

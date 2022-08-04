@@ -183,7 +183,7 @@
       "array": [
         0,
         0,
-        466.77490234375,
+        467.6537170410156,
         0,
         0,
         0,
@@ -1649,7 +1649,7 @@
       }
     ],
     "_N$interactable": true,
-    "_N$enableAutoGrayEffect": false,
+    "_N$enableAutoGrayEffect": true,
     "_N$transition": 3,
     "transition": 3,
     "_N$normalColor": {
@@ -2817,7 +2817,7 @@
       }
     ],
     "_N$interactable": true,
-    "_N$enableAutoGrayEffect": false,
+    "_N$enableAutoGrayEffect": true,
     "_N$transition": 3,
     "transition": 3,
     "_N$normalColor": {
@@ -3985,7 +3985,7 @@
       }
     ],
     "_N$interactable": true,
-    "_N$enableAutoGrayEffect": false,
+    "_N$enableAutoGrayEffect": true,
     "_N$transition": 3,
     "transition": 3,
     "_N$normalColor": {

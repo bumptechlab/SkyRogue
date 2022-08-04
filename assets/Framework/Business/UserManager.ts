@@ -8,7 +8,7 @@ class UserManager {
 
 
     private static userNames = ["Sam", "Barney", "Lily", "Kate", "Katherine", "James", "Bob", "Carl"];
-    private static INIT_COIN = 10000;
+    private static INIT_COIN = 0;
     private static currentUser: User = null;
 
     public static createRandomUser(randomCoin?): User {
@@ -55,14 +55,6 @@ class UserManager {
         if (user) {
             LocalStorageMgr.saveLoginUser(this.currentUser);
             this.currentUser = user;
-            cc.director.emit(CommonEventName.EVENT_REFRESH_USER_INFO);
-        }
-    }
-
-    public static updateUserCoin(coin: number) {
-        if (this.currentUser) {
-            this.currentUser.coin = coin;
-            LocalStorageMgr.saveLoginUser(this.currentUser);
             cc.director.emit(CommonEventName.EVENT_REFRESH_USER_INFO);
         }
     }

@@ -1,11 +1,25 @@
 class NodeManager {
 
-    public static setVisiable(node, visiable = false) {
+    public static setVisible(node, visiable = false) {
         if (cc.isValid(node)) {
             if (node instanceof cc.Node) {
                 node.active = visiable;
             } else {
                 node.node.active = visiable;
+            }
+        }
+    }
+
+    public static setInteractable(node, interactable: boolean) {
+        if (cc.isValid(node)) {
+            let button = null;
+            if (node instanceof cc.Button) {
+                button = node;
+            } else if (node instanceof cc.Node) {
+                button = node.getComponent(cc.Button);
+            }
+            if (cc.isValid(button)) {
+                node.interactable = interactable;
             }
         }
     }

@@ -8,14 +8,16 @@
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
 
-import UserManager from "../../Framework/Business/UserManager";
 import GameManager from "../../Framework/Business/GameManager";
+import CommonDragView from "../Common/CommonDragView";
 
 const {ccclass, property} = cc._decorator;
 
 @ccclass
 export default class Plane extends cc.Component {
 
+    @property(CommonDragView)
+    commonDragView: CommonDragView = null;
 
     private planeType: number = 0;
     private crashCallback = null;
@@ -39,6 +41,13 @@ export default class Plane extends cc.Component {
         let nodePos = self.node.parent.convertToNodeSpaceAR(worldPos);
         console.log("Plane init position: [%s,%s]", nodePos.x, nodePos.y);
         self.node.position = nodePos;
+    }
+
+    public setDraggable(draggable: boolean): void {
+        let self = this;
+        if (cc.isValid(self.commonDragView)) {
+            self.commonDragView.setDraggable(draggable);
+        }
     }
 
 

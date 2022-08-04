@@ -40,13 +40,18 @@ export default class Shop extends cc.Component {
 
     private getPlanePurchaseState(planeType: number): number {
         let user = UserManager.getLoginUser();
-        let state = PurchaseBtn.STATE.LOCKED;
+        let state = PurchaseBtn.STATE.LOCKED_CAN_BUY;
         if (user.curPlane == planeType) {
             state = PurchaseBtn.STATE.USING;
         } else if (user.planes.indexOf(planeType) != -1) {
             state = PurchaseBtn.STATE.UNLOCKED;
         } else {
-            state = PurchaseBtn.STATE.LOCKED;
+            let price = GameManager.PLANE_CONFIG[planeType].price;
+            if (user.coin < price) {//金币不足
+                state = PurchaseBtn.STATE.LOCKED_CAN_NOT_BUY;
+            } else {
+                state = PurchaseBtn.STATE.LOCKED_CAN_BUY;
+            }
         }
         return state;
     }
@@ -61,7 +66,7 @@ export default class Shop extends cc.Component {
         if (state == PurchaseBtn.STATE.UNLOCKED) { //已解锁，可以更换飞机
             user.curPlane = planeType;
             UserManager.updateLoginUser(user);
-        } else if (state == PurchaseBtn.STATE.LOCKED) {//未解锁，需要购买
+        } else if (state == PurchaseBtn.STATE.LOCKED_CAN_BUY) {//未解锁，需要购买
             let price = GameManager.PLANE_CONFIG[planeType].price;
             if (user.coin < price) {//金币不足
                 CommonPrefabMgr.createToast(Language.common.balanceNotEnough);

@@ -13,6 +13,7 @@ import Plane from "./Plane";
 import RockScene from "./RockScene";
 import GameManager from "../../Framework/Business/GameManager";
 import CommonPrefabMgr from "../../Framework/Base/CommonPrefabMgr";
+import DistanceCounter from "./DistanceCounter";
 
 const {ccclass, property} = cc._decorator;
 
@@ -24,6 +25,9 @@ export default class Game extends cc.Component {
 
     @property(cc.Node)
     bg2Node: cc.Node = null;
+
+    @property(DistanceCounter)
+    distanceCounter: DistanceCounter = null;
 
     @property(Plane)
     plane: Plane = null;
@@ -44,24 +48,54 @@ export default class Game extends cc.Component {
     protected startGame() {
         let self = this;
         cc.director.getCollisionManager().enabled = true;
-        cc.director.getCollisionManager().enabledDebugDraw = true;
+        //cc.director.getCollisionManager().enabledDebugDraw = true;
+
+        //背景开始移动
         self.setGamePause(false);
+        //初始化距离计算器（未开始计算）
+        if (cc.isValid(self.distanceCounter)) {
+            self.distanceCounter.init(self.distanceFinishCallback.bind(self));
+        }
+        //初始化飞机并开始进场
         self.initPlane(function () {
-            //3秒后，障碍物开始入场
+            //开始计算距离
+            if (cc.isValid(self.distanceCounter)) {
+                self.distanceCounter.startCount();
+            }
+            //可以开始拖动飞机
+            if (cc.isValid(self.plane)) {
+                self.plane.setDraggable(true);
+            }
+            //飞机入场完毕3秒后，障碍物开始入场
             self.scheduleOnce(function () {
                 self.rockEnter();
             }, 3);
         });
+
     }
 
     protected stopGame() {
         let self = this;
         cc.director.getCollisionManager().enabled = false;
-        cc.director.getCollisionManager().enabledDebugDraw = true;
+        //暂停背景
         self.setGamePause(true);
+        //障碍物停止
         if (cc.isValid(self.rockScene)) {
             self.rockScene.stopGame();
         }
+        //距离计算停止
+        if (cc.isValid(self.distanceCounter)) {
+            self.distanceCounter.stopCount();
+        }
+        //飞机变为不可拖拽
+        if (cc.isValid(self.plane)) {
+            self.plane.setDraggable(false);
+        }
+    }
+
+    protected distanceFinishCallback() {
+        let self = this;
+
     }
 
     protected rockEnter() {
@@ -97,17 +131,26 @@ export default class Game extends cc.Component {
         let self = this;
         let user = UserManager.getLoginUser();
         if (cc.isValid(self.plane)) {
+            self.plane.setDraggable(false);
             self.plane.initPosition();
-            self.plane.init(user.curPlane, self.gameOver.bind(self));
+            self.plane.init(user.curPlane, self.gameOverCallback.bind(self));
             self.plane.enter(enterCallback);
         }
     }
 
     //Game Over
-    protected gameOver(rock: cc.Node) {
+    protected gameOverCallback(rock: cc.Node) {
         let self = this;
         self.stopGame();
-        CommonPrefabMgr.showGameOverDialog(0, 0, function () {
+        let distance = 0;
+        if (cc.isValid(self.distanceCounter)) {
+            distance = self.distanceCounter.getDistance();
+        }
+        let gold = distance;
+        let user = UserManager.getLoginUser();
+        user.coin = user.coin + gold;
+        UserManager.updateLoginUser(user);
+        CommonPrefabMgr.showGameOverDialog(distance, gold, function () {
             cc.director.loadScene("Hall");
         }, function () {
             self.startGame();
