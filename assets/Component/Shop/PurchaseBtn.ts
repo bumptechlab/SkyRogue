@@ -64,32 +64,36 @@ export default class PurchaseBtn extends cc.Component {
         self.state = state;
         console.log("Purchase btn set state [%s] on plane-%s", state, self.planeType);
         if (state == PurchaseBtn.STATE.USING) {
-            NodeManager.setInteractable(self.node, true);
             NodeManager.setVisible(self.usingNode, true);
             NodeManager.setVisible(self.useNode, false);
             NodeManager.setVisible(self.unlockNode, false);
-            SpriteManager.loadSprite(self.bgSprite, ResManager.common.texture.btn1);
+            SpriteManager.loadSprite(self.bgSprite, ResManager.common.texture.btn1, function () {
+                NodeManager.setInteractable(self.node, true);
+            });
 
         } else if (state == PurchaseBtn.STATE.UNLOCKED) {
-            NodeManager.setInteractable(self.node, true);
             NodeManager.setVisible(self.usingNode, false);
             NodeManager.setVisible(self.useNode, true);
             NodeManager.setVisible(self.unlockNode, false);
-            SpriteManager.loadSprite(self.bgSprite, ResManager.common.texture.btn3);
+            SpriteManager.loadSprite(self.bgSprite, ResManager.common.texture.btn3, function () {
+                NodeManager.setInteractable(self.node, true);
+            });
 
         } else if (state == PurchaseBtn.STATE.LOCKED_CAN_BUY) {
-            NodeManager.setInteractable(self.node, true);
             NodeManager.setVisible(self.usingNode, false);
             NodeManager.setVisible(self.useNode, false);
             NodeManager.setVisible(self.unlockNode, true);
-            SpriteManager.loadSprite(self.bgSprite, ResManager.common.texture.btn2);
+            SpriteManager.loadSprite(self.bgSprite, ResManager.common.texture.btn2, function () {
+                NodeManager.setInteractable(self.node, true);
+            });
 
         } else if (state == PurchaseBtn.STATE.LOCKED_CAN_NOT_BUY) {
-            NodeManager.setInteractable(self.node, false);
             NodeManager.setVisible(self.usingNode, false);
             NodeManager.setVisible(self.useNode, false);
             NodeManager.setVisible(self.unlockNode, true);
-            SpriteManager.loadSprite(self.bgSprite, ResManager.common.texture.btn2);
+            SpriteManager.loadSprite(self.bgSprite, ResManager.common.texture.btn2, function () {
+                NodeManager.setInteractable(self.node, false);
+            });
 
         }
     }

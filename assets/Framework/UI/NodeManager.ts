@@ -19,7 +19,8 @@ class NodeManager {
                 button = node.getComponent(cc.Button);
             }
             if (cc.isValid(button)) {
-                node.interactable = interactable;
+                button.interactable = interactable;
+                //button.disabledColor = cc.color(124, 124, 124);
             }
         }
     }

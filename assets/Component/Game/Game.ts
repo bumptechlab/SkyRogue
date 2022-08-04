@@ -142,14 +142,27 @@ export default class Game extends cc.Component {
     protected gameOverCallback(rock: cc.Node) {
         let self = this;
         self.stopGame();
+        self.showGameOverDialog();
+    }
+
+    private showGameOverDialog() {
+        let self = this;
         let distance = 0;
         if (cc.isValid(self.distanceCounter)) {
             distance = self.distanceCounter.getDistance();
         }
+        let curRoom = GameManager.getCurRoom();
         let gold = distance;
         let user = UserManager.getLoginUser();
+        //更新金额
         user.coin = user.coin + gold;
+        //记录最远距离
+        if (distance > user.records[curRoom]) {
+            user.records[curRoom] = distance;
+        }
         UserManager.updateLoginUser(user);
+
+
         CommonPrefabMgr.showGameOverDialog(distance, gold, function () {
             cc.director.loadScene("Hall");
         }, function () {
