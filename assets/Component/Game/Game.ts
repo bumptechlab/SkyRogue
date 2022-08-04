@@ -11,6 +11,8 @@
 import UserManager from "../../Framework/Business/UserManager";
 import Plane from "./Plane";
 import RockScene from "./RockScene";
+import GameManager from "../../Framework/Business/GameManager";
+import CommonPrefabMgr from "../../Framework/Base/CommonPrefabMgr";
 
 const {ccclass, property} = cc._decorator;
 
@@ -36,24 +38,46 @@ export default class Game extends cc.Component {
     protected onLoad(): void {
         let self = this;
         self.bgOutPosition = -self.bg1Node.height;
-        cc.director.getCollisionManager().enabled = true;
-        cc.director.getCollisionManager().enabledDebugDraw = true;
         self.startGame();
     }
 
     protected startGame() {
         let self = this;
+        cc.director.getCollisionManager().enabled = true;
+        cc.director.getCollisionManager().enabledDebugDraw = true;
         self.setGamePause(false);
-        self.initPlaneSkin();
-        self.planeEnter(function () {
-            let timeout = setTimeout(function () {
-                clearTimeout(timeout);
-                //障碍物开始入场
-                if (cc.isValid(self.rockScene)) {
-                    self.rockScene.startGame();
-                }
-            }, 3000);
+        self.initPlane(function () {
+            //3秒后，障碍物开始入场
+            self.scheduleOnce(function () {
+                self.rockEnter();
+            }, 3);
         });
+    }
+
+    protected stopGame() {
+        let self = this;
+        cc.director.getCollisionManager().enabled = false;
+        cc.director.getCollisionManager().enabledDebugDraw = true;
+        self.setGamePause(true);
+        if (cc.isValid(self.rockScene)) {
+            self.rockScene.stopGame();
+        }
+    }
+
+    protected rockEnter() {
+        let self = this;
+        if (cc.isValid(self.rockScene)) {
+            let rockSpeed = self.speed;
+            if (GameManager.getCurRoom() == GameManager.ROOM_KIND.EASY) {
+                rockSpeed = self.speed * 0.8;
+            } else if (GameManager.getCurRoom() == GameManager.ROOM_KIND.ORDINARY) {
+                rockSpeed = self.speed;
+            } else if (GameManager.getCurRoom() == GameManager.ROOM_KIND.DIFFICULTY) {
+                rockSpeed = self.speed * 1.2;
+            }
+            self.rockScene.setSpeed(rockSpeed);
+            self.rockScene.startGame();
+        }
     }
 
     protected setGamePause(paused) {
@@ -69,29 +93,27 @@ export default class Game extends cc.Component {
         self.renderBg();
     }
 
-    protected initPlaneSkin() {
+    protected initPlane(enterCallback) {
         let self = this;
         let user = UserManager.getLoginUser();
         if (cc.isValid(self.plane)) {
-            self.plane.init(user.curPlane);
+            self.plane.initPosition();
+            self.plane.init(user.curPlane, self.gameOver.bind(self));
+            self.plane.enter(enterCallback);
         }
     }
 
-
-    protected planeEnter(enterCallback) {
+    //Game Over
+    protected gameOver(rock: cc.Node) {
         let self = this;
-        if (cc.isValid(self.plane)) {
-            self.plane.node.runAction(cc.sequence(
-                cc.moveTo(2, cc.v2(0, -100)),
-                cc.moveTo(2, cc.v2(0, -250)),
-                cc.callFunc(function () {
-                    if (enterCallback) {
-                        enterCallback();
-                    }
-                })
-            )).easing(cc.easeSineOut());
-        }
+        self.stopGame();
+        CommonPrefabMgr.showGameOverDialog(0, 0, function () {
+            cc.director.loadScene("Hall");
+        }, function () {
+            self.startGame();
+        })
     }
+
 
     protected renderBg() {
         let self = this;
@@ -107,8 +129,10 @@ export default class Game extends cc.Component {
     }
 
     protected onDestroy(): void {
+        let self = this;
         cc.director.getCollisionManager().enabled = false;
         cc.director.getCollisionManager().enabledDebugDraw = false;
+        self.unscheduleAllCallbacks();
     }
 
 }

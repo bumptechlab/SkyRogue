@@ -16,24 +16,31 @@ const {ccclass, property} = cc._decorator;
 export default class RockScene extends cc.Component {
 
 
-    speed: number = 5;
-    paused: boolean = true;
+    private speed: number = 5;
+    private paused: boolean = true;
 
     private lastElapsedTime: number = 0;
     private randomInterval: number = 0;
-    private outPosition: number = 0;
+    private outPositionY: number = 0;
 
     protected onLoad(): void {
         let self = this;
-        self.outPosition = -self.node.height / 2 - 50;
-        console.log("RockScene: outPosition=" + self.outPosition);
+        let worldPositionY = -50; //石头在屏幕外被移除的Y轴位置，使用世界坐标
+        let nodePos = self.node.convertToNodeSpaceAR(new cc.v2(0, worldPositionY));
+        self.outPositionY = nodePos.y;
+        console.log("RockScene: outPositionY=" + self.outPositionY);
     }
-
 
     public startGame(): void {
         let self = this;
+        self.node.removeAllChildren();
         self.setPaused(false);
+    }
 
+    public stopGame(): void {
+        let self = this;
+        self.node.removeAllChildren();
+        self.setPaused(true);
     }
 
     public setSpeed(speed: number): void {
@@ -41,7 +48,7 @@ export default class RockScene extends cc.Component {
         self.speed = speed;
     }
 
-    public setPaused(paused: boolean) {
+    private setPaused(paused: boolean) {
         let self = this;
         self.paused = paused;
     }
@@ -53,7 +60,6 @@ export default class RockScene extends cc.Component {
         }
         self.createRandomRocks(dt);
         self.renderRocks();
-
     }
 
     protected createRandomRocks(dt) {
@@ -67,6 +73,7 @@ export default class RockScene extends cc.Component {
 
             self.randomInterval = Math.random() * 3; //随机0-3秒之间生成一个石头
             self.lastElapsedTime = 0;
+            console.log("Create %s, next rock in %s seconds", rockNode.name, self.randomInterval);
         }
     }
 
@@ -77,7 +84,7 @@ export default class RockScene extends cc.Component {
             let child = self.node.children[i];
             child.y -= self.speed;
             //统计移动到屏幕外的节点
-            if (child.y <= self.outPosition) {
+            if (child.y <= self.outPositionY) {
                 outChildren.push(child);
             }
         }

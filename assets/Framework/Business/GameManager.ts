@@ -33,22 +33,8 @@ export default class GameManager {
     public static createRockNode() {
         let self = this;
         let rockNode = SpriteManager.createSpriteNode("rock");
-        rockNode.group = "rock";
-        rockNode.addComponent(Rock);
-        rockNode.addComponent(BoxCollider);
-        let rockRes = [];
-        if (self.curRoom == GameManager.ROOM_KIND.EASY) {
-            rockRes = ResManager.game.texture.rockEasy;
-        } else if (self.curRoom == GameManager.ROOM_KIND.ORDINARY) {
-            rockRes = ResManager.game.texture.rockOrdinary;
-        } else if (self.curRoom == GameManager.ROOM_KIND.DIFFICULTY) {
-            rockRes = ResManager.game.texture.rockDifficulty;
-        }
-        let rockIndex = parseInt((Math.random() * rockRes.length).toString());
-        let rockTexture = rockRes[rockIndex];
-        SpriteManager.loadSpriteForNode(rockNode, rockTexture, function () {
-            console.log("Create a rock, size: %sx%s", rockNode.width, rockNode.height);
-        });
+        let rock = rockNode.addComponent(Rock);
+        rock.init(self.curRoom);
         return rockNode;
     }
 

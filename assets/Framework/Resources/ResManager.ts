@@ -45,7 +45,9 @@ class ResManager {
             ]
         },
         animation: {},
-        prefab: {}
+        prefab: {
+            gameOverDialog: "game/prefab/GameOverDialog"
+        }
     };
 }
 
