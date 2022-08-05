@@ -26,6 +26,7 @@ export default class GameManager {
         }
     };
     private static curRoom: number; //当前难度
+    private static speed: number = 10; //一般难度的速度
 
     public static createRockNode() {
         let self = this;
@@ -33,6 +34,19 @@ export default class GameManager {
         let rock = rockNode.addComponent(Rock);
         rock.init(self.curRoom);
         return rockNode;
+    }
+
+    public static getRockSpeed() {
+        let self = this;
+        let rockSpeed = self.speed;
+        if (GameManager.getCurRoom() == GameManager.ROOM_KIND.EASY) {
+            rockSpeed = self.speed * 0.8;
+        } else if (GameManager.getCurRoom() == GameManager.ROOM_KIND.ORDINARY) {
+            rockSpeed = self.speed;
+        } else if (GameManager.getCurRoom() == GameManager.ROOM_KIND.DIFFICULTY) {
+            rockSpeed = self.speed * 1.2;
+        }
+        return rockSpeed;
     }
 
 

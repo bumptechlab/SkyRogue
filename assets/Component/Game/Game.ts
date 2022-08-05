@@ -101,14 +101,7 @@ export default class Game extends cc.Component {
     protected rockEnter() {
         let self = this;
         if (cc.isValid(self.rockScene)) {
-            let rockSpeed = self.speed;
-            if (GameManager.getCurRoom() == GameManager.ROOM_KIND.EASY) {
-                rockSpeed = self.speed * 0.8;
-            } else if (GameManager.getCurRoom() == GameManager.ROOM_KIND.ORDINARY) {
-                rockSpeed = self.speed;
-            } else if (GameManager.getCurRoom() == GameManager.ROOM_KIND.DIFFICULTY) {
-                rockSpeed = self.speed * 1.2;
-            }
+            let rockSpeed = GameManager.getRockSpeed();
             self.rockScene.setSpeed(rockSpeed);
             self.rockScene.startGame();
         }
