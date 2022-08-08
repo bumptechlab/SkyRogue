@@ -60,6 +60,11 @@ class ResManager {
                 [93, 89],
                 [109, 138],
             ],
+            planeSize: [
+                [136, 139],
+                [148, 161],
+                [181, 161]
+            ]
         },
         animation: {},
         prefab: {

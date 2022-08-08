@@ -10,6 +10,8 @@
 
 import GameManager from "../../Framework/Business/GameManager";
 import CommonDragView from "../Common/CommonDragView";
+import BoxCollider = cc.BoxCollider;
+import ResManager from "../../Framework/Resources/ResManager";
 
 const {ccclass, property} = cc._decorator;
 
@@ -95,6 +97,12 @@ export default class Plane extends cc.Component {
                     console.log("Use plane: %s, skin: %s", planeType, animName);
                     animation.setAnimation(0, animName, true);
                 }
+            }
+            let box = self.node.getComponent(BoxCollider);
+            if (cc.isValid(box)) {
+                let planeSize = ResManager.game.config.planeSize[planeType];
+                box.size.width = planeSize[0];
+                box.size.height = planeSize[1];
             }
         }
     }
