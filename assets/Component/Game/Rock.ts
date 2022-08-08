@@ -24,7 +24,7 @@ export default class Rock extends cc.Component {
     public init(room: number): void {
         let self = this;
         self.node.group = "rock";
-        self.node.addComponent(BoxCollider);
+        let box = self.node.addComponent(BoxCollider);
         let rockRes = [];
         if (room == GameManager.ROOM_KIND.EASY) {
             rockRes = ResManager.game.texture.rockEasy;
@@ -33,10 +33,24 @@ export default class Rock extends cc.Component {
         } else if (room == GameManager.ROOM_KIND.DIFFICULTY) {
             rockRes = ResManager.game.texture.rockDifficulty;
         }
+        let configRes = [];
+        if (room == GameManager.ROOM_KIND.EASY) {
+            configRes = ResManager.game.config.rockEasy;
+        } else if (room == GameManager.ROOM_KIND.ORDINARY) {
+            configRes = ResManager.game.config.rockOrdinary;
+        } else if (room == GameManager.ROOM_KIND.DIFFICULTY) {
+            configRes = ResManager.game.config.rockDifficulty;
+        }
         let rockIndex = parseInt((Math.random() * rockRes.length).toString());
         let rockTexture = rockRes[rockIndex];
+        let boxSize = configRes[rockIndex];
+        box.size.width = boxSize[0];
+        box.size.height = boxSize[1];
+
         self.node.name = "rock" + rockIndex;
-        SpriteManager.loadSpriteForNode(self.node, rockTexture, null);
+        SpriteManager.loadSpriteForNode(self.node, rockTexture, function () {
+            //console.log("Rock[%s] box size: %sx%s", rockIndex, box.size.width, box.size.height);
+        });
     }
 
     protected onCollisionEnter(other) {

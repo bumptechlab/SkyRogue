@@ -44,6 +44,23 @@ class ResManager {
                 "game/texture/rock_difficulty/rock3",
             ]
         },
+        config: {
+            rockEasy: [
+                [53, 67],
+                [72, 80],
+                [38, 36],
+            ],
+            rockOrdinary: [
+                [72, 71],
+                [51, 51],
+                [96, 96],
+            ],
+            rockDifficulty: [
+                [69, 43],
+                [93, 89],
+                [109, 138],
+            ],
+        },
         animation: {},
         prefab: {
             gameOverDialog: "game/prefab/GameOverDialog"
