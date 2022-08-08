@@ -48,7 +48,7 @@ export default class Game extends cc.Component {
     protected startGame() {
         let self = this;
         cc.director.getCollisionManager().enabled = true;
-        cc.director.getCollisionManager().enabledDebugDraw = true;
+        //cc.director.getCollisionManager().enabledDebugDraw = true;
 
         //背景开始移动
         self.setGamePause(false);
