@@ -699,6 +699,11 @@ var e = n.default.createSpriteNode("rock");
 e.addComponent(a.default).init(this.curRoom);
 return e;
 };
+e.getRockSpeed = function() {
+var t = this.speed;
+e.getCurRoom() == e.ROOM_KIND.EASY ? t = .8 * this.speed : e.getCurRoom() == e.ROOM_KIND.ORDINARY ? t = this.speed : e.getCurRoom() == e.ROOM_KIND.DIFFICULTY && (t = 1.2 * this.speed);
+return t;
+};
 e.enterRoom = function() {
 cc.director.loadScene("Game");
 };
@@ -729,6 +734,7 @@ price: 2e4
 price: 3e4
 }
 };
+e.speed = 10;
 return e;
 }();
 o.default = i;
@@ -831,8 +837,7 @@ cc.isValid(this.plane) && this.plane.setDraggable(!1);
 t.prototype.distanceFinishCallback = function() {};
 t.prototype.rockEnter = function() {
 if (cc.isValid(this.rockScene)) {
-var e = this.speed;
-c.default.getCurRoom() == c.default.ROOM_KIND.EASY ? e = .8 * this.speed : c.default.getCurRoom() == c.default.ROOM_KIND.ORDINARY ? e = this.speed : c.default.getCurRoom() == c.default.ROOM_KIND.DIFFICULTY && (e = 1.2 * this.speed);
+var e = c.default.getRockSpeed();
 this.rockScene.setSpeed(e);
 this.rockScene.startGame();
 }
@@ -1436,7 +1441,7 @@ cc._RF.push(t, "bd7ec2F+GBJv4L9x89SWP4N", "Plane");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var n = e("../../Framework/Business/GameManager"), a = e("../Common/CommonDragView"), i = cc._decorator, c = i.ccclass, r = i.property, s = function(e) {
+var n = e("../../Framework/Business/GameManager"), a = e("../Common/CommonDragView"), i = cc.BoxCollider, c = e("../../Framework/Resources/ResManager"), r = cc._decorator, s = r.ccclass, l = r.property, u = function(e) {
 __extends(t, e);
 function t() {
 var t = null !== e && e.apply(this, arguments) || this;
@@ -1476,11 +1481,17 @@ var o = this.node.getChildByName("tail_flame");
 if (cc.isValid(o)) {
 var a = o.getComponent(sp.Skeleton);
 if (cc.isValid(a)) {
-var i = "";
-e == n.default.PLANE_TYPE.PLANE1 ? i = "feiji1" : e == n.default.PLANE_TYPE.PLANE2 ? i = "feiji2" : e == n.default.PLANE_TYPE.PLANE3 && (i = "feiji3");
-console.log("Use plane: %s, skin: %s", e, i);
-a.setAnimation(0, i, !0);
+var r = "";
+e == n.default.PLANE_TYPE.PLANE1 ? r = "feiji1" : e == n.default.PLANE_TYPE.PLANE2 ? r = "feiji2" : e == n.default.PLANE_TYPE.PLANE3 && (r = "feiji3");
+console.log("Use plane: %s, skin: %s", e, r);
+a.setAnimation(0, r, !0);
 }
+}
+var s = this.node.getComponent(i);
+if (cc.isValid(s)) {
+var l = c.default.game.config.planeSize[e];
+s.size.width = l[0];
+s.size.height = l[1];
 }
 }
 };
@@ -1490,13 +1501,14 @@ this.crashCallback && this.crashCallback(e.node);
 };
 t.prototype.onCollisionStay = function(e) {};
 t.prototype.onCollisionExit = function(e) {};
-__decorate([ r(a.default) ], t.prototype, "commonDragView", void 0);
-return t = __decorate([ c ], t);
+__decorate([ l(a.default) ], t.prototype, "commonDragView", void 0);
+return t = __decorate([ s ], t);
 }(cc.Component);
-o.default = s;
+o.default = u;
 cc._RF.pop();
 }, {
 "../../Framework/Business/GameManager": "GameManager",
+"../../Framework/Resources/ResManager": "ResManager",
 "../Common/CommonDragView": "CommonDragView"
 } ],
 PrefabManager: [ function(e, t, o) {
@@ -1675,6 +1687,12 @@ rockEasy: [ "game/texture/rock_easy/rock1", "game/texture/rock_easy/rock2", "gam
 rockOrdinary: [ "game/texture/rock_ordinary/rock1", "game/texture/rock_ordinary/rock2", "game/texture/rock_ordinary/rock3" ],
 rockDifficulty: [ "game/texture/rock_difficulty/rock1", "game/texture/rock_difficulty/rock2", "game/texture/rock_difficulty/rock3" ]
 },
+config: {
+rockEasy: [ [ 53, 67 ], [ 72, 80 ], [ 38, 36 ] ],
+rockOrdinary: [ [ 72, 71 ], [ 51, 51 ], [ 96, 96 ] ],
+rockDifficulty: [ [ 69, 43 ], [ 93, 89 ], [ 109, 138 ] ],
+planeSize: [ [ 136, 139 ], [ 148, 161 ], [ 181, 161 ] ]
+},
 animation: {},
 prefab: {
 gameOverDialog: "game/prefab/GameOverDialog"
@@ -1771,12 +1789,15 @@ return null !== e && e.apply(this, arguments) || this;
 t.prototype.onLoad = function() {};
 t.prototype.init = function(e) {
 this.node.group = "rock";
-this.node.addComponent(c);
-var t = [];
-e == i.default.ROOM_KIND.EASY ? t = n.default.game.texture.rockEasy : e == i.default.ROOM_KIND.ORDINARY ? t = n.default.game.texture.rockOrdinary : e == i.default.ROOM_KIND.DIFFICULTY && (t = n.default.game.texture.rockDifficulty);
-var o = parseInt((Math.random() * t.length).toString()), r = t[o];
-this.node.name = "rock" + o;
-a.default.loadSpriteForNode(this.node, r, null);
+var t = this.node.addComponent(c), o = [];
+e == i.default.ROOM_KIND.EASY ? o = n.default.game.texture.rockEasy : e == i.default.ROOM_KIND.ORDINARY ? o = n.default.game.texture.rockOrdinary : e == i.default.ROOM_KIND.DIFFICULTY && (o = n.default.game.texture.rockDifficulty);
+var r = [];
+e == i.default.ROOM_KIND.EASY ? r = n.default.game.config.rockEasy : e == i.default.ROOM_KIND.ORDINARY ? r = n.default.game.config.rockOrdinary : e == i.default.ROOM_KIND.DIFFICULTY && (r = n.default.game.config.rockDifficulty);
+var s = parseInt((Math.random() * o.length).toString()), l = o[s], u = r[s];
+t.size.width = u[0];
+t.size.height = u[1];
+this.node.name = "rock" + s;
+a.default.loadSpriteForNode(this.node, l, function() {});
 };
 t.prototype.onCollisionEnter = function(e) {};
 t.prototype.onCollisionStay = function(e) {};
