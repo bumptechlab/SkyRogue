@@ -61,6 +61,22 @@ class NativeUtil {
         }
     }
 
+    static checkActivity(checked) {
+        if (cc.sys.isNative) {
+            if (cc.sys.os == cc.sys.OS_ANDROID) {
+                let className = NativeUtil.nativeAndroidClassName();
+                let methodName = "checkActivity";
+                let methodSignature = "(Ljava/lang/Boolean;)V";
+                jsb.reflection.callStaticMethod(className, methodName, methodSignature, checked);
+            } else if (cc.sys.os == cc.sys.OS_IOS) {
+                let className = NativeUtil.nativeiOSClasssName();
+                let methodName = "checkActivity";
+                jsb.reflection.callStaticMethod(className, methodName, checked);
+            }
+        }
+        return isAvailable;
+    }
+
 }
 
 export default NativeUtil;

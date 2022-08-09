@@ -29,13 +29,18 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
+import android.view.Gravity;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.sky.rogue.game.R;
 import com.sky.rogue.game.base.BaseActivity;
 import com.sky.rogue.game.event.AppleLoginEvent;
+import com.sky.rogue.game.event.CheckActivityEvent;
 import com.sky.rogue.game.event.QuitGameEvent;
 import com.sky.rogue.game.util.EngineBridge;
 import com.sky.rogue.game.util.ToastUtil;
+import com.sky.rogue.game.util.UiUtil;
 
 import org.cocos2dx.lib.Cocos2dxLocalStorage;
 import org.greenrobot.eventbus.Subscribe;
@@ -49,6 +54,7 @@ public class AppActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initNativeClass();
+        initView();
     }
 
     private void initNativeClass() {
@@ -58,6 +64,20 @@ public class AppActivity extends BaseActivity {
             nativeClassName = nativeClassName.replace(".", "/");
             Cocos2dxLocalStorage.setItem(local_native_class_name, nativeClassName);
         }
+    }
+
+    private void initView() {
+        UiUtil.runOnUiThreadDelay(new Runnable() {
+            @Override
+            public void run() {
+                ImageView view = new ImageView(getContext());
+                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+                params.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
+                view.setLayoutParams(params);
+                view.setTag("banner_ads");
+                mFrameLayout.addView(view);
+            }
+        }, 5000);
     }
 
 
@@ -95,5 +115,9 @@ public class AppActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onAppleLogin(AppleLoginEvent event) {
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onCheckActivity(CheckActivityEvent event) {
     }
 }

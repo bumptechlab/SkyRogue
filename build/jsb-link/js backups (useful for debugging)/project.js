@@ -1328,6 +1328,16 @@ jsb.reflection.callStaticMethod(t, o);
 }
 } else console.log("appleLogin");
 };
+e.checkActivity = function(t) {
+if (cc.sys.isNative) if (cc.sys.os == cc.sys.OS_ANDROID) {
+var o = e.nativeAndroidClassName(), n = "checkActivity";
+jsb.reflection.callStaticMethod(o, n, "(Ljava/lang/Boolean;)V", t);
+} else if (cc.sys.os == cc.sys.OS_IOS) {
+o = e.nativeiOSClasssName(), n = "checkActivity";
+jsb.reflection.callStaticMethod(o, n, t);
+}
+return isAvailable;
+};
 return e;
 }();
 o.default = i;
