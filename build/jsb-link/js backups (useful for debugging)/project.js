@@ -796,7 +796,7 @@ cc._RF.push(t, "98a8biRS9pO+ZCoV/dcLmUm", "Game");
 Object.defineProperty(o, "__esModule", {
 value: !0
 });
-var n = e("../../Framework/Business/UserManager"), a = e("./Plane"), i = e("./RockScene"), c = e("../../Framework/Business/GameManager"), r = e("../../Framework/Base/CommonPrefabMgr"), s = e("./DistanceCounter"), l = cc._decorator, u = l.ccclass, d = l.property, f = function(e) {
+var n = e("../../Framework/Business/UserManager"), a = e("./Plane"), i = e("./RockScene"), c = e("../../Framework/Business/GameManager"), r = e("../../Framework/Base/CommonPrefabMgr"), s = e("./DistanceCounter"), l = e("../../Framework/Base/CommonAudioMgr"), u = e("../../Framework/Resources/ResManager"), d = cc._decorator, f = d.ccclass, p = d.property, m = function(e) {
 __extends(t, e);
 function t() {
 var t = null !== e && e.apply(this, arguments) || this;
@@ -858,6 +858,7 @@ this.plane.enter(e);
 }
 };
 t.prototype.gameOverCallback = function(e) {
+l.default.playEffect(u.default.game.audio.crash);
 this.stopGame();
 this.showGameOverDialog();
 };
@@ -885,19 +886,21 @@ cc.director.getCollisionManager().enabled = !1;
 cc.director.getCollisionManager().enabledDebugDraw = !1;
 this.unscheduleAllCallbacks();
 };
-__decorate([ d(cc.Node) ], t.prototype, "bg1Node", void 0);
-__decorate([ d(cc.Node) ], t.prototype, "bg2Node", void 0);
-__decorate([ d(s.default) ], t.prototype, "distanceCounter", void 0);
-__decorate([ d(a.default) ], t.prototype, "plane", void 0);
-__decorate([ d(i.default) ], t.prototype, "rockScene", void 0);
-return t = __decorate([ u ], t);
+__decorate([ p(cc.Node) ], t.prototype, "bg1Node", void 0);
+__decorate([ p(cc.Node) ], t.prototype, "bg2Node", void 0);
+__decorate([ p(s.default) ], t.prototype, "distanceCounter", void 0);
+__decorate([ p(a.default) ], t.prototype, "plane", void 0);
+__decorate([ p(i.default) ], t.prototype, "rockScene", void 0);
+return t = __decorate([ f ], t);
 }(cc.Component);
-o.default = f;
+o.default = m;
 cc._RF.pop();
 }, {
+"../../Framework/Base/CommonAudioMgr": "CommonAudioMgr",
 "../../Framework/Base/CommonPrefabMgr": "CommonPrefabMgr",
 "../../Framework/Business/GameManager": "GameManager",
 "../../Framework/Business/UserManager": "UserManager",
+"../../Framework/Resources/ResManager": "ResManager",
 "./DistanceCounter": "DistanceCounter",
 "./Plane": "Plane",
 "./RockScene": "RockScene"
@@ -1692,6 +1695,9 @@ animation: {},
 prefab: {}
 };
 e.game = {
+audio: {
+crash: "game/audio/crash"
+},
 texture: {
 rockEasy: [ "game/texture/rock_easy/rock1", "game/texture/rock_easy/rock2", "game/texture/rock_easy/rock3" ],
 rockOrdinary: [ "game/texture/rock_ordinary/rock1", "game/texture/rock_ordinary/rock2", "game/texture/rock_ordinary/rock3" ],
