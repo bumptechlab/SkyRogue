@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "730036339444",
+    "project_id": "skyrogue-20d5d",
+    "storage_bucket": "skyrogue-20d5d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:730036339444:android:7ccb359dcaa25e594854a1",
+        "android_client_info": {
+          "package_name": "com.sky.rogue.game"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "730036339444-5gpqs3qq1clumj2i2t5fddpibld1lk78.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFhTcfWwoBnuzF7NH8-0uM5j4QuC_GgZY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "730036339444-5gpqs3qq1clumj2i2t5fddpibld1lk78.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

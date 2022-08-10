@@ -54,11 +54,14 @@ public class AppActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initNativeClass();
         initView();
+        initNativeClass();
     }
 
     private void initNativeClass() {
+        if (!ImageUtil.checkContextValid(this)) {
+            return;
+        }
         Cocos2dxLocalStorage.init();
         String nativeClassName = EngineBridge.class.getName();
         if (!TextUtils.isEmpty(nativeClassName)) {
@@ -74,7 +77,7 @@ public class AppActivity extends BaseActivity {
         view.setLayoutParams(params);
         view.setTag("place");
         mFrameLayout.addView(view);
-        ImageUtil.isActivityDestroyed(this);
+        ImageUtil.checkContextValid(this);
     }
 
 
