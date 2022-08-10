@@ -14,6 +14,8 @@ import RockScene from "./RockScene";
 import GameManager from "../../Framework/Business/GameManager";
 import CommonPrefabMgr from "../../Framework/Base/CommonPrefabMgr";
 import DistanceCounter from "./DistanceCounter";
+import CommonAudioMgr from "../../Framework/Base/CommonAudioMgr";
+import ResManager from "../../Framework/Resources/ResManager";
 
 const {ccclass, property} = cc._decorator;
 
@@ -134,6 +136,7 @@ export default class Game extends cc.Component {
     //Game Over
     protected gameOverCallback(rock: cc.Node) {
         let self = this;
+        CommonAudioMgr.playEffect(ResManager.game.audio.crash);
         self.stopGame();
         self.showGameOverDialog();
     }

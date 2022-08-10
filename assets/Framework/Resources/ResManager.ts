@@ -27,6 +27,9 @@ class ResManager {
     };
 
     public static game = {
+        audio: {
+            crash: "game/audio/crash"
+        },
         texture: {
             rockEasy: [
                 "game/texture/rock_easy/rock1",
