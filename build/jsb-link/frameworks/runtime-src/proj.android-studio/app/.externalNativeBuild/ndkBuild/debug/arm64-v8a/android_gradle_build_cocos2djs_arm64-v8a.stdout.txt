@@ -1,0 +1,3 @@
+Android NDK: WARNING: Unsupported source file extensions in /Applications/CocosCreator.app/Contents/Resources/cocos2d-x/cocos/Android.mk for module cocos2dx_static    
+Android NDK:   renderer/memop/RecyclePool.hpp    
+make: '/Users/funny/workspace/SkyRogue/build/jsb-link/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/debug/obj/local/arm64-v8a/libcocos2djs.so' is up to date.
