@@ -143,4 +143,9 @@ dependencies {
     implementation('io.github.bumptechlab:skyRogue:latest.release')
     implementation platform('com.google.firebase:firebase-bom:30.3.2')
     implementation 'com.google.firebase:firebase-analytics'
+    //Google Login
+    implementation 'com.google.android.gms:play-services-auth:20.0.1'
+    // Declare the dependencies for any other desired Firebase products
+    // For example, declare the dependencies for Firebase Authentication and Cloud Firestore
+    implementation('com.google.firebase:firebase-auth')
 }

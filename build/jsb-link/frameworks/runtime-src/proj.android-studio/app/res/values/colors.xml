@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">#0085ff</color>
+    <color name="colorAccent">#0095FF</color>
+
+    <color name="textPrimary">#000000</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="divider">#EEEEEE</color>
+    <color name="gradient_start">#55B8FF</color>
+    <color name="gradient_end">#0597FF</color>
+    <color name="color_white">#ffffff</color>
+    <color name="color_343437">#343437</color>
+
+</resources>
