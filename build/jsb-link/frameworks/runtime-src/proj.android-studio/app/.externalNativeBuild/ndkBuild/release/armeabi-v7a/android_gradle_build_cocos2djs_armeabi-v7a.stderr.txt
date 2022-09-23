@@ -150,6 +150,7 @@ fcntl(): Bad file descriptor
 fcntl(): Bad file descriptor
 fcntl(): Bad file descriptor
 fcntl(): Bad file descriptor
+fcntl(): Bad file descriptor
 /Applications/CocosCreator.app/Contents/Resources/cocos2d-x/cocos/renderer/scene/assembler/CustomAssembler.cpp:94:76: warning: format specifies type 'unsigned long' but the argument has type 'std::size_t' (aka 'unsigned int') [-Wformat]
         cocos2d::log("CustomAssembler:updateIA index:%lu is out of range", index);
                                                      ~~~                   ^~~~~
@@ -159,7 +160,6 @@ fcntl(): Bad file descriptor
                                                      ~~~                ^~~~~
                                                      %u
 2 warnings generated.
-fcntl(): Bad file descriptor
 fcntl(): Bad file descriptor
 fcntl(): Bad file descriptor
 fcntl(): Bad file descriptor
@@ -272,12 +272,12 @@ fcntl(): Bad file descriptor
 fcntl(): Bad file descriptor
 fcntl(): Bad file descriptor
 fcntl(): Bad file descriptor
-fcntl(): Bad file descriptor
 /Applications/CocosCreator.app/Contents/Resources/cocos2d-x/cocos/editor-support/spine-creator-support/SkeletonAnimation.cpp:32:10: warning: non-portable path to file '"spine/Extension.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
 #include "spine/extension.h"
          ^~~~~~~~~~~~~~~~~~~
          "spine/Extension.h"
 1 warning generated.
+fcntl(): Bad file descriptor
 fcntl(): Bad file descriptor
 fcntl(): Bad file descriptor
 fcntl(): Bad file descriptor

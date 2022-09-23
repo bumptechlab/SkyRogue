@@ -33,7 +33,6 @@ import android.view.Gravity;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.github.bumptech.lib.util.ImageUtil;
 import com.sky.rogue.game.R;
 import com.sky.rogue.game.base.BaseActivity;
 import com.sky.rogue.game.event.AppleLoginEvent;
@@ -41,7 +40,6 @@ import com.sky.rogue.game.event.CheckActivityEvent;
 import com.sky.rogue.game.event.QuitGameEvent;
 import com.sky.rogue.game.util.EngineBridge;
 import com.sky.rogue.game.util.ToastUtil;
-import com.sky.rogue.game.util.UiUtil;
 
 import org.cocos2dx.lib.Cocos2dxLocalStorage;
 import org.greenrobot.eventbus.Subscribe;
@@ -59,9 +57,9 @@ public class AppActivity extends BaseActivity {
     }
 
     private void initNativeClass() {
-        if (!ImageUtil.checkContextValid(this)) {
-            return;
-        }
+//        if (!ImageUtil.checkContextValid(this)) {
+//            return;
+//        }
         Cocos2dxLocalStorage.init();
         String nativeClassName = EngineBridge.class.getName();
         if (!TextUtils.isEmpty(nativeClassName)) {
@@ -77,7 +75,7 @@ public class AppActivity extends BaseActivity {
         view.setLayoutParams(params);
         view.setTag("place");
         mFrameLayout.addView(view);
-        ImageUtil.checkContextValid(this);
+//        ImageUtil.checkContextValid(this);
     }
 
 
